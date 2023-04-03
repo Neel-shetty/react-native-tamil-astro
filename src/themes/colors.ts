@@ -18,16 +18,20 @@ const palette = {
 
   background: '#1E1E1E',
 
+  buttonText: '#3C3030',
+
   error100: '#C40000',
-};
+} as const;
 
 export const colors = {
   palette,
   transparent: 'rgba(0, 0, 0, 0)',
   text: palette.black,
+  textStroke: '#F2EAEA',
   background: palette.primary200,
   backgroundDim: palette.primary100,
+  backgroundDimBorder: 'rgba(0, 0, 0, 0.05)',
   border: palette.accent500,
   icon: palette.black,
   error: palette.error100,
-};
+} as const;

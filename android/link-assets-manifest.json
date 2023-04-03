@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/contage/Contage-Bold.ttf",
+      "sha1": "0fce1599e24cd2ebed1183788a9f1fcad440f211"
+    },
+    {
+      "path": "assets/fonts/contage/Contage-Medium.ttf",
+      "sha1": "b1d121d990c30829d6941eab1158d04c0c58709f"
+    },
+    {
+      "path": "assets/fonts/contage/Contage-Regular.ttf",
+      "sha1": "89ad504f11054ff024a194ddcb171527509a5f42"
+    },
+    {
+      "path": "assets/fonts/diwan_kufi/DiwanKufiRegular.ttf",
+      "sha1": "518b3a8330972ce6002f1729a72b70f3565f091f"
+    },
+    {
+      "path": "assets/fonts/imprima/Imprima-Regular.ttf",
+      "sha1": "5e8e16f8967bc4b1b972a01bf858841f2cd848b7"
+    },
+    {
+      "path": "assets/fonts/inter/Inter-Bold.ttf",
+      "sha1": "48747b7a60086f97af0d373febcbd1f1bee87f17"
+    },
+    {
+      "path": "assets/fonts/inter/Inter-Medium.ttf",
+      "sha1": "a418a8ba73bbcfa8c131c426ab836d78457afa9b"
+    },
+    {
+      "path": "assets/fonts/inter/Inter-Regular.ttf",
+      "sha1": "7237d9cf55f177702066a28a4dde1e4c7e8ab576"
+    }
+  ]
+}

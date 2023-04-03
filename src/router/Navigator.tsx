@@ -47,6 +47,7 @@ const Navigator = () => {
           <Stack.Screen
             component={SignInScreen.component}
             name={SignInScreen.name}
+            options={{headerShown: false}}
           />
         )}
       </Stack.Navigator>
