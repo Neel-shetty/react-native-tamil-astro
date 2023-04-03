@@ -15,9 +15,16 @@ interface OtpInputProps {
   handleBlur: (e: any) => void;
   value: string;
   error: string | null;
+  resendOtp: () => void;
 }
 
-const OtpInput = ({handleChange, handleBlur, value, error}: OtpInputProps) => {
+const OtpInput = ({
+  handleChange,
+  handleBlur,
+  value,
+  error,
+  resendOtp,
+}: OtpInputProps) => {
   return (
     <View style={styles.root}>
       <View style={styles.inputContainer}>
@@ -34,8 +41,8 @@ const OtpInput = ({handleChange, handleBlur, value, error}: OtpInputProps) => {
       </View>
       <View style={styles.underline} />
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{error ? error : 'null'}</Text>
-        <TouchableOpacity>
+        <Text style={styles.errorText}>{error ? error : null}</Text>
+        <TouchableOpacity onPress={resendOtp}>
           <Text style={styles.resendText}>Resend OTP</Text>
         </TouchableOpacity>
       </View>

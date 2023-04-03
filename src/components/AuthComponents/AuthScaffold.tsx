@@ -6,9 +6,10 @@ import {fonts} from '../../themes/fonts';
 
 interface AuthScaffoldProps {
   children: React.ReactNode;
+  showBanner?: boolean;
 }
 
-const AuthScaffold = ({children}: AuthScaffoldProps) => {
+const AuthScaffold = ({children, showBanner = true}: AuthScaffoldProps) => {
   return (
     <ScrollView style={styles.root}>
       <View style={styles.paddingTop} />
@@ -26,12 +27,14 @@ const AuthScaffold = ({children}: AuthScaffoldProps) => {
       </View>
       <View style={styles.padding} />
       <View style={styles.padding} />
-      <View style={styles.banner}>
-        <Text style={styles.titleText}>
-          ஜோதிடருடன் முதல் அழைப்பு இலவசம்{'\n'}First Consultation with
-          Astrologer is Free
-        </Text>
-      </View>
+      {showBanner ? (
+        <View style={styles.banner}>
+          <Text style={styles.titleText}>
+            ஜோதிடருடன் முதல் அழைப்பு இலவசம்{'\n'}First Consultation with
+            Astrologer is Free
+          </Text>
+        </View>
+      ) : null}
       {children}
     </ScrollView>
   );

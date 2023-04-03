@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Formik} from 'formik';
 import AuthScaffold from '../../components/AuthComponents/AuthScaffold';
@@ -10,6 +10,9 @@ import {colors} from '../../themes/colors';
 import {layout} from '../../constants/layout';
 import {fonts} from '../../themes/fonts';
 import {VerifyOtp} from '../../api/VerifyOtp';
+import {RequestOtp} from '../../api/RequestOtp';
+import LanguageScreen from '../Main/LanguageScreen';
+import EditIcon from '../../../assets/icons/edit.svg';
 
 const OtpScreen = () => {
   const navigation = useNavigation<OtpScreenNavigationProp['navigation']>();
@@ -25,6 +28,13 @@ const OtpScreen = () => {
             +91-{route.params.phone}
           </Text>
         </Text>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <EditIcon />
+        </TouchableOpacity>
       </View>
       <View style={styles.padding} />
       <Formik
@@ -34,7 +44,7 @@ const OtpScreen = () => {
           // let result = await VerifyOtp({otp: values.otp});
           var result = true; // TODO: Remove this line
           if (result === true) {
-            navigation.navigate('languageScreen');
+            navigation.navigate(LanguageScreen.name);
           }
         }}
         // validationSchema={scheme}
@@ -53,6 +63,9 @@ const OtpScreen = () => {
               handleChange={handleChange('otp')}
               error={touched.otp && errors.otp ? errors.otp : null}
               value={values.otp}
+              resendOtp={async () => {
+                await RequestOtp({phone: route.params.phone});
+              }}
             />
             <View style={styles.padding} />
             <PrimaryButton title="Verify OTP" onPress={handleSubmit} />
@@ -82,10 +95,17 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: layout.width * 0.8,
+    alignSelf: 'center',
   },
   grayText: {
     color: colors.palette.darkGray,
     fontFamily: fonts.interRegular,
     fontSize: 16,
+  },
+  iconContainer: {
+    marginLeft: 10,
   },
 });
