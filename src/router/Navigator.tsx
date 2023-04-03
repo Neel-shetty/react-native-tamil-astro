@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from '../screens/Main/HomeScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +9,7 @@ import SignInScreen from '../screens/Auth/SignInScreen';
 import {RootStackParamList} from './types';
 import OtpScreen from '../screens/Auth/OtpScreen';
 import LanguageScreen from '../screens/Main/LanguageScreen';
+import DrawerNavigator from './DrawerNavigator';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -50,8 +50,8 @@ const Navigator = () => {
         {loggedIn ? (
           <>
             <Stack.Screen
-              component={HomeScreen.component}
-              name={HomeScreen.name}
+              component={DrawerNavigator.component}
+              name={DrawerNavigator.name}
             />
           </>
         ) : (
