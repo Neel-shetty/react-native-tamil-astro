@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoggedIn} from '../store/UserSlice';
 import SignInScreen from '../screens/Auth/SignInScreen';
 import {RootStackParamList} from './types';
+import OtpScreen from '../screens/Auth/OtpScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,18 +40,30 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: true,
+          headerShown: false,
+          animation: 'slide_from_right',
+        }}>
         {loggedIn ? (
           <Stack.Screen
             component={HomeScreen.component}
             name={HomeScreen.name}
           />
         ) : (
-          <Stack.Screen
-            component={SignInScreen.component}
-            name={SignInScreen.name}
-            options={{headerShown: false}}
-          />
+          <>
+            <Stack.Screen
+              component={SignInScreen.component}
+              name={SignInScreen.name}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              component={OtpScreen.component}
+              name={OtpScreen.name}
+              options={{headerShown: false}}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

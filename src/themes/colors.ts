@@ -22,6 +22,7 @@ const palette = {
 
   underline: '#595151',
   gray: '#B2AAAA',
+  darkGray: '#504C4C',
 
   error100: '#FF0909',
 } as const;

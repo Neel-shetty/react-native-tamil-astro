@@ -6,7 +6,7 @@ import HomeScreen from '../screens/Main/HomeScreen';
 
 export type RootStackParamList = {
   [HomeScreen.name]: undefined;
-  [OtpScreen.name]: undefined;
+  [OtpScreen.name]: {phone: string};
   [SignInScreen.name]: undefined;
   languageScreen: undefined;
 };
@@ -19,4 +19,9 @@ export type HomeScreenNavigationProp = NativeStackScreenProps<
 export type SignInScreenNavigationProp = NativeStackScreenProps<
   RootStackParamList,
   typeof SignInScreen.name
+>;
+
+export type OtpScreenNavigationProp = NativeStackScreenProps<
+  RootStackParamList,
+  typeof OtpScreen.name
 >;

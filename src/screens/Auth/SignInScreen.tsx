@@ -27,12 +27,16 @@ const SignInScreen = () => {
         initialValues={{phone: ''}}
         onSubmit={async values => {
           console.log(values);
-          const result = await RequestOtp({phone: values.phone});
+          // let result = await RequestOtp({phone: values.phone});
+          var result = true; // TODO: Remove this line
           if (result === true) {
-            navigation.navigate(OtpScreen.name);
+            navigation.navigate(OtpScreen.name, {
+              phone: values.phone ? values.phone : '9834567890',
+            });
           }
         }}
-        validationSchema={scheme}>
+        // validationSchema={scheme}
+      >
         {({
           handleChange,
           handleBlur,
@@ -48,7 +52,9 @@ const SignInScreen = () => {
               error={touched.phone && errors.phone ? errors.phone : null}
               value={values.phone}
             />
+            <View style={styles.padding} />
             <PrimaryButton title="Request OTP" onPress={handleSubmit} />
+            <View style={styles.padding} />
           </View>
         )}
       </Formik>
@@ -64,5 +70,8 @@ const styles = StyleSheet.create({
   },
   paddingTop: {
     height: layout.height * 0.18,
+  },
+  padding: {
+    height: layout.height * 0.02,
   },
 });
