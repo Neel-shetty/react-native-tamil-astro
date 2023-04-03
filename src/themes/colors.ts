@@ -5,6 +5,7 @@ const palette = {
   //yellow
   primary100: 'rgba(248, 177, 17, 0.05)',
   primary200: 'rgba(254, 239, 207, 0.17)',
+  primary300: 'rgba(248, 177, 17, 0.20)',
   primary500: '#F8B111',
   primary700: '#CC9009',
 
@@ -21,6 +22,8 @@ const palette = {
   buttonText: '#3C3030',
 
   underline: '#595151',
+
+  blackOpacity10: 'rgba(0, 0, 0, 0.1)',
   gray: '#B2AAAA',
   darkGray: '#504C4C',
 
