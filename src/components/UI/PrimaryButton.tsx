@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes/colors';
 import {fonts} from '../../themes/fonts';
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.palette.primary500,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   text: {
     fontFamily: fonts.contageLight,

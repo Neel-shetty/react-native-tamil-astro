@@ -9,7 +9,7 @@ const HomeScreen = () => {
   );
 };
 
-export default {component: HomeScreen, name: 'HomeScreen'};
+export default {component: HomeScreen, name: 'HomeScreen' as const};
 
 const styles = StyleSheet.create({
   root: {},

@@ -20,7 +20,10 @@ const palette = {
 
   buttonText: '#3C3030',
 
-  error100: '#C40000',
+  underline: '#595151',
+  gray: '#B2AAAA',
+
+  error100: '#FF0909',
 } as const;
 
 export const colors = {

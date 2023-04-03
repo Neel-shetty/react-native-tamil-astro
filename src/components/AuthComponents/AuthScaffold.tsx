@@ -3,14 +3,12 @@ import React from 'react';
 import {colors} from '../../themes/colors';
 import {layout} from '../../constants/layout';
 import {fonts} from '../../themes/fonts';
-import {useTranslation} from 'react-i18next';
 
 interface AuthScaffoldProps {
   children: React.ReactNode;
 }
 
 const AuthScaffold = ({children}: AuthScaffoldProps) => {
-  // const {t} = useTranslation();
   return (
     <ScrollView style={styles.root}>
       <View style={styles.paddingTop} />
@@ -21,16 +19,16 @@ const AuthScaffold = ({children}: AuthScaffoldProps) => {
       </View>
       <View style={styles.padding} />
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>தமிழருக்கான சிறந்த ஜோதிட ஆப்</Text>
         <Text style={styles.titleText}>
-          Best Astrology App for Tamil Community
+          தமிழருக்கான சிறந்த ஜோதிட ஆப்{'\n'}Best Astrology App for Tamil
+          Community
         </Text>
       </View>
       <View style={styles.padding} />
       <View style={styles.padding} />
       <View style={styles.banner}>
         <Text style={styles.titleText}>
-          ஜோதிடருடன் முதல் அழைப்பு இலவசம்{'\n'} First Consultation with
+          ஜோதிடருடன் முதல் அழைப்பு இலவசம்{'\n'}First Consultation with
           Astrologer is Free
         </Text>
       </View>
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   paddingTop: {
-    height: layout.height * 0.1,
+    height: layout.height * 0.08,
   },
   padding: {
     height: layout.height * 0.02,
@@ -61,6 +59,7 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontFamily: fonts.interMedium,
     fontSize: 16,
+    textAlign: 'center',
     // textShadowColor: colors.textStroke,
     // textShadowRadius: 1,
   },

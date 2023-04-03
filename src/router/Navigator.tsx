@@ -8,8 +8,9 @@ import {RootState} from '../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoggedIn} from '../store/UserSlice';
 import SignInScreen from '../screens/Auth/SignInScreen';
+import {RootStackParamList} from './types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigator = () => {
   const [showSpashScreen, setShowSplashScreen] = useState(false);
@@ -19,6 +20,7 @@ const Navigator = () => {
 
   useEffect(() => {
     async function checkLoggedIn() {
+      setShowSplashScreen(false);
       const result = await AsyncStorage.getItem('loggedIn');
       console.log(
         '🚀 ~ file: Navigator.tsx:22 ~ checkLoggedIn ~ result:',
