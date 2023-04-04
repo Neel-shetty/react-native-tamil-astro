@@ -4,6 +4,7 @@ import {colors} from '../../themes/colors';
 import {layout} from '../../constants/layout';
 import {fonts} from '../../themes/fonts';
 import CategoryList from '../../components/MainComponents/HomeScreenComponents/CategoryList';
+import AstrologerList from '../../components/MainComponents/HomeScreenComponents/AstrologerList';
 
 const HomeScreen = () => {
   return (
@@ -18,6 +19,7 @@ const HomeScreen = () => {
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Choose Astrologer Category</Text>
       </View>
+      <AstrologerList />
     </View>
   );
 };

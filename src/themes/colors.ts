@@ -1,6 +1,7 @@
 const palette = {
   white: 'white',
   black: 'black',
+  red: '#FF0000',
 
   //yellow
   primary100: 'rgba(248, 177, 17, 0.05)',
@@ -25,6 +26,7 @@ const palette = {
 
   blackOpacity10: 'rgba(0, 0, 0, 0.1)',
   gray: '#B2AAAA',
+  gray300: '#343030',
   darkGray: '#504C4C',
 
   error100: '#FF0909',
