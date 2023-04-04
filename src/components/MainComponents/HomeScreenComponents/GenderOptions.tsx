@@ -1,11 +1,14 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useMemo, useRef, useCallback, useEffect} from 'react';
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
 import SquareButton from '../../UI/SquareButton';
+import {useNavigation} from '@react-navigation/native';
+import {HomeScreenNavigationProp} from '../../../router/types';
+import DetailsFormScreen from '../../../screens/Main/DetailsFormScreen';
 
 interface GenderOptionsPropsType {
   visible: boolean;
@@ -14,16 +17,20 @@ interface GenderOptionsPropsType {
 
 const GenderOptions = ({visible, setVisible}: GenderOptionsPropsType) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-    if (index === -1) {
-      setVisible(false);
-      // bottomSheetRef.current?.close();
-    }
-  }, []);
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      console.log('handleSheetChanges', index);
+      if (index === -1) {
+        setVisible(false);
+        // bottomSheetRef.current?.close();
+      }
+    },
+    [setVisible],
+  );
 
   useEffect(() => {
     if (visible === true) {
@@ -47,7 +54,14 @@ const GenderOptions = ({visible, setVisible}: GenderOptionsPropsType) => {
           <Text style={styles.title}>Preferred gender of the Astrologer?</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <SquareButton onPress={() => {}} title="Male" />
+          <SquareButton
+            onPress={() => {
+              navigation.navigate(DetailsFormScreen.name);
+              bottomSheetRef.current?.close();
+              setVisible(false);
+            }}
+            title="Male"
+          />
           <SquareButton onPress={() => {}} title="female" />
           <SquareButton onPress={() => {}} title="No Preference" />
         </View>

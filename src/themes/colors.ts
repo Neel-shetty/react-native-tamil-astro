@@ -1,5 +1,6 @@
 const palette = {
   white: 'white',
+  whiteWarm: '#FFFFFB',
   black: 'black',
   red: '#FF0000',
 
@@ -23,10 +24,12 @@ const palette = {
   buttonText: '#3C3030',
 
   underline: '#595151',
+  blackBorder: 'rgba(0, 0, 0, 0.25)',
 
   blackOpacity10: 'rgba(0, 0, 0, 0.1)',
   gray: '#B2AAAA',
   gray300: '#343030',
+  gray500: '#625D5D',
   darkGray: '#504C4C',
 
   error100: '#FF0909',

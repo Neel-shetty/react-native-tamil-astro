@@ -1,5 +1,5 @@
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+// import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
 import OtpScreen from '../screens/Auth/OtpScreen';
 import SignInScreen from '../screens/Auth/SignInScreen';
@@ -8,6 +8,8 @@ import LanguageScreen from '../screens/Main/LanguageScreen';
 import DrawerNavigator from './DrawerNavigator';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
+import DetailsFormScreen from '../screens/Main/DetailsFormScreen';
+import TabStackNavigator from './TabStackNavigator';
 
 export type RootStackParamList = {
   [DrawerNavigator.name]: NavigatorScreenParams<DrawerParamList>;
@@ -21,7 +23,12 @@ export type DrawerParamList = {
 };
 
 export type BottomTabPraramList = {
+  [TabStackNavigator.name]: NavigatorScreenParams<TabStackParamList>;
+};
+
+export type TabStackParamList = {
   [HomeScreen.name]: undefined;
+  [DetailsFormScreen.name]: undefined;
 };
 
 export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
@@ -29,8 +36,8 @@ export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
   typeof DrawerNavigator.name
 >;
 
-export type HomeScreenNavigationProp = BottomTabScreenProps<
-  BottomTabPraramList,
+export type HomeScreenNavigationProp = NativeStackScreenProps<
+  TabStackParamList,
   typeof HomeScreen.name
 >;
 

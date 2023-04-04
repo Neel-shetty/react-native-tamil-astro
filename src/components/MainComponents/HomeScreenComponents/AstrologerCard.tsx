@@ -14,6 +14,7 @@ interface AstrologerCardProps {
   cost: string;
   clients: string;
   experience: string;
+  setVisible: (visible: boolean) => void;
 }
 
 const AstrologerCard = ({
