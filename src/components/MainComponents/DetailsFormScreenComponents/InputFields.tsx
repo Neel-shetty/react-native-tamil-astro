@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
@@ -6,6 +6,9 @@ import {Formik} from 'formik';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>('');
+  const [maritalStatus, setMaritalStatus] = useState<string>('');
+  const [problem, setProblem] = useState<string>('');
+
   return (
     <View>
       <Formik
@@ -31,6 +34,18 @@ const InputFields = () => {
               handleChange={handleChange('placeOfBirth')}
               handleBlur={handleBlur('placeOfBirth')}
               value={values.placeOfBirth}
+              error={''}
+            />
+            <CustomDropdown
+              placeholder="Marital Status"
+              value={maritalStatus}
+              setValue={setMaritalStatus}
+              error={''}
+            />
+            <CustomDropdown
+              placeholder="Type of Problem"
+              value={problem}
+              setValue={setProblem}
               error={''}
             />
           </View>

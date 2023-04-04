@@ -34,7 +34,7 @@ const CustomDropdown = ({
   const [isFocus, setIsFocus] = useState(false);
 
   return (
-    <View>
+    <View style={styles.padding}>
       <View style={styles.root}>
         <Dropdown
           style={styles.dropdown}
@@ -58,7 +58,7 @@ const CustomDropdown = ({
         />
       </View>
       <View style={styles.errorContainer}>
-        <Text style={styles.error}>{error ? error : ''}</Text>
+        <Text style={styles.error}>{error ? error : 'error'}</Text>
       </View>
     </View>
   );
@@ -112,4 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   iconStyle: {},
+  padding: {
+    paddingVertical: 5,
+  },
 });

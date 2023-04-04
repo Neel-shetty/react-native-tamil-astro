@@ -20,7 +20,7 @@ const CustomInput = ({
   error,
 }: CustomInputPropsType) => {
   return (
-    <View>
+    <View style={styles.padding}>
       <View style={styles.root}>
         <TextInput
           style={styles.input}
@@ -66,5 +66,8 @@ const styles = StyleSheet.create({
   errorContainer: {
     width: layout.width * 0.85,
     paddingLeft: 18,
+  },
+  padding: {
+    paddingVertical: 5,
   },
 });
