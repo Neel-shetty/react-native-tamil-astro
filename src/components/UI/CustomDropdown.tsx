@@ -4,12 +4,11 @@ import {colors} from '../../themes/colors';
 import {layout} from '../../constants/layout';
 import {fonts} from '../../themes/fonts';
 import {Dropdown} from 'react-native-element-dropdown';
-import {DropdownProps} from 'react-native-element-dropdown/lib/typescript/components/Dropdown/model';
 
 type CustomInputPropsType = {
   placeholder: string;
   error: string | null;
-  value: string;
+  value?: string;
   setValue: (value: string) => void;
 };
 
@@ -27,11 +26,11 @@ const data = [
 const CustomDropdown = ({
   placeholder,
   error,
-  value,
+  // value,
   setValue,
 }: CustomInputPropsType) => {
   // const [value, setValue] = useState<string>('');
-  const [isFocus, setIsFocus] = useState(false);
+  const [_, setIsFocus] = useState(false);
 
   return (
     <View style={styles.padding}>

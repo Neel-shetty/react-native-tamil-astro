@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
 import {Formik} from 'formik';
+import PrimaryButton from '../../UI/PrimaryButton';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>('');
@@ -10,7 +11,7 @@ const InputFields = () => {
   const [problem, setProblem] = useState<string>('');
 
   return (
-    <View>
+    <View style={styles.root}>
       <Formik
         initialValues={{name: '', placeOfBirth: ''}}
         onSubmit={values => console.log(values)}>
@@ -48,6 +49,7 @@ const InputFields = () => {
               setValue={setProblem}
               error={''}
             />
+            <PrimaryButton title="Chat" onPress={handleSubmit} />
           </View>
         )}
       </Formik>
@@ -57,4 +59,6 @@ const InputFields = () => {
 
 export default InputFields;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  root: {},
+});
