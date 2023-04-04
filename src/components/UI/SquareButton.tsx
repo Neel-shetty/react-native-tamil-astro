@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   text: {
-    fontFamily: fonts.interRegular,
+    fontFamily: fonts.interMedium,
     fontSize: 16,
     color: colors.palette.buttonText,
+    textAlign: 'center',
   },
 });

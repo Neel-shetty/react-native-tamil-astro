@@ -1,12 +1,12 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AstrologerCard from './AstrologerCard';
 
-const AstrologerList = () => {
+const AstrologerList = ({setVisible}) => {
   const data = [
     {
       title: 'Junior Astrologer',
-      stars: 5,
+      stars: 4.2,
       cost: '8',
       firstTime: false,
       clients: '1000',
@@ -14,11 +14,19 @@ const AstrologerList = () => {
     },
     {
       title: 'Senior Astrologer',
-      stars: 5,
-      cost: '8',
+      stars: 4.8,
+      cost: '12',
       firstTime: true,
-      clients: '1000',
-      experience: '1 to 3 Years',
+      clients: '4000',
+      experience: '3 to 8 Years',
+    },
+    {
+      title: 'Expert Astrologer',
+      stars: 5,
+      cost: '20',
+      firstTime: true,
+      clients: '10,000',
+      experience: '8+ Years',
     },
   ];
   return (
@@ -34,6 +42,7 @@ const AstrologerList = () => {
             firstTime={item.firstTime}
             stars={item.stars}
             title={item.title}
+            setVisible={setVisible}
           />
         )}
       />

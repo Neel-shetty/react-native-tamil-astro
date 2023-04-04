@@ -5,8 +5,12 @@ import {layout} from '../../constants/layout';
 import {fonts} from '../../themes/fonts';
 import CategoryList from '../../components/MainComponents/HomeScreenComponents/CategoryList';
 import AstrologerList from '../../components/MainComponents/HomeScreenComponents/AstrologerList';
+import BottomSheet from '@gorhom/bottom-sheet';
+import GenderOptions from '../../components/MainComponents/HomeScreenComponents/GenderOptions';
 
 const HomeScreen = () => {
+  const [visible, setVisible] = React.useState(false);
+  console.log('🚀 ~ file: HomeScreen.tsx:13 ~ HomeScreen ~ visible:', visible);
   return (
     <View style={styles.root}>
       <View style={styles.padding1} />
@@ -19,7 +23,8 @@ const HomeScreen = () => {
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Choose Astrologer Category</Text>
       </View>
-      <AstrologerList />
+      <AstrologerList setVisible={setVisible} />
+      <GenderOptions visible={visible} setVisible={setVisible} />
     </View>
   );
 };

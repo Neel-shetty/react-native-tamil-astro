@@ -23,6 +23,7 @@ const AstrologerCard = ({
   title,
   clients,
   experience,
+  setVisible,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
 
@@ -30,9 +31,9 @@ const AstrologerCard = ({
     <View style={styles.root}>
       <View style={styles.leftContainer}>
         <View style={styles.leftTopContainer}>
-          <Text style={styles.title}>Junior Astrologer</Text>
+          <Text style={styles.title}>{title}</Text>
           <View style={styles.ratingContainer}>
-            <Text style={styles.ratingNumber}>4.8 </Text>
+            <Text style={styles.ratingNumber}>{stars} </Text>
             {rating.map((_, index) => (
               <Star key={index} />
             ))}
@@ -40,7 +41,7 @@ const AstrologerCard = ({
         </View>
         <View style={styles.leftBottomContainer}>
           <Text style={[styles.cost, firstTime ? styles.firstTime : null]}>
-            Rate: ₹8/min
+            Rate: ₹{cost}/min
           </Text>
           {firstTime ? (
             <Text style={styles.free}>First Free!</Text>
@@ -51,11 +52,15 @@ const AstrologerCard = ({
       </View>
       <View style={styles.rightContainer}>
         <View style={styles.rightTopContainer}>
-          <Text style={styles.cost}>Clients: 1000+</Text>
-          <Text style={styles.cost}>Exp: 1 to 3 Years</Text>
+          <Text style={styles.cost}>Clients: {clients}+</Text>
+          <Text style={styles.cost}>Exp: {experience}</Text>
         </View>
         <View style={styles.rightBottomContainer}>
-          <TouchableOpacity style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              setVisible(true);
+            }}
+            style={styles.buttonContainer}>
             <Call />
             <Text style={styles.cost}>Call</Text>
           </TouchableOpacity>
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
   ratingNumber: {
     fontSize: 12,
     fontFamily: fonts.imprima,
+    color: colors.text,
   },
   cost: {
     fontFamily: fonts.interRegular,
