@@ -6,6 +6,9 @@ import {Formik} from 'formik';
 import PrimaryButton from '../../UI/PrimaryButton';
 import * as yup from 'yup';
 import {SubmitDetails} from '../../../api/SubmitDetails';
+import {useNavigation} from '@react-navigation/native';
+import {DetailsFormScreenNavigationProp} from '../../../router/types';
+import HomeScreen from '../../../screens/Main/HomeScreen';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>();
@@ -26,6 +29,9 @@ const InputFields = () => {
     placeOfBirth: yup.string().required(),
   });
 
+  const navigation =
+    useNavigation<DetailsFormScreenNavigationProp['navigation']>();
+
   return (
     <View style={styles.root}>
       <Formik
@@ -45,6 +51,7 @@ const InputFields = () => {
             typeOfProblem: problem,
           });
           console.log(values);
+          navigation.navigate(HomeScreen.name, {astrologer: '1'});
         }}
         validationSchema={validationSchema}>
         {({

@@ -6,10 +6,23 @@ import {fonts} from '../../themes/fonts';
 import CategoryList from '../../components/MainComponents/HomeScreenComponents/CategoryList';
 import AstrologerList from '../../components/MainComponents/HomeScreenComponents/AstrologerList';
 import GenderOptions from '../../components/MainComponents/HomeScreenComponents/GenderOptions';
+import AstrologerWaitModal from '../../components/MainComponents/HomeScreenComponents/AstrologerWaitModal';
+import {useRoute} from '@react-navigation/native';
+import {HomeScreenNavigationProp} from '../../router/types';
 
 const HomeScreen = () => {
   const [visible, setVisible] = React.useState(false);
-  console.log('🚀 ~ file: HomeScreen.tsx:13 ~ HomeScreen ~ visible:', visible);
+  const [showModal, setShowModal] = React.useState(false);
+
+  const route = useRoute<HomeScreenNavigationProp['route']>();
+
+  React.useEffect(() => {
+    const astrologer = route.params?.astrologer;
+    if (astrologer) {
+      setShowModal(true);
+    }
+  }, [route.params?.astrologer]);
+
   return (
     <View style={styles.root}>
       <View style={styles.padding1} />
@@ -24,6 +37,17 @@ const HomeScreen = () => {
       </View>
       <AstrologerList setVisible={setVisible} />
       <GenderOptions visible={visible} setVisible={setVisible} />
+      {/* <Modal
+
+        style={styles.modal}
+        backdropColor={colors.palette.accent500}
+        isVisible={true}>
+        <Text>test</Text>
+      </Modal> */}
+      <AstrologerWaitModal
+        astroId={route.params?.astrologer ?? ''}
+        visible={showModal}
+      />
     </View>
   );
 };
@@ -56,4 +80,11 @@ const styles = StyleSheet.create({
   padding1: {
     height: layout.height * 0.02,
   },
+  // modal: {
+  //   backgroundColor: 'white',
+  //   // padding: 22,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderRadius: 4,
+  // },
 });

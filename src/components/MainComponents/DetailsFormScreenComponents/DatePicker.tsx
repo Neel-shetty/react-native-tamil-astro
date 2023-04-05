@@ -1,26 +1,50 @@
-// import React, {useState} from 'react';
-// import {Button} from 'react-native';
-// import DatePicker from 'react-native-date-picker';
+import React from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {useState} from 'react';
+import {Button, Platform, View} from 'react-native';
 
-// export default () => {
-//   const [date, setDate] = useState(new Date());
-//   const [open, setOpen] = useState(false);
+const DatePicker = () => {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
-//   return (
-//     <>
-//       <Button title="Open" onPress={() => setOpen(true)} />
-//       <DatePicker
-//         modal
-//         open={open}
-//         date={date}
-//         onConfirm={date => {
-//           setOpen(false);
-//           setDate(date);
-//         }}
-//         onCancel={() => {
-//           setOpen(false);
-//         }}
-//       />
-//     </>
-//   );
-// };
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  return (
+    <View>
+      <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+    </View>
+  );
+};

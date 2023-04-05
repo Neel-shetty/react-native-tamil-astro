@@ -27,7 +27,7 @@ export type BottomTabPraramList = {
 };
 
 export type TabStackParamList = {
-  [HomeScreen.name]: undefined;
+  [HomeScreen.name]: {astrologer: string | undefined};
   [DetailsFormScreen.name]: undefined;
 };
 
@@ -39,6 +39,11 @@ export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
 export type HomeScreenNavigationProp = NativeStackScreenProps<
   TabStackParamList,
   typeof HomeScreen.name
+>;
+
+export type DetailsFormScreenNavigationProp = NativeStackScreenProps<
+  TabStackParamList,
+  typeof DetailsFormScreen.name
 >;
 
 export type SignInScreenNavigationProp = NativeStackScreenProps<
