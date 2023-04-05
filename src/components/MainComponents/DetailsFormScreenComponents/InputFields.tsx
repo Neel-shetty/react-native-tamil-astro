@@ -9,6 +9,7 @@ import {SubmitDetails} from '../../../api/SubmitDetails';
 import {useNavigation} from '@react-navigation/native';
 import {DetailsFormScreenNavigationProp} from '../../../router/types';
 import HomeScreen from '../../../screens/Main/HomeScreen';
+import DatePicker from './DatePicker';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>();
@@ -80,6 +81,7 @@ const InputFields = () => {
                 dropdownErrors.gender ? 'This is a required field  ' : null
               }
             />
+            <DatePicker placeholder="Time of Birth*" />
             <CustomInput
               placeholder="Place of Birth*"
               handleChange={handleChange('placeOfBirth')}
