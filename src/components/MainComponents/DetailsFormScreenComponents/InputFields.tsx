@@ -4,38 +4,77 @@ import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
 import {Formik} from 'formik';
 import PrimaryButton from '../../UI/PrimaryButton';
+import * as yup from 'yup';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>('');
   const [maritalStatus, setMaritalStatus] = useState<string>('');
   const [problem, setProblem] = useState<string>('');
+  const [dropdownErrors, setDropdownErrors] = useState({
+    gender: false,
+    maritalStatus: false,
+    problem: false,
+  });
+
+  const validationSchema = yup.object({
+    name: yup
+      .string()
+      .min(2, 'Name must be at least 2 characters')
+      .max(100, 'Name must be at most 100 characters')
+      .required(),
+    placeOfBirth: yup.string().required(),
+  });
 
   return (
     <View style={styles.root}>
       <Formik
         initialValues={{name: '', placeOfBirth: ''}}
-        onSubmit={values => console.log(values)}>
-        {({handleChange, handleBlur, handleSubmit, values}) => (
+        onSubmit={values => {
+          if (gender === '') {
+            // dropdownErrors.gender = true;
+            setDropdownErrors({...dropdownErrors, gender: true});
+            return;
+          }
+          setDropdownErrors({...dropdownErrors, gender: false});
+          console.log(values);
+        }}
+        validationSchema={validationSchema}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          touched,
+          errors,
+        }) => (
           <View>
             <CustomInput
               placeholder="Name*"
               handleChange={handleChange('name')}
               handleBlur={handleBlur('name')}
               value={values.name}
-              error={''}
+              error={
+                errors.name && touched.name ? 'Name field is required' : ''
+              }
             />
             <CustomDropdown
               placeholder="Gender*"
               value={gender}
               setValue={setGender}
-              error={''}
+              error={
+                dropdownErrors.gender ? 'This is a required field  ' : null
+              }
             />
             <CustomInput
-              placeholder="Place of Birth"
+              placeholder="Place of Birth*"
               handleChange={handleChange('placeOfBirth')}
               handleBlur={handleBlur('placeOfBirth')}
               value={values.placeOfBirth}
-              error={''}
+              error={
+                errors.placeOfBirth && touched.placeOfBirth
+                  ? 'Place of Birth field is required'
+                  : ''
+              }
             />
             <CustomDropdown
               placeholder="Marital Status"

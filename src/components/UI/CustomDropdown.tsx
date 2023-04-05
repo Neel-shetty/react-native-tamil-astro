@@ -57,7 +57,7 @@ const CustomDropdown = ({
         />
       </View>
       <View style={styles.errorContainer}>
-        <Text style={styles.error}>{error ? error : 'error'}</Text>
+        <Text style={styles.error}>{error ? error : ''}</Text>
       </View>
     </View>
   );

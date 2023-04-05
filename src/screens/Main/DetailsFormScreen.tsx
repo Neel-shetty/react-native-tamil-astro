@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {layout} from '../../constants/layout';
 import {colors} from '../../themes/colors';
@@ -10,9 +10,11 @@ const DetailsFormScreen = () => {
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.root}>
+      <View style={styles.paddingTop} />
       <Text style={styles.title}>
         Please fill your details for the astrologer
       </Text>
+      <View style={styles.padding} />
       <InputFields />
     </ScrollView>
   );
@@ -35,5 +37,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.contageLight,
     fontSize: 18,
     color: colors.text,
+  },
+  paddingTop: {
+    height: 30,
+  },
+  padding: {
+    height: 20,
   },
 });
