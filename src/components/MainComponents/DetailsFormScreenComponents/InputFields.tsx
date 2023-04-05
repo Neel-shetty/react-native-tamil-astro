@@ -5,11 +5,12 @@ import CustomDropdown from '../../UI/CustomDropdown';
 import {Formik} from 'formik';
 import PrimaryButton from '../../UI/PrimaryButton';
 import * as yup from 'yup';
+import {SubmitDetails} from '../../../api/SubmitDetails';
 
 const InputFields = () => {
-  const [gender, setGender] = useState<string>('');
-  const [maritalStatus, setMaritalStatus] = useState<string>('');
-  const [problem, setProblem] = useState<string>('');
+  const [gender, setGender] = useState<string>();
+  const [maritalStatus, setMaritalStatus] = useState<string>();
+  const [problem, setProblem] = useState<string>();
   const [dropdownErrors, setDropdownErrors] = useState({
     gender: false,
     maritalStatus: false,
@@ -29,13 +30,20 @@ const InputFields = () => {
     <View style={styles.root}>
       <Formik
         initialValues={{name: '', placeOfBirth: ''}}
-        onSubmit={values => {
-          if (gender === '') {
+        onSubmit={async values => {
+          if (!gender) {
             // dropdownErrors.gender = true;
             setDropdownErrors({...dropdownErrors, gender: true});
             return;
           }
           setDropdownErrors({...dropdownErrors, gender: false});
+          const result = await SubmitDetails({
+            gender: gender,
+            name: values.name,
+            placeOfBirth: values.placeOfBirth,
+            maritialStatus: maritalStatus,
+            typeOfProblem: problem,
+          });
           console.log(values);
         }}
         validationSchema={validationSchema}>

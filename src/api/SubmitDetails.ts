@@ -9,7 +9,7 @@ interface SubmitDetailsProps {
   typeOfProblem?: string;
 }
 
-async function SubmitDetails({
+export async function SubmitDetails({
   name,
   gender,
   placeOfBirth,
