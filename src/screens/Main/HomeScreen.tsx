@@ -47,6 +47,7 @@ const HomeScreen = () => {
       <AstrologerWaitModal
         astroId={route.params?.astrologer ?? ''}
         visible={showModal}
+        setVisible={setShowModal}
       />
     </View>
   );

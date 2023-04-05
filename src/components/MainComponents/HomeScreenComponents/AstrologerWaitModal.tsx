@@ -9,9 +9,11 @@ import Star from '../../../../assets/icons/HomeScreen/star.svg';
 const AstrologerWaitModal = ({
   visible,
   astroId,
+  setVisible,
 }: {
   visible: boolean;
   astroId: string;
+  setVisible: (visible: boolean) => void;
 }) => {
   const [astrologer, _] = React.useState({
     name: 'Kethan Swami',
@@ -35,6 +37,9 @@ const AstrologerWaitModal = ({
       style={styles.modal}
       isVisible={visible}
       backdropColor={'#FEF0F0'}
+      onBackdropPress={() => setVisible(false)}
+      onSwipeComplete={() => setVisible(false)}
+      swipeDirection="down"
       backdropOpacity={0.5}>
       <View style={styles.root}>
         <Text style={styles.title}>Your assigned Astrologer</Text>

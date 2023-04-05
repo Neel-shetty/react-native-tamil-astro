@@ -43,7 +43,7 @@ const InputFields = () => {
             return;
           }
           setDropdownErrors({...dropdownErrors, gender: false});
-          const result = await SubmitDetails({
+          await SubmitDetails({
             gender: gender,
             name: values.name,
             placeOfBirth: values.placeOfBirth,
