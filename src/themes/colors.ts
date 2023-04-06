@@ -32,6 +32,8 @@ const palette = {
   gray500: '#625D5D',
   darkGray: '#504C4C',
 
+  green: '#05AC01',
+
   error100: '#FF0909',
 } as const;
 

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes/colors';
 import Balance from '../../components/MainComponents/TransactionHistoryScreenComponents/Balance';

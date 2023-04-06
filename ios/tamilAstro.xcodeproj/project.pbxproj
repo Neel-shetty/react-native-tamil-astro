@@ -23,6 +23,8 @@
 		85F28CE2B2CB4A609725C0A3 /* Contage-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C831C2A74D34786A1DF2F2E /* Contage-Medium.ttf */; };
 		292A5B6B647242D1BD83CB40 /* Contage-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558843104AEC42F99E33525C /* Contage-Regular.ttf */; };
 		FEA1106D9078434DAF285BF5 /* Contage-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4260ADE7C01413D8D101A61 /* Contage-Light.ttf */; };
+		16486F7B2AB8499E9D250809 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C1E8D4D4C2E49A29CDBE374 /* Inter-Light.ttf */; };
+		1EAD3FF707964753AF064CAF /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8ECA529665649CD9DDEFB33 /* Inter-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		1C831C2A74D34786A1DF2F2E /* Contage-Medium.ttf */ = {isa = PBXFileReference; name = "Contage-Medium.ttf"; path = "../assets/fonts/contage/Contage-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		558843104AEC42F99E33525C /* Contage-Regular.ttf */ = {isa = PBXFileReference; name = "Contage-Regular.ttf"; path = "../assets/fonts/contage/Contage-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B4260ADE7C01413D8D101A61 /* Contage-Light.ttf */ = {isa = PBXFileReference; name = "Contage-Light.ttf"; path = "../assets/fonts/contage/Contage-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4C1E8D4D4C2E49A29CDBE374 /* Inter-Light.ttf */ = {isa = PBXFileReference; name = "Inter-Light.ttf"; path = "../assets/fonts/inter/Inter-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D8ECA529665649CD9DDEFB33 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/inter/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +183,8 @@
 				1C831C2A74D34786A1DF2F2E /* Contage-Medium.ttf */,
 				558843104AEC42F99E33525C /* Contage-Regular.ttf */,
 				B4260ADE7C01413D8D101A61 /* Contage-Light.ttf */,
+				4C1E8D4D4C2E49A29CDBE374 /* Inter-Light.ttf */,
+				D8ECA529665649CD9DDEFB33 /* Inter-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -289,6 +295,8 @@
 				85F28CE2B2CB4A609725C0A3 /* Contage-Medium.ttf in Resources */,
 				292A5B6B647242D1BD83CB40 /* Contage-Regular.ttf in Resources */,
 				FEA1106D9078434DAF285BF5 /* Contage-Light.ttf in Resources */,
+				16486F7B2AB8499E9D250809 /* Inter-Light.ttf in Resources */,
+				1EAD3FF707964753AF064CAF /* Inter-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
