@@ -16,11 +16,9 @@ const HomeScreen = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
+  const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
+  console.log('🚀 ~ file: HomeScreen.tsx:20 ~ HomeScreen ~ flow:', flow);
 
-  console.log(
-    '🚀 ~ file: HomeScreen.tsx:18 ~ HomeScreen ~ astrologerOptionsVisible:',
-    astrologerOptionsVisible,
-  );
   const route = useRoute<HomeScreenNavigationProp['route']>();
 
   React.useEffect(() => {
@@ -30,10 +28,16 @@ const HomeScreen = () => {
     }
   }, [route.params?.astrologer]);
 
-  function showAstrologerOptions() {
-    console.log('running');
-    setAstrologerOptionsVisible(true);
-  }
+  // function showAstrologerOptions() {
+  //   console.log('running');
+  //   setAstrologerOptionsVisible(true);
+  // }
+
+  React.useEffect(() => {
+    return () => {
+      setFlow('category');
+    };
+  }, []);
 
   return (
     <View style={styles.root}>
@@ -43,12 +47,28 @@ const HomeScreen = () => {
           In which area of life do you want guidance?
         </Text>
       </View>
-      <CategoryList onPress={showAstrologerOptions} />
+      <CategoryList
+        onPress={() => {
+          console.log('pressed');
+          setFlow('category');
+          setVisible(true);
+        }}
+      />
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Choose Astrologer Category</Text>
       </View>
-      <AstrologerList setVisible={setVisible} />
-      <GenderOptions visible={visible} setVisible={setVisible} />
+      <AstrologerList
+        onPress={() => {
+          setFlow('astrologer');
+        }}
+        setVisible={setVisible}
+      />
+      <GenderOptions
+        showAstrologerOptions={setAstrologerOptionsVisible}
+        flow={flow}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <AstrologerOptions
         visible={astrologerOptionsVisible}
         setVisible={setAstrologerOptionsVisible}

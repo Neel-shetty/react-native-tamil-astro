@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import {SubmitDetails} from '../../../api/SubmitDetails';
 import {useNavigation} from '@react-navigation/native';
 import {DetailsFormScreenNavigationProp} from '../../../router/types';
-import HomeScreen from '../../../screens/Main/HomeScreen';
+// import HomeScreen from '../../../screens/Main/HomeScreen';
 import DatePicker from './DatePicker';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
@@ -55,7 +55,8 @@ const InputFields = () => {
             typeOfProblem: problem,
           });
           console.log(values);
-          navigation.navigate(HomeScreen.name, {astrologer: '1'});
+          // NOTE: Workaround for require cycle, screen name is not dynamic
+          navigation.navigate('HomeScreen', {astrologer: '1'});
         }}
         validationSchema={validationSchema}>
         {({
