@@ -11,25 +11,11 @@ import File from '../../../../assets/icons/HistoryScreen/file.svg';
 import Play from '../../../../assets/icons/HistoryScreen/play.svg';
 
 interface HistoryCardPropTypes {
-  stars: number;
-  skills: string;
-  title: string;
-  clients: number;
-  experience: number;
-  cost: number;
-  languages: string;
+  astrologer?: any;
 }
 
-const HistoryCard = ({
-  stars,
-  skills,
-  title,
-  clients,
-  experience,
-  cost,
-  languages,
-}: HistoryCardPropTypes) => {
-  const rating = Array(stars).fill(1);
+const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
+  const rating = Array(astrologer.stars).fill(1);
   return (
     <View style={styles.background}>
       <View style={styles.root}>
@@ -50,13 +36,13 @@ const HistoryCard = ({
           </View>
           <View style={styles.topRight}>
             <Text style={styles.title} numberOfLines={1}>
-              {title}
+              {astrologer.name}
               <Text style={styles.text}>
-                {'  '}[{languages}]
+                {'  '}[{astrologer.language}]
               </Text>
             </Text>
-            <Text style={styles.text}>{skills}</Text>
-            <Text style={styles.text}>Exp: {experience}Yrs </Text>
+            <Text style={styles.text}>{astrologer.skills}</Text>
+            <Text style={styles.text}>Exp: {astrologer.experience}Yrs </Text>
           </View>
         </View>
         <View style={styles.bottomContainer}>
@@ -67,24 +53,22 @@ const HistoryCard = ({
                 <Star key={index} />
               ))}
             </View>
-            <Text style={styles.text}>Clients: {clients}</Text>
+            <Text style={styles.text}>Clients: {astrologer.clients}</Text>
           </View>
           <View style={styles.bottomRight}>
             <View style={styles.costContainer}>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                }}>
-                <Text style={styles.text}>₹{cost}/min</Text>
+              <View style={styles.idk}>
+                <Text style={styles.text}>₹{astrologer.cost}/min</Text>
               </View>
-              <View style={{flex: 1}} />
+              <View style={styles.flex} />
             </View>
             <View style={styles.buttonContainer}>
               <View style={styles.topButton}>
                 <TouchableOpacity style={styles.button}>
-                  <File />
-                  <Text style={styles.buttonText}>Read Past Chat</Text>
+                  {astrologer.chat ? <File /> : <Play />}
+                  <Text style={styles.buttonText}>
+                    {astrologer.chat ? 'Read Past Chat' : 'Play Past Call'}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.bottomButton}>
@@ -226,5 +210,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: fonts.interRegular,
     color: colors.palette.buttonText,
+  },
+  idk: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  flex: {
+    flex: 1,
   },
 });

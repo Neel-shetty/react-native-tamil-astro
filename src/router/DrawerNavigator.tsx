@@ -1,6 +1,7 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BottomTabNavigator from './BottomTabNavigator';
+import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -10,6 +11,10 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={BottomTabNavigator.name}
         component={BottomTabNavigator.component}
+      />
+      <Drawer.Screen
+        name={TransactionHistoryScreen.name}
+        component={TransactionHistoryScreen.component}
       />
     </Drawer.Navigator>
   );
