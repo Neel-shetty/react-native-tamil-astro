@@ -9,11 +9,18 @@ import GenderOptions from '../../components/MainComponents/HomeScreenComponents/
 import AstrologerWaitModal from '../../components/MainComponents/HomeScreenComponents/AstrologerWaitModal';
 import {useRoute} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../router/types';
+import AstrologerOptions from '../../components/MainComponents/HomeScreenComponents/AtrologerOptions';
 
 const HomeScreen = () => {
   const [visible, setVisible] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
+  const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
+    React.useState(false);
 
+  console.log(
+    '🚀 ~ file: HomeScreen.tsx:18 ~ HomeScreen ~ astrologerOptionsVisible:',
+    astrologerOptionsVisible,
+  );
   const route = useRoute<HomeScreenNavigationProp['route']>();
 
   React.useEffect(() => {
@@ -23,6 +30,11 @@ const HomeScreen = () => {
     }
   }, [route.params?.astrologer]);
 
+  function showAstrologerOptions() {
+    console.log('running');
+    setAstrologerOptionsVisible(true);
+  }
+
   return (
     <View style={styles.root}>
       <View style={styles.padding1} />
@@ -31,19 +43,16 @@ const HomeScreen = () => {
           In which area of life do you want guidance?
         </Text>
       </View>
-      <CategoryList />
+      <CategoryList onPress={showAstrologerOptions} />
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Choose Astrologer Category</Text>
       </View>
       <AstrologerList setVisible={setVisible} />
       <GenderOptions visible={visible} setVisible={setVisible} />
-      {/* <Modal
-
-        style={styles.modal}
-        backdropColor={colors.palette.accent500}
-        isVisible={true}>
-        <Text>test</Text>
-      </Modal> */}
+      <AstrologerOptions
+        visible={astrologerOptionsVisible}
+        setVisible={setAstrologerOptionsVisible}
+      />
       <AstrologerWaitModal
         astroId={route.params?.astrologer ?? ''}
         visible={showModal}

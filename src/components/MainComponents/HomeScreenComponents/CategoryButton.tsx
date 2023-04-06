@@ -7,12 +7,13 @@ import {layout} from '../../../constants/layout';
 interface CategoryButtonProps {
   title: string;
   logo: React.ReactNode;
+  onPress: () => void;
 }
 
-const CategoryButton = ({title, logo}: CategoryButtonProps) => {
+const CategoryButton = ({title, logo, onPress}: CategoryButtonProps) => {
   return (
     <View style={[styles.root, styles.bg]}>
-      <TouchableOpacity style={styles.root}>
+      <TouchableOpacity onPress={onPress} style={styles.root}>
         {/* <View style={styles.logoContainer}> */}
         {logo}
         {/* </View> */}

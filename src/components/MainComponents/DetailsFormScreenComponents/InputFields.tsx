@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import React, {useState} from 'react';
 import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
@@ -10,6 +10,8 @@ import {useNavigation} from '@react-navigation/native';
 import {DetailsFormScreenNavigationProp} from '../../../router/types';
 import HomeScreen from '../../../screens/Main/HomeScreen';
 import DatePicker from './DatePicker';
+import {fonts} from '../../../themes/fonts';
+import {colors} from '../../../themes/colors';
 
 const InputFields = () => {
   const [gender, setGender] = useState<string>();
@@ -20,6 +22,7 @@ const InputFields = () => {
     maritalStatus: false,
     problem: false,
   });
+  const [lowBalance, setLowBalance] = useState(false);
 
   const validationSchema = yup.object({
     name: yup
@@ -105,7 +108,21 @@ const InputFields = () => {
               setValue={setProblem}
               error={''}
             />
-            <PrimaryButton title="Chat" onPress={handleSubmit} />
+            <View style={styles.bottomContainer}>
+              <Text style={styles.subtitle}>
+                {lowBalance ? 'You need atleast 50rs to consult' : ''}
+              </Text>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton
+                  title={lowBalance ? 'Recharge and Chat' : 'Start Chat'}
+                  onPress={handleSubmit}
+                />
+              </View>
+              <Text style={styles.subtitle}>
+                {lowBalance ? 'Current Balance:' : ''}
+                <Text style={styles.red}>{lowBalance ? '29rs' : ''}</Text>
+              </Text>
+            </View>
           </View>
         )}
       </Formik>
@@ -117,4 +134,18 @@ export default InputFields;
 
 const styles = StyleSheet.create({
   root: {},
+  bottomContainer: {
+    alignItems: 'center',
+  },
+  subtitle: {
+    fontFamily: fonts.interRegular,
+    color: colors.palette.gray500,
+    fontSize: 14,
+  },
+  red: {
+    color: colors.palette.accent500,
+  },
+  buttonContainer: {
+    marginVertical: 10,
+  },
 });

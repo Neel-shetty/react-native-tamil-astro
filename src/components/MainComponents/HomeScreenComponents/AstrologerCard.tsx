@@ -14,7 +14,8 @@ interface AstrologerCardProps {
   cost: string;
   clients: string;
   experience: string;
-  setVisible: (visible: boolean) => void;
+  setVisible?: (visible: boolean) => void;
+  onPress?: () => void;
 }
 
 const AstrologerCard = ({
@@ -25,51 +26,59 @@ const AstrologerCard = ({
   clients,
   experience,
   setVisible,
+  onPress,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
 
   return (
-    <View style={styles.root}>
-      <View style={styles.leftContainer}>
-        <View style={styles.leftTopContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingNumber}>{stars} </Text>
-            {rating.map((_, index) => (
-              <Star key={index} />
-            ))}
+    <View style={styles.background}>
+      <View style={styles.root}>
+        <View style={styles.leftContainer}>
+          <View style={styles.leftTopContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingNumber}>{stars} </Text>
+              {rating.map((_, index) => (
+                <Star key={index} />
+              ))}
+            </View>
+          </View>
+          <View style={styles.leftBottomContainer}>
+            <Text style={[styles.cost, firstTime ? styles.firstTime : null]}>
+              Rate: ₹{cost}/min
+            </Text>
+            {firstTime ? (
+              <Text style={styles.free}>First Free!</Text>
+            ) : (
+              <Text>{''}</Text>
+            )}
           </View>
         </View>
-        <View style={styles.leftBottomContainer}>
-          <Text style={[styles.cost, firstTime ? styles.firstTime : null]}>
-            Rate: ₹{cost}/min
-          </Text>
-          {firstTime ? (
-            <Text style={styles.free}>First Free!</Text>
-          ) : (
-            <Text>{''}</Text>
-          )}
-        </View>
-      </View>
-      <View style={styles.rightContainer}>
-        <View style={styles.rightTopContainer}>
-          <Text style={styles.cost}>Clients: {clients}+</Text>
-          <Text style={styles.cost}>Exp: {experience}</Text>
-        </View>
-        <View style={styles.rightBottomContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              setVisible(true);
-            }}
-            style={styles.buttonContainer}>
-            <Call />
-            <Text style={styles.cost}>Call</Text>
-          </TouchableOpacity>
-          <View style={styles.spacer} />
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Chat />
-            <Text style={styles.cost}>Chat</Text>
-          </TouchableOpacity>
+        <View style={styles.rightContainer}>
+          <View style={styles.rightTopContainer}>
+            <Text style={styles.cost}>Clients: {clients}+</Text>
+            <Text style={styles.cost}>Exp: {experience}</Text>
+          </View>
+          <View style={styles.rightBottomContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                if (setVisible) {
+                  setVisible(true);
+                }
+                if (onPress) {
+                  onPress();
+                }
+              }}
+              style={styles.buttonContainer}>
+              <Call />
+              <Text style={styles.cost}>Call</Text>
+            </TouchableOpacity>
+            <View style={styles.spacer} />
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Chat />
+              <Text style={styles.cost}>Chat</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -79,6 +88,14 @@ const AstrologerCard = ({
 export default AstrologerCard;
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: colors.palette.white,
+    elevation: 4,
+    width: layout.width * 0.9,
+    height: layout.height * 0.14, // TODO: change to dynamic
+    borderRadius: 23,
+    marginVertical: 5,
+  },
   root: {
     flexDirection: 'row',
     width: layout.width * 0.9,
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     borderWidth: 1,
     borderColor: colors.palette.accent200,
-    marginVertical: 5,
+    // marginVertical: 5,
   },
   leftContainer: {
     flex: 1,

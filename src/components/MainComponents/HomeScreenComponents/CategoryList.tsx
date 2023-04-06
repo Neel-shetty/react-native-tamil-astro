@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Love from '../../../../assets/icons/HomeScreen/love.svg';
 import Career from '../../../../assets/icons/HomeScreen/job.svg';
@@ -9,7 +9,7 @@ import Other from '../../../../assets/icons/HomeScreen/other.svg';
 import {layout} from '../../../constants/layout';
 import CategoryButton from './CategoryButton';
 
-const CategoryList = () => {
+const CategoryList = ({onPress}: {onPress: () => void}) => {
   const categories = [
     {
       title: 'Love',
@@ -41,8 +41,13 @@ const CategoryList = () => {
       <FlatList
         style={{width: layout.width}}
         data={categories}
-        renderItem={({item}) => (
-          <CategoryButton title={item.title} logo={item.logo} />
+        renderItem={({item, index}) => (
+          <CategoryButton
+            key={index}
+            onPress={onPress}
+            title={item.title}
+            logo={item.logo}
+          />
         )}
         numColumns={3}
       />
