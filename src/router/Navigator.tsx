@@ -10,6 +10,7 @@ import {RootStackParamList} from './types';
 import OtpScreen from '../screens/Auth/OtpScreen';
 import LanguageScreen from '../screens/Main/LanguageScreen';
 import DrawerNavigator from './DrawerNavigator';
+// import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -53,6 +54,10 @@ const Navigator = () => {
               component={DrawerNavigator.component}
               name={DrawerNavigator.name}
             />
+            {/* <Stack.Screen
+              component={BottomTabNavigator.component}
+              name={BottomTabNavigator.name}
+            /> */}
           </>
         ) : (
           <>
