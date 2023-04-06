@@ -7,7 +7,7 @@ const AstrologerList = ({
   onPress,
 }: {
   setVisible?: (x: boolean) => void;
-  onPress?: () => {};
+  onPress?: () => void;
 }) => {
   const data = [
     {

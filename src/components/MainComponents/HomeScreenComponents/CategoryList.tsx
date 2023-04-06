@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import React from 'react';
 import Love from '../../../../assets/icons/HomeScreen/love.svg';
 import Career from '../../../../assets/icons/HomeScreen/job.svg';

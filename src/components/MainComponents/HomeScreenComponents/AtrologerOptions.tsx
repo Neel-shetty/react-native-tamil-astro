@@ -1,6 +1,6 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useMemo, useRef, useCallback, useEffect} from 'react';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
