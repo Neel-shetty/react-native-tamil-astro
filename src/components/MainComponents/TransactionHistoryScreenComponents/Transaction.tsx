@@ -13,11 +13,16 @@ const Transaction = ({transaction}: {transaction: TransactionType}) => {
         <Text style={styles.date}>{transaction.date}</Text>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.amount}>+ ₹ {transaction.amount}</Text>
-        <Text style={styles.bonus}>
-          {transaction.bonus ? '*Bonus' : ''}
-          {transaction.bonus}
-        </Text>
+        <View style={styles.space} />
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount}>+ ₹ {transaction.amount}</Text>
+        </View>
+        <View style={styles.bonusContainer}>
+          <Text style={styles.bonus}>
+            {transaction.bonus ? '*Bonus ' : ''}
+            {transaction.bonus}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     marginRight: 16,
+    alignItems: 'flex-end',
   },
   recharge: {
     fontFamily: fonts.interSemiBold,
@@ -59,5 +65,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.imprima,
     fontSize: 10,
     color: colors.text,
+  },
+  space: {
+    flex: 1,
+  },
+  amountContainer: {
+    flex: 1,
+  },
+  bonusContainer: {
+    flex: 1,
+    marginTop: 2,
   },
 });

@@ -17,7 +17,7 @@ const TransactionList = () => {
   };
   const [transactions, _] = React.useState<TransactionType[]>([
     transaction,
-    transaction,
+    {...transaction, bonus: undefined},
     transaction,
     transaction,
   ]);
