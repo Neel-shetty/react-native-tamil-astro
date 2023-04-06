@@ -1,6 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import TabStackNavigator from './TabStackNavigator';
+import HistoryScreen from '../screens/Main/HistoryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,6 +11,10 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name={TabStackNavigator.name}
         component={TabStackNavigator.component}
+      />
+      <Tab.Screen
+        name={HistoryScreen.name}
+        component={HistoryScreen.component}
       />
     </Tab.Navigator>
   );

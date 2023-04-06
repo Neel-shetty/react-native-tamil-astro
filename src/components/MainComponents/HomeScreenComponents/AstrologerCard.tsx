@@ -6,6 +6,7 @@ import {fonts} from '../../../themes/fonts';
 import Star from '../../../../assets/icons/HomeScreen/star.svg';
 import Call from '../../../../assets/icons/HomeScreen/call.svg';
 import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
+import SmallButton from '../../UI/SmallButton';
 
 interface AstrologerCardProps {
   firstTime?: boolean;
@@ -60,7 +61,7 @@ const AstrologerCard = ({
             <Text style={styles.cost}>Exp: {experience}</Text>
           </View>
           <View style={styles.rightBottomContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 if (setVisible) {
                   setVisible(true);
@@ -72,12 +73,20 @@ const AstrologerCard = ({
               style={styles.buttonContainer}>
               <Call />
               <Text style={styles.cost}>Call</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <SmallButton
+              onPress={() => {
+                if (setVisible) {
+                  setVisible(true);
+                }
+                if (onPress) {
+                  onPress();
+                }
+              }}
+              icon={<Call />}
+            />
             <View style={styles.spacer} />
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Chat />
-              <Text style={styles.cost}>Chat</Text>
-            </TouchableOpacity>
+            <SmallButton onPress={() => {}} icon={<Chat />} />
           </View>
         </View>
       </View>

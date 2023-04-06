@@ -1,0 +1,230 @@
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {colors} from '../../../themes/colors';
+import {layout} from '../../../constants/layout';
+import {fonts} from '../../../themes/fonts';
+import Star from '../../../../assets/icons/HomeScreen/star.svg';
+import SmallButton from '../../UI/SmallButton';
+import Call from '../../../../assets/icons/HomeScreen/call.svg';
+import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
+import File from '../../../../assets/icons/HistoryScreen/file.svg';
+import Play from '../../../../assets/icons/HistoryScreen/play.svg';
+
+interface HistoryCardPropTypes {
+  stars: number;
+  skills: string;
+  title: string;
+  clients: number;
+  experience: number;
+  cost: number;
+  languages: string;
+}
+
+const HistoryCard = ({
+  stars,
+  skills,
+  title,
+  clients,
+  experience,
+  cost,
+  languages,
+}: HistoryCardPropTypes) => {
+  const rating = Array(stars).fill(1);
+  return (
+    <View style={styles.background}>
+      <View style={styles.root}>
+        <View style={styles.topContainer}>
+          <View style={styles.topleft}>
+            <View style={styles.profileContainer}>
+              <Image
+                style={styles.profileBg}
+                source={require('../../../../assets/images/profile-bg.png')}
+              />
+              <View style={styles.imageContainer}>
+                <Image
+                  style={styles.image}
+                  source={require('../../../../assets/images/profile-pic.png')}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.topRight}>
+            <Text style={styles.title} numberOfLines={1}>
+              {title}
+              <Text style={styles.text}>
+                {'  '}[{languages}]
+              </Text>
+            </Text>
+            <Text style={styles.text}>{skills}</Text>
+            <Text style={styles.text}>Exp: {experience}Yrs </Text>
+          </View>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.bottomLeft}>
+            <View style={styles.ratingContainer}>
+              {/* <Text style={styles.ratingNumber}>{stars} </Text> */}
+              {rating.map((_, index) => (
+                <Star key={index} />
+              ))}
+            </View>
+            <Text style={styles.text}>Clients: {clients}</Text>
+          </View>
+          <View style={styles.bottomRight}>
+            <View style={styles.costContainer}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                }}>
+                <Text style={styles.text}>₹{cost}/min</Text>
+              </View>
+              <View style={{flex: 1}} />
+            </View>
+            <View style={styles.buttonContainer}>
+              <View style={styles.topButton}>
+                <TouchableOpacity style={styles.button}>
+                  <File />
+                  <Text style={styles.buttonText}>Read Past Chat</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.bottomButton}>
+                <SmallButton icon={<Call />} onPress={() => {}} />
+                <View style={styles.space} />
+                <SmallButton icon={<Chat />} onPress={() => {}} />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default HistoryCard;
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: colors.palette.white,
+    elevation: 4,
+    borderRadius: 23,
+    marginVertical: 5,
+    width: layout.width * 0.95,
+    height: 159, // TODO: Change this to dynamic height
+  },
+  root: {
+    backgroundColor: colors.background,
+    width: layout.width * 0.95,
+    height: 159, // TODO: Change this to dynamic height
+    borderRadius: 23,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: colors.palette.accent200,
+  },
+  topContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingTop: 10,
+  },
+  topleft: {
+    flex: 1,
+    // backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  topRight: {
+    flex: 2,
+    // backgroundColor: 'yellow',
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    paddingBottom: 10,
+  },
+  bottomLeft: {
+    flex: 1,
+    // backgroundColor: 'coral',
+    alignItems: 'center',
+    // justifyContent: 'center',
+    paddingTop: 10,
+  },
+  bottomRight: {
+    flex: 2,
+    // backgroundColor: 'violet',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    // padding: 20,
+  },
+  profileBg: {
+    position: 'absolute',
+  },
+  imageContainer: {
+    // position: 'absolute',
+  },
+  image: {
+    borderRadius: 100,
+    // marginRight: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontFamily: fonts.contageRegular,
+    color: colors.text,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  text: {
+    fontFamily: fonts.interRegular,
+    fontSize: 14,
+    color: colors.palette.gray300,
+  },
+  costContainer: {
+    flex: 1,
+    // backgroundColor: 'red',
+  },
+  buttonContainer: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    // backgroundColor: 'green',
+    // flex: 2,
+    // paddingRight: 30,
+    height: '100%',
+  },
+  bottomButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  space: {
+    width: 10,
+  },
+  topButton: {
+    // backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: colors.palette.white,
+    width: 135,
+    height: 27,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.52)',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+  },
+  buttonText: {
+    fontFamily: fonts.interRegular,
+    color: colors.palette.buttonText,
+  },
+});
