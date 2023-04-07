@@ -10,6 +10,7 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
 import DetailsFormScreen from '../screens/Main/DetailsFormScreen';
 import TabStackNavigator from './TabStackNavigator';
+import ChatScreen from '../screens/Main/ChatScreen';
 
 export type RootStackParamList = {
   [DrawerNavigator.name]: NavigatorScreenParams<DrawerParamList>;
@@ -29,6 +30,7 @@ export type BottomTabPraramList = {
 export type TabStackParamList = {
   [HomeScreen.name]: {astrologer: string | undefined};
   [DetailsFormScreen.name]: undefined;
+  [ChatScreen.name]: undefined;
 };
 
 export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
@@ -39,6 +41,11 @@ export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
 export type HomeScreenNavigationProp = NativeStackScreenProps<
   TabStackParamList,
   typeof HomeScreen.name
+>;
+
+export type ChatScreenNavigationProp = NativeStackScreenProps<
+  TabStackParamList,
+  typeof ChatScreen.name
 >;
 
 export type DetailsFormScreenNavigationProp = NativeStackScreenProps<

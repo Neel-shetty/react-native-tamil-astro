@@ -7,9 +7,10 @@ import CategoryList from '../../components/MainComponents/HomeScreenComponents/C
 import AstrologerList from '../../components/MainComponents/HomeScreenComponents/AstrologerList';
 import GenderOptions from '../../components/MainComponents/HomeScreenComponents/GenderOptions';
 import AstrologerWaitModal from '../../components/MainComponents/HomeScreenComponents/AstrologerWaitModal';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../router/types';
 import AstrologerOptions from '../../components/MainComponents/HomeScreenComponents/AtrologerOptions';
+import ChatScreen from './ChatScreen';
 
 const HomeScreen = () => {
   const [visible, setVisible] = React.useState(false);
@@ -20,6 +21,7 @@ const HomeScreen = () => {
   console.log('🚀 ~ file: HomeScreen.tsx:20 ~ HomeScreen ~ flow:', flow);
 
   const route = useRoute<HomeScreenNavigationProp['route']>();
+  const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
   React.useEffect(() => {
     const astrologer = route.params?.astrologer;
@@ -43,7 +45,11 @@ const HomeScreen = () => {
     <View style={styles.root}>
       <View style={styles.padding1} />
       <View style={styles.headingContainer}>
-        <Text style={styles.heading}>
+        <Text
+          onPress={() => {
+            navigation.navigate(ChatScreen.name);
+          }}
+          style={styles.heading}>
           In which area of life do you want guidance?
         </Text>
       </View>
