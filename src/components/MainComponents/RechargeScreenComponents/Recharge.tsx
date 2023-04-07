@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import PrimaryButton from '../../UI/PrimaryButton';
 import {layout} from '../../../constants/layout';
@@ -6,9 +6,11 @@ import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
 import {Formik} from 'formik';
 import BalanceOptions from './BalanceOptions';
+import RazorpayCheckout from 'react-native-razorpay';
+import {api} from '../../../api';
 
 const Recharge = () => {
-  const data = [
+  const optionData = [
     {
       popular: true,
       amount: 150,
@@ -36,18 +38,59 @@ const Recharge = () => {
     },
   ];
 
+  async function pay(amount: number) {
+    api.post('/create/order/id', {amount: amount}).then(res => {
+      var options = {
+        description: 'Balance Recharge',
+        image: 'https://i.imgur.com/3g7nmJC.jpg',
+        currency: 'INR',
+        key: '<YOUR_KEY_ID>',
+        amount: amount,
+        name: 'Acme Corp',
+        order_id: res.data.data, //Replace this with an order_id created using Orders API.
+        prefill: {
+          email: 'gaurav.kumar@example.com',
+          contact: '9191919191',
+          name: 'Gaurav Kumar',
+        },
+        theme: {color: colors.palette.primary500},
+      };
+      RazorpayCheckout.open(options)
+        .then(data => {
+          // handle success
+          Alert.alert(`Success: ${data.razorpay_payment_id}`);
+          api
+            .post('/payment/details', {
+              razorpay_payment_id: data.razorpay_payment_id,
+              razorpay_order_id: res.data.data,
+              razorpay_signature: data.razorpay_signature,
+            })
+            .then(() => {})
+            .catch(error => {
+              // handle failure
+              Alert.alert(`Error: ${error.code} | ${error.description}`);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
+  }
+
   return (
     <View style={styles.root}>
       <View style={styles.balanceContainer}>
         <Text style={styles.title}>Available Balance</Text>
-        {/* <Text>₹250</Text> */}
         <Text style={styles.amount}>
           <Text style={styles.size20}>₹</Text>250
         </Text>
         <View style={styles.addMoneyContainer}>
           <Formik
             initialValues={{amount: ''}}
-            onSubmit={values => console.log(values)}>
+            onSubmit={async values => {
+              console.log(values);
+              await pay(parseInt(values.amount, 10));
+            }}>
             {({handleChange, handleBlur, handleSubmit, values}) => (
               <>
                 <TextInput
@@ -67,10 +110,12 @@ const Recharge = () => {
       </View>
       {/* recharge options */}
       <View style={styles.rechargeOptionsContainer}>
-        <Text style={styles.optionTitle}>Quick Balance Options</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.optionTitle}>Quick Balance Options</Text>
+        </View>
         {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
         <FlatList
-          data={data}
+          data={optionData}
           numColumns={3}
           renderItem={({item}) => (
             <BalanceOptions
@@ -137,5 +182,8 @@ const styles = StyleSheet.create({
     fontFamily: fonts.contageLight,
     fontSize: 14,
     color: colors.text,
+  },
+  titleContainer: {
+    marginBottom: 10,
   },
 });
