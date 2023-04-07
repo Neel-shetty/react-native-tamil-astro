@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import PrimaryButton from '../../UI/PrimaryButton';
 import {layout} from '../../../constants/layout';
@@ -8,6 +8,34 @@ import {Formik} from 'formik';
 import BalanceOptions from './BalanceOptions';
 
 const Recharge = () => {
+  const data = [
+    {
+      popular: true,
+      amount: 150,
+      bonus: 23,
+    },
+    {
+      popular: false,
+      amount: 250,
+      bonus: 23,
+    },
+    {
+      popular: false,
+      amount: 500,
+      bonus: 23,
+    },
+    {
+      popular: false,
+      amount: 750,
+      bonus: 23,
+    },
+    {
+      popular: false,
+      amount: 1000,
+      bonus: 23,
+    },
+  ];
+
   return (
     <View style={styles.root}>
       <View style={styles.balanceContainer}>
@@ -39,8 +67,19 @@ const Recharge = () => {
       </View>
       {/* recharge options */}
       <View style={styles.rechargeOptionsContainer}>
-        <Text>Quick Balance Options</Text>
-        <BalanceOptions />
+        <Text style={styles.optionTitle}>Quick Balance Options</Text>
+        {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
+        <FlatList
+          data={data}
+          numColumns={3}
+          renderItem={({item}) => (
+            <BalanceOptions
+              popular={item.popular}
+              amount={item.amount}
+              bonus={item.bonus}
+            />
+          )}
+        />
       </View>
     </View>
   );
@@ -93,5 +132,10 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: 'center',
     // justifyContent: 'center',
+  },
+  optionTitle: {
+    fontFamily: fonts.contageLight,
+    fontSize: 14,
+    color: colors.text,
   },
 });

@@ -1,27 +1,44 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
 import Star from '../../../../assets/icons/RechargeScreen/popularStar.svg';
+import {layout} from '../../../constants/layout';
 
-const BalanceOptions = () => {
+const BalanceOptions = ({
+  popular,
+  amount,
+  bonus,
+}: {
+  popular?: boolean;
+  amount: number;
+  bonus?: number;
+}) => {
   return (
     <View style={styles.realRoot}>
-      <View style={styles.popularContainer}>
-        <Star />
-        <Text style={styles.popular}>Popular</Text>
-      </View>
+      {popular ? (
+        <View style={styles.popularContainer}>
+          <Star />
+          <Text style={styles.popular}>Popular</Text>
+        </View>
+      ) : (
+        <View style={styles.spacer} />
+      )}
       <View style={styles.background}>
-        <View style={styles.root}>
+        <TouchableOpacity style={styles.root}>
           <Text style={styles.amount}>
             <Text style={styles.size}>₹</Text>
-            50
+            {amount}
           </Text>
+        </TouchableOpacity>
+      </View>
+      {bonus ? (
+        <View style={styles.bonusContainer}>
+          <Text style={styles.popular}>Bonus ₹{bonus}</Text>
         </View>
-      </View>
-      <View style={styles.bonusContainer}>
-        <Text style={styles.popular}>Bonus ₹15</Text>
-      </View>
+      ) : (
+        <View style={styles.spacer} />
+      )}
     </View>
   );
 };
@@ -29,7 +46,11 @@ const BalanceOptions = () => {
 export default BalanceOptions;
 
 const styles = StyleSheet.create({
-  realRoot: {},
+  realRoot: {
+    width: layout.width / 3.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   background: {
     width: 73,
     height: 41,
@@ -78,5 +99,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  spacer: {
+    height: 21,
   },
 });
