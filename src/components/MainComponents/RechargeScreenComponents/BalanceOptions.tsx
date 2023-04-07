@@ -9,10 +9,12 @@ const BalanceOptions = ({
   popular,
   amount,
   bonus,
+  onPress,
 }: {
   popular?: boolean;
   amount: number;
   bonus?: number;
+  onPress: () => void;
 }) => {
   return (
     <View style={styles.realRoot}>
@@ -25,7 +27,7 @@ const BalanceOptions = ({
         <View style={styles.spacer} />
       )}
       <View style={styles.background}>
-        <TouchableOpacity style={styles.root}>
+        <TouchableOpacity onPress={onPress} style={styles.root}>
           <Text style={styles.amount}>
             <Text style={styles.size}>₹</Text>
             {amount}

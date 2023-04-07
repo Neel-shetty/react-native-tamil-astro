@@ -122,6 +122,9 @@ const Recharge = () => {
               popular={item.popular}
               amount={item.amount}
               bonus={item.bonus}
+              onPress={() => {
+                pay(item.amount);
+              }}
             />
           )}
         />
