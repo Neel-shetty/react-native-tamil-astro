@@ -3,6 +3,8 @@ import React from 'react';
 import Send from '../../../../assets/icons/ChatScreen/send.svg';
 import Clip from '../../../../assets/icons/ChatScreen/clip.svg';
 import {layout} from '../../../constants/layout';
+import {fonts} from '../../../themes/fonts';
+import {colors} from '../../../themes/colors';
 
 interface ChatInputProps {
   onPress: () => void;
@@ -28,7 +30,9 @@ const ChatInput = ({
           value={value}
         />
         <View style={styles.clipContainer}>
-          <Clip />
+          <TouchableOpacity>
+            <Clip />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.sendContainer}>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     width: layout.width - 50,
     alignSelf: 'center',
     // backgroundColor: 'violet',
-    height: 40,
+    // height: 40,
     maxHeight: 80,
     justifyContent: 'space-evenly',
     marginVertical: 10,
@@ -58,14 +62,16 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink',
     borderWidth: 1,
     borderRadius: 23,
-    width: layout.width * 0.75,
+    width: layout.width * 0.7,
     borderColor: 'rgba(0, 0, 0, 0.25)',
   },
   input: {
-    width: layout.width * 0.65,
+    width: layout.width * 0.6,
     // backgroundColor: 'yellow',
     paddingLeft: 20,
-    // textAlignVertical: 'top',
+    fontFamily: fonts.interRegular,
+    fontSize: 14,
+    color: colors.text,
   },
   sendContainer: {
     alignItems: 'center',
@@ -74,8 +80,8 @@ const styles = StyleSheet.create({
   sendButton: {
     borderRadius: 100,
     borderWidth: 1,
-    height: 37,
-    width: 37,
+    height: 40,
+    width: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },

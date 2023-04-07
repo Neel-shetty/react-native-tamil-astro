@@ -25,6 +25,7 @@
     "react": "18.2.0",
     "react-i18next": "^12.2.0",
     "react-native": "0.71.5",
+    "react-native-document-picker": "^8.2.0",
     "react-native-element-dropdown": "^2.9.0",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-modal": "^13.0.1",
