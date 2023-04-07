@@ -5,6 +5,7 @@ import Clip from '../../../../assets/icons/ChatScreen/clip.svg';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
+import DocumentPicker from 'react-native-document-picker';
 
 interface ChatInputProps {
   onPress: () => void;
@@ -19,6 +20,26 @@ const ChatInput = ({
   handleChange,
   value,
 }: ChatInputProps) => {
+  async function pickFile() {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images, DocumentPicker.types.video],
+        allowMultiSelection: false,
+      });
+      console.log(
+        res[0].uri,
+        res[0].type, // mime type
+        res[0].name,
+        res[0].size,
+      );
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        console.log(err);
+      }
+    }
+  }
   return (
     <View style={styles.root}>
       <View style={styles.inputContainer}>
@@ -30,7 +51,7 @@ const ChatInput = ({
           value={value}
         />
         <View style={styles.clipContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={pickFile}>
             <Clip />
           </TouchableOpacity>
         </View>

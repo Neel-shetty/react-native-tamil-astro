@@ -5,8 +5,14 @@ import Message from './Message';
 import {layout} from '../../../constants/layout';
 import ChatInput from './ChatInput';
 import {Formik} from 'formik';
+import RechargeModal from './RechargeModal';
+import Balance0Modal from './Balance0Modal';
+import FeedbackModal from './FeedbackModal';
 
 const Chat = () => {
+  const [showRechargeModal, setShowRechargeModal] = React.useState(false);
+  const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = React.useState(true);
   const chats: {
     textAlign: 'right' | 'left';
     message: string;
@@ -26,6 +32,7 @@ const Chat = () => {
       textAlign: 'right',
     },
   ];
+
   return (
     <View style={styles.root}>
       <View style={styles.timerContainer}>
@@ -56,6 +63,15 @@ const Chat = () => {
           )}
         </Formik>
       </View>
+      <RechargeModal
+        visible={showRechargeModal}
+        setVisible={setShowRechargeModal}
+      />
+      <Balance0Modal
+        visible={showBalance0Modal}
+        setVisible={setShowBalance0Modal}
+      />
+      <FeedbackModal />
     </View>
   );
 };
