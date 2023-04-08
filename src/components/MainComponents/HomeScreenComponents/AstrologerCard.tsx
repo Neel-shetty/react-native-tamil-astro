@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {layout} from '../../../constants/layout';
 import {colors} from '../../../themes/colors';
@@ -7,6 +7,8 @@ import Star from '../../../../assets/icons/HomeScreen/star.svg';
 import Call from '../../../../assets/icons/HomeScreen/call.svg';
 import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
 import SmallButton from '../../UI/SmallButton';
+import {useDispatch} from 'react-redux';
+import {setShowGenderOptions} from '../../../store/UiSlice';
 
 interface AstrologerCardProps {
   firstTime?: boolean;
@@ -17,6 +19,7 @@ interface AstrologerCardProps {
   experience: string;
   setVisible?: (visible: boolean) => void;
   onPress?: () => void;
+  showGenderOptions?: boolean;
 }
 
 const AstrologerCard = ({
@@ -26,10 +29,11 @@ const AstrologerCard = ({
   title,
   clients,
   experience,
-  setVisible,
   onPress,
+  showGenderOptions,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.background}>
@@ -76,8 +80,8 @@ const AstrologerCard = ({
             </TouchableOpacity> */}
             <SmallButton
               onPress={() => {
-                if (setVisible) {
-                  setVisible(true);
+                if (showGenderOptions) {
+                  dispatch(setShowGenderOptions(true));
                 }
                 if (onPress) {
                   onPress();

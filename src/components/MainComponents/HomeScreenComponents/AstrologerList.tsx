@@ -3,11 +3,11 @@ import React from 'react';
 import AstrologerCard from './AstrologerCard';
 
 const AstrologerList = ({
-  setVisible,
   onPress,
+  showGenderOptions,
 }: {
-  setVisible?: (x: boolean) => void;
   onPress?: () => void;
+  showGenderOptions?: boolean;
 }) => {
   const data = [
     {
@@ -48,8 +48,8 @@ const AstrologerList = ({
             firstTime={item.firstTime}
             stars={item.stars}
             title={item.title}
-            setVisible={setVisible}
             onPress={onPress}
+            showGenderOptions={showGenderOptions}
           />
         )}
       />

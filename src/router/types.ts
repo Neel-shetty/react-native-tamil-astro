@@ -15,6 +15,8 @@ import HistoryTabDrawerNavigator from './HistoryTabDrawerNavigator';
 import HistoryScreen from '../screens/Main/HistoryScreen';
 import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
 import RechargeScreen from '../screens/Main/RechargeScreen';
+import ConsultAstrologerScreen from './ConsultAstrologerScreen';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
 export type RootStackParamList = {
   [BottomTabNavigator.name]: NavigatorScreenParams<BottomTabPraramList>;
@@ -26,6 +28,7 @@ export type RootStackParamList = {
 export type BottomTabPraramList = {
   [DrawerNavigator.name]: NavigatorScreenParams<DrawerParamList>;
   [HistoryTabDrawerNavigator.name]: NavigatorScreenParams<HistoryTabDrawerNavigatorParamList>;
+  [ConsultAstrologerScreen.name]: undefined;
 };
 
 export type DrawerParamList = {
@@ -41,14 +44,22 @@ export type HistoryTabDrawerNavigatorParamList = {
 };
 
 export type TabStackParamList = {
-  [HomeScreen.name]: {astrologer: string | undefined};
+  [HomeScreen.name]: {
+    astrologer?: string;
+    showGenderOptions?: boolean;
+  };
   [DetailsFormScreen.name]: undefined;
   [ChatScreen.name]: undefined;
 };
 
-export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
+export type DrawerNavigatorNavigationProp = BottomTabScreenProps<
   BottomTabPraramList,
   typeof DrawerNavigator.name
+>;
+
+export type HistoryTabDrawerNavigatorNavigationProp = BottomTabScreenProps<
+  BottomTabPraramList,
+  typeof HistoryTabDrawerNavigator.name
 >;
 
 export type HomeScreenNavigationProp = NativeStackScreenProps<

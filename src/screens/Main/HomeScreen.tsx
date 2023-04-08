@@ -11,17 +11,28 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../router/types';
 import AstrologerOptions from '../../components/MainComponents/HomeScreenComponents/AtrologerOptions';
 import ChatScreen from './ChatScreen';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../store';
+import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
 
 const HomeScreen = () => {
-  const [visible, setVisible] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
-  const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
+  // const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
+  const flow = useSelector((state: RootState) => state.ui.flow);
   console.log('🚀 ~ file: HomeScreen.tsx:20 ~ HomeScreen ~ flow:', flow);
 
   const route = useRoute<HomeScreenNavigationProp['route']>();
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
+  const dispatch = useDispatch();
+  const showGenderOptions = useSelector(
+    (state: RootState) => state.ui.showGenderOptions,
+  );
+  console.log(
+    '🚀 ~ file: HomeScreen.tsx:31 ~ HomeScreen ~ showGenderOptions:',
+    showGenderOptions,
+  );
 
   React.useEffect(() => {
     const astrologer = route.params?.astrologer;
@@ -37,9 +48,21 @@ const HomeScreen = () => {
 
   React.useEffect(() => {
     return () => {
-      setFlow('category');
+      dispatch(setFlow('category'));
     };
-  }, []);
+  }, [dispatch]);
+
+  // React.useEffect(() => {
+  //   const showGenderOptions = route.params?.showGenderOptions;
+  //   console.log(
+  //     '🚀 ~ file: HomeScreen.tsx:46 ~ React.useEffect ~ showGenderOptions:',
+  //     showGenderOptions,
+  //   );
+  //   if (showGenderOptions) {
+  //     setFlow('category');
+  //     setVisible(true);
+  //   }
+  // }, [route.params?.showGenderOptions]);
 
   return (
     <View style={styles.root}>
@@ -56,8 +79,9 @@ const HomeScreen = () => {
       <CategoryList
         onPress={() => {
           console.log('pressed');
-          setFlow('category');
-          setVisible(true);
+          dispatch(setFlow('category'));
+          // setVisible(true);
+          dispatch(setShowGenderOptions(true));
         }}
       />
       <View style={styles.headingContainer}>
@@ -65,15 +89,15 @@ const HomeScreen = () => {
       </View>
       <AstrologerList
         onPress={() => {
-          setFlow('astrologer');
+          dispatch(setFlow('astrologer'));
         }}
-        setVisible={setVisible}
+        showGenderOptions={true}
       />
       <GenderOptions
         showAstrologerOptions={setAstrologerOptionsVisible}
         flow={flow}
-        visible={visible}
-        setVisible={setVisible}
+        visible={showGenderOptions}
+        // setVisible={setVisible}
       />
       <AstrologerOptions
         visible={astrologerOptionsVisible}

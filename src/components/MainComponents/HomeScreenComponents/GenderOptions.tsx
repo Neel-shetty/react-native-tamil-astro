@@ -9,22 +9,23 @@ import SquareButton from '../../UI/SquareButton';
 import {useNavigation} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../../router/types';
 import DetailsFormScreen from '../../../screens/Main/DetailsFormScreen';
+import {useDispatch} from 'react-redux';
+import {setShowGenderOptions} from '../../../store/UiSlice';
 
 interface GenderOptionsPropsType {
   visible: boolean;
-  setVisible: (visible: boolean) => void;
   flow: 'astrologer' | 'category';
   showAstrologerOptions: (x: boolean) => void;
 }
 
 const GenderOptions = ({
   visible,
-  setVisible,
   flow,
   showAstrologerOptions,
 }: GenderOptionsPropsType) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
+  const dispatch = useDispatch();
 
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 
@@ -32,11 +33,12 @@ const GenderOptions = ({
     (index: number) => {
       console.log('handleSheetChanges', index);
       if (index === -1) {
-        setVisible(false);
+        // setVisible(false);
+        dispatch(setShowGenderOptions(false));
         // bottomSheetRef.current?.close();
       }
     },
-    [setVisible],
+    [dispatch],
   );
 
   useEffect(() => {
@@ -66,11 +68,13 @@ const GenderOptions = ({
               if (flow === 'astrologer') {
                 navigation.navigate(DetailsFormScreen.name);
                 bottomSheetRef.current?.close();
-                setVisible(false);
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
               }
               if (flow === 'category') {
                 bottomSheetRef.current?.close();
-                setVisible(false);
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
                 showAstrologerOptions(true);
               }
             }}
