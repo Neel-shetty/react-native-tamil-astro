@@ -71,7 +71,10 @@ const Chat = () => {
         visible={showBalance0Modal}
         setVisible={setShowBalance0Modal}
       />
-      <FeedbackModal />
+      <FeedbackModal
+        setVisible={setShowFeedbackModal}
+        visible={showFeedbackModal}
+      />
     </View>
   );
 };
