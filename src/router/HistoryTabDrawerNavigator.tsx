@@ -2,20 +2,16 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
 import RechargeScreen from '../screens/Main/RechargeScreen';
-import TabStackNavigator from './TabStackNavigator';
+import HistoryScreen from '../screens/Main/HistoryScreen';
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = () => {
+const HistoryTabDrawerNavigator = () => {
   return (
     <Drawer.Navigator>
-      {/* <Drawer.Screen
-        name={BottomTabNavigator.name}
-        component={BottomTabNavigator.component}
-      /> */}
       <Drawer.Screen
-        name={TabStackNavigator.name}
-        component={TabStackNavigator.component}
+        component={HistoryScreen.component}
+        name={HistoryScreen.name}
       />
       <Drawer.Screen
         name={TransactionHistoryScreen.name}
@@ -29,4 +25,7 @@ const DrawerNavigator = () => {
   );
 };
 
-export default {component: DrawerNavigator, name: 'DrawerNavigator' as const};
+export default {
+  component: HistoryTabDrawerNavigator,
+  name: 'HistoryTabDrawerNavigator' as const,
+};

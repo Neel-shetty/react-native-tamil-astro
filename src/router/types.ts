@@ -11,20 +11,33 @@ import BottomTabNavigator from './BottomTabNavigator';
 import DetailsFormScreen from '../screens/Main/DetailsFormScreen';
 import TabStackNavigator from './TabStackNavigator';
 import ChatScreen from '../screens/Main/ChatScreen';
+import HistoryTabDrawerNavigator from './HistoryTabDrawerNavigator';
+import HistoryScreen from '../screens/Main/HistoryScreen';
+import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
+import RechargeScreen from '../screens/Main/RechargeScreen';
 
 export type RootStackParamList = {
-  [DrawerNavigator.name]: NavigatorScreenParams<DrawerParamList>;
+  [BottomTabNavigator.name]: NavigatorScreenParams<BottomTabPraramList>;
   [OtpScreen.name]: {phone: string};
   [SignInScreen.name]: undefined;
   [LanguageScreen.name]: undefined;
 };
 
-export type DrawerParamList = {
-  [BottomTabNavigator.name]: NavigatorScreenParams<BottomTabPraramList>;
+export type BottomTabPraramList = {
+  [DrawerNavigator.name]: NavigatorScreenParams<DrawerParamList>;
+  [HistoryTabDrawerNavigator.name]: NavigatorScreenParams<HistoryTabDrawerNavigatorParamList>;
 };
 
-export type BottomTabPraramList = {
+export type DrawerParamList = {
   [TabStackNavigator.name]: NavigatorScreenParams<TabStackParamList>;
+  [TransactionHistoryScreen.name]: undefined;
+  [RechargeScreen.name]: undefined;
+};
+
+export type HistoryTabDrawerNavigatorParamList = {
+  [HistoryScreen.name]: undefined;
+  [TransactionHistoryScreen.name]: undefined;
+  [RechargeScreen.name]: undefined;
 };
 
 export type TabStackParamList = {
@@ -34,7 +47,7 @@ export type TabStackParamList = {
 };
 
 export type DrawerNavigatorNavigationProp = NativeStackScreenProps<
-  RootStackParamList,
+  BottomTabPraramList,
   typeof DrawerNavigator.name
 >;
 

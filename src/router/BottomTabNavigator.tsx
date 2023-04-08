@@ -1,20 +1,24 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import TabStackNavigator from './TabStackNavigator';
-import HistoryScreen from '../screens/Main/HistoryScreen';
+import DrawerNavigator from './DrawerNavigator';
+import HistoryTabDrawerNavigator from './HistoryTabDrawerNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name={TabStackNavigator.name}
         component={TabStackNavigator.component}
+      /> */}
+      <Tab.Screen
+        name={DrawerNavigator.name}
+        component={DrawerNavigator.component}
       />
       <Tab.Screen
-        name={HistoryScreen.name}
-        component={HistoryScreen.component}
+        name={HistoryTabDrawerNavigator.name}
+        component={HistoryTabDrawerNavigator.component}
       />
     </Tab.Navigator>
   );
