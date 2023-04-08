@@ -5,9 +5,6 @@ import History from '../../../assets/icons/Navigation/history.svg';
 import Home from '../../../assets/icons/Navigation/home.svg';
 import {colors} from '../../themes/colors';
 import {fonts} from '../../themes/fonts';
-import GenderOptions from '../../components/MainComponents/HomeScreenComponents/GenderOptions';
-import AstrologerOptions from '../../components/MainComponents/HomeScreenComponents/AtrologerOptions';
-import AstrologerWaitModal from '../../components/MainComponents/HomeScreenComponents/AstrologerWaitModal';
 import DrawerNavigator from '../DrawerNavigator';
 import TabStackNavigator from '../TabStackNavigator';
 import HomeScreen from '../../screens/Main/HomeScreen';
@@ -38,7 +35,7 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
 
           if (!isFocused && !event.defaultPrevented) {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
-            navigation.navigate({name: route.name, merge: true});
+            navigation.navigate({name: route.name, merge: true, params: {}});
           }
         };
 
@@ -48,29 +45,7 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             target: route.key,
           });
         };
-        // if (label === 'ConsultAstrologer') {
-        //   console.log('label', label);
-        //   return (
-        //     <View
-        //       style={{
-        //         flex: 1,
-        //         backgroundColor: colors.palette.white,
-        //         borderTopWidth: 1,
-        //         borderColor: colors.palette.accent500,
-        //       }}>
-        //       <View style={{height: 42}} />
-        //       <Image
-        //         style={{
-        //           position: 'absolute',
-        //           top: -24,
-        //           alignSelf: 'center',
-        //           borderWidth: 10,
-        //         }}
-        //         source={require('../../../assets/images/consult.png')}
-        //       />
-        //     </View>
-        //   );
-        // }
+
         return (
           <View
             key={index}
@@ -94,7 +69,8 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
               </View>
             )}
             {label === 'ConsultAstrologer' && (
-              <View style={{flex: 1, width: 100}}>
+              <View style={styles.circleRoot}>
+                <View style={styles.space} />
                 {/* <View style={styles.middleTabSpace} /> */}
                 <View style={styles.circleBorder}>
                   <View style={styles.circleBorderMask} />
@@ -109,17 +85,12 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
                       dispatch(setShowGenderOptions(true));
                       dispatch(setFlow('category'));
                     }}
-                    style={
-                      {
-                        // position: 'absolute',
-                      }
-                    }>
+                    style={styles.touchable}>
                     <Image
                       source={require('../../../assets/images/consult.png')}
                     />
                   </TouchableOpacity>
                 </View>
-                <View style={{height: 26}} />
                 <View style={{}}>
                   <Text style={styles.title}>Consult Astrologer</Text>
                 </View>
@@ -182,6 +153,13 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderColor: colors.palette.accent500,
   },
+  touchable: {
+    borderRadius: 30,
+    height: 55,
+    width: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   circleBorderMask: {
     position: 'absolute',
     width: 60,
@@ -192,7 +170,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   circleImage: {},
-  middleTabSpace: {height: 42},
+  space: {height: 26},
   title: {
     fontFamily: fonts.contageRegular,
     fontSize: 10,
@@ -200,4 +178,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 0,
   },
+  circleRoot: {flex: 1, width: 100},
 });
