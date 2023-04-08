@@ -7,6 +7,7 @@ import HeaderRightIcons from './UI/HeaderRightIcons';
 import LanguageScreen from '../screens/Main/LanguageScreen';
 import {StyleProp, ViewStyle} from 'react-native';
 import {LeftIcons} from './LeftIcons';
+import {colors} from '../themes/colors';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +42,9 @@ const DrawerNavigator = () => {
         },
         headerRight: RightIcons,
         headerLeft: leftIconFun(navigation),
+        drawerItemStyle: {
+          backgroundColor: colors.palette.white,
+        },
       })}>
       <Drawer.Screen
         name={TabStackNavigator.name}

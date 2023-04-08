@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: colors.palette.accent500,
     backgroundColor: 'pink',
+    // elevation: 10,
   },
   otherButton: {
     flex: 1,
