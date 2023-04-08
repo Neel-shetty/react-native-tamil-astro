@@ -35,6 +35,7 @@ export type DrawerParamList = {
   [TabStackNavigator.name]: NavigatorScreenParams<TabStackParamList>;
   [TransactionHistoryScreen.name]: undefined;
   [RechargeScreen.name]: undefined;
+  [LanguageScreen.name]: undefined;
 };
 
 export type HistoryTabDrawerNavigatorParamList = {
