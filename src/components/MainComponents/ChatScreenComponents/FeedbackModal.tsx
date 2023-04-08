@@ -78,7 +78,9 @@ const FeedbackModal = ({
         <Formik
           initialValues={{message: ''}}
           onSubmit={(values, {resetForm}) => {
-            if (numberofStars < 1) return;
+            if (numberofStars < 1) {
+              return;
+            }
             console.log(values);
             resetForm();
           }}>
