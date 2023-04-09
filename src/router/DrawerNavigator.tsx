@@ -8,11 +8,12 @@ import RechargeScreen from '../screens/Main/RechargeScreen';
 import TabStackNavigator from './TabStackNavigator';
 import HeaderRightIcons from './UI/HeaderRightIcons';
 import LanguageScreen from '../screens/Main/LanguageScreen';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, Text, TextStyle, ViewStyle} from 'react-native';
 import {LeftIcons} from './LeftIcons';
 import {colors} from '../themes/colors';
 import CustomDrawer from './UI/CustomDrawer';
 import HistoryScreen from '../screens/Main/HistoryScreen';
+import {fonts} from '../themes/fonts';
 
 const Drawer = createDrawerNavigator();
 
@@ -34,6 +35,29 @@ export const leftIconStyle: StyleProp<ViewStyle> = {
 
 export const spacer: StyleProp<ViewStyle> = {
   width: 10,
+};
+
+const headerTitleStyle1: StyleProp<TextStyle> = {
+  fontFamily: fonts.contageRegular,
+  fontSize: 18,
+  color: colors.palette.accent500,
+};
+
+const headerTitleStyle2: StyleProp<TextStyle> = {
+  fontFamily: fonts.contageRegular,
+  fontSize: 18,
+  color: '#F8B111',
+  position: 'absolute',
+  left: -1.5,
+};
+
+const HeaderTitle = () => {
+  return (
+    <>
+      <Text style={headerTitleStyle2}>Tamil Astro</Text>
+      <Text style={headerTitleStyle1}>Tamil Astro</Text>
+    </>
+  );
 };
 
 const DrawerNavigator = () => {
@@ -60,7 +84,11 @@ const DrawerNavigator = () => {
           paddingVertical: 0,
           margin: 0,
         },
-        headerTitleStyle: {},
+        headerTitleStyle: {
+          fontFamily: fonts.contageRegular,
+          fontSize: 18,
+        },
+        headerTitle: HeaderTitle,
       })}>
       <Drawer.Screen
         name={TabStackNavigator.name}

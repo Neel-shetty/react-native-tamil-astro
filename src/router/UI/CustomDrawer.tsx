@@ -121,7 +121,6 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             <Close />
           </TouchableOpacity>
         </View>
-        {/* <DrawerItemList {...props} /> */}
         <View style={styles.itemContainer}>
           {screens.map((item, index) => (
             <Item
