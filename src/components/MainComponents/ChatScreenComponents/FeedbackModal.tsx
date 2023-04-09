@@ -83,6 +83,7 @@ const FeedbackModal = ({
             }
             console.log(values);
             resetForm();
+            setVisible(false);
           }}>
           {({handleChange, handleBlur, handleSubmit, values}) => (
             <>

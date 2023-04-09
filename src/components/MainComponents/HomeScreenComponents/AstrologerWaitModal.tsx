@@ -5,6 +5,9 @@ import {layout} from '../../../constants/layout';
 import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
 import Star from '../../../../assets/icons/HomeScreen/star.svg';
+import {HomeScreenNavigationProp} from '../../../router/types';
+import {useNavigation} from '@react-navigation/native';
+import ChatScreen from '../../../screens/Main/ChatScreen';
 
 const AstrologerWaitModal = ({
   visible,
@@ -24,6 +27,7 @@ const AstrologerWaitModal = ({
     skills: 'Vedic, Numerology, Tarot',
   });
   const rating = Array(astrologer.stars).fill(1);
+  const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
   async function fetchAstrologer(id: string) {
     console.log('astroId', id);
@@ -32,6 +36,25 @@ const AstrologerWaitModal = ({
   useEffect(() => {
     fetchAstrologer(astroId);
   }, [astroId]);
+
+  //mock waiting time
+  const [time, setTime] = React.useState(0);
+  console.log('🚀 ~ file: AstrologerWaitModal.tsx:42 ~ time:', time);
+  useEffect(() => {
+    if (visible === false) return;
+    const interval = setInterval(() => {
+      setTime(time => time + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [visible]);
+
+  useEffect(() => {
+    if (time === 5) {
+      navigation.navigate(ChatScreen.name);
+      setVisible(false);
+    }
+  }, [time, setVisible, navigation]);
+
   return (
     <Modal
       style={styles.modal}
@@ -71,7 +94,7 @@ const AstrologerWaitModal = ({
         </View>
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>
-            Astrologer Call connecting within {'30'} Sec...{'\n'}Please wait!
+            Astrologer Call connecting within {'5'} Sec...{'\n'}Please wait!
           </Text>
         </View>
       </View>

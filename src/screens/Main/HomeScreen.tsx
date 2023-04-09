@@ -66,7 +66,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.root}>
-      <View style={styles.padding1} />
+      {/* <View style={styles.padding1} /> */}
       <View style={styles.headingContainer}>
         <Text
           onPress={() => {
@@ -93,6 +93,7 @@ const HomeScreen = () => {
         }}
         showGenderOptions={true}
       />
+      <View style={styles.bottomSpacer} />
       <GenderOptions
         showAstrologerOptions={setAstrologerOptionsVisible}
         flow={flow}
@@ -140,11 +141,8 @@ const styles = StyleSheet.create({
   padding1: {
     height: layout.height * 0.02,
   },
-  // modal: {
-  //   backgroundColor: 'white',
-  //   // padding: 22,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderRadius: 4,
-  // },
+  bottomSpacer: {
+    maxHeight: 25,
+    flex: 1,
+  },
 });
