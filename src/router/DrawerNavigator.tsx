@@ -8,7 +8,7 @@ import RechargeScreen from '../screens/Main/RechargeScreen';
 import TabStackNavigator from './TabStackNavigator';
 import HeaderRightIcons from './UI/HeaderRightIcons';
 import LanguageScreen from '../screens/Main/LanguageScreen';
-import {StyleProp, Text, TextStyle, ViewStyle} from 'react-native';
+import {StyleProp, Text, TextStyle, View, ViewStyle} from 'react-native';
 import {LeftIcons} from './LeftIcons';
 import {colors} from '../themes/colors';
 import CustomDrawer from './UI/CustomDrawer';
@@ -53,10 +53,14 @@ const headerTitleStyle2: StyleProp<TextStyle> = {
 
 const HeaderTitle = () => {
   return (
-    <>
-      <Text style={headerTitleStyle2}>Tamil Astro</Text>
+    <View
+    // style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}
+    >
+      <Text numberOfLines={1} style={headerTitleStyle2}>
+        Tamil Astro
+      </Text>
       <Text style={headerTitleStyle1}>Tamil Astro</Text>
-    </>
+    </View>
   );
 };
 
