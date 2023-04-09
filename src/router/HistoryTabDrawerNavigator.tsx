@@ -1,5 +1,8 @@
 import React from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  DrawerContentComponentProps,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
 import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
 import RechargeScreen from '../screens/Main/RechargeScreen';
 import HistoryScreen from '../screens/Main/HistoryScreen';
@@ -9,6 +12,7 @@ import {colors} from '../themes/colors';
 import CustomDrawer from './UI/CustomDrawer';
 import {fonts} from '../themes/fonts';
 import HeaderRightIcons from './UI/HeaderRightIcons';
+import LanguageScreen from '../screens/Main/LanguageScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -96,6 +100,10 @@ const HistoryTabDrawerNavigator = () => {
       <Drawer.Screen
         component={RechargeScreen.component}
         name={RechargeScreen.name}
+      />
+      <Drawer.Screen
+        component={LanguageScreen.component}
+        name={LanguageScreen.name}
       />
     </Drawer.Navigator>
   );
