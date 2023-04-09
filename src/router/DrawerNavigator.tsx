@@ -12,6 +12,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {LeftIcons} from './LeftIcons';
 import {colors} from '../themes/colors';
 import CustomDrawer from './UI/CustomDrawer';
+import HistoryScreen from '../screens/Main/HistoryScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -76,6 +77,10 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         component={LanguageScreen.component}
         name={LanguageScreen.name}
+      />
+      <Drawer.Screen
+        component={HistoryScreen.component}
+        name={HistoryScreen.name}
       />
     </Drawer.Navigator>
   );

@@ -16,7 +16,15 @@ import TransactionHistoryScreen from '../../screens/Main/TransactionHistoryScree
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoggedIn} from '../../store/UserSlice';
 
-const Item = ({label, icon, onPress}) => {
+const Item = ({
+  label,
+  icon,
+  onPress,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  onPress: () => void;
+}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
       <View style={styles.logoContainer}>{icon}</View>
