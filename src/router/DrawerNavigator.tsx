@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
+  DrawerContentComponentProps,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
@@ -13,7 +11,7 @@ import LanguageScreen from '../screens/Main/LanguageScreen';
 import {StyleProp, ViewStyle} from 'react-native';
 import {LeftIcons} from './LeftIcons';
 import {colors} from '../themes/colors';
-import {Text} from 'react-native';
+import CustomDrawer from './UI/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,8 +36,12 @@ export const spacer: StyleProp<ViewStyle> = {
 };
 
 const DrawerNavigator = () => {
+  const drawer = (props: DrawerContentComponentProps) => (
+    <CustomDrawer {...props} />
+  );
   return (
     <Drawer.Navigator
+      drawerContent={drawer}
       screenOptions={({navigation}) => ({
         headerShadowVisible: true,
         headerStyle: {
@@ -57,6 +59,7 @@ const DrawerNavigator = () => {
           paddingVertical: 0,
           margin: 0,
         },
+        headerTitleStyle: {},
       })}>
       <Drawer.Screen
         name={TabStackNavigator.name}
