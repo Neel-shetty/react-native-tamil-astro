@@ -72,9 +72,9 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.bottomButton}>
-                <SmallButton icon={<Call />} onPress={() => {}} />
+                <SmallButton title="Call" icon={<Call />} onPress={() => {}} />
                 <View style={styles.space} />
-                <SmallButton icon={<Chat />} onPress={() => {}} />
+                <SmallButton title="Chat" icon={<Chat />} onPress={() => {}} />
               </View>
             </View>
           </View>

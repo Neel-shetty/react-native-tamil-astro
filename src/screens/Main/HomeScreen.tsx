@@ -14,6 +14,7 @@ import ChatScreen from './ChatScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
 import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
+import CallScreen from './CallScreen';
 
 const HomeScreen = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -85,7 +86,11 @@ const HomeScreen = () => {
         }}
       />
       <View style={styles.headingContainer}>
-        <Text style={styles.heading}>Choose Astrologer Category</Text>
+        <Text
+          style={styles.heading}
+          onPress={() => navigation.navigate(CallScreen.name)}>
+          Choose Astrologer Category
+        </Text>
       </View>
       <AstrologerList
         onPress={() => {

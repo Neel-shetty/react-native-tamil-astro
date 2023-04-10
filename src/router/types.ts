@@ -17,6 +17,7 @@ import TransactionHistoryScreen from '../screens/Main/TransactionHistoryScreen';
 import RechargeScreen from '../screens/Main/RechargeScreen';
 import ConsultAstrologerScreen from './ConsultAstrologerScreen';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import CallScreen from '../screens/Main/CallScreen';
 
 export type RootStackParamList = {
   [BottomTabNavigator.name]: NavigatorScreenParams<BottomTabPraramList>;
@@ -51,6 +52,7 @@ export type TabStackParamList = {
   };
   [DetailsFormScreen.name]: undefined;
   [ChatScreen.name]: undefined;
+  [CallScreen.name]: undefined;
 };
 
 export type DrawerNavigatorNavigationProp = BottomTabScreenProps<
