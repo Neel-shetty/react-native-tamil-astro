@@ -27,7 +27,7 @@ const GenderOptions = ({
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const dispatch = useDispatch();
 
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['50%'], []);
 
   const handleSheetChanges = useCallback(
     (index: number) => {

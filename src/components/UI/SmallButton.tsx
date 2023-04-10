@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes/colors';
 import {fonts} from '../../themes/fonts';
@@ -6,14 +6,16 @@ import {fonts} from '../../themes/fonts';
 const SmallButton = ({
   onPress,
   icon,
+  title,
 }: {
   onPress: () => void;
   icon: React.ReactNode;
+  title: string;
 }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
       {icon}
-      <Text style={styles.cost}>Chat</Text>
+      <Text style={styles.cost}>{title}</Text>
     </TouchableOpacity>
   );
 };

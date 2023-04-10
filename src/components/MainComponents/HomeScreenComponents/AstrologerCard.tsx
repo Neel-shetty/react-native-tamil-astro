@@ -80,6 +80,20 @@ const AstrologerCard = ({
             </TouchableOpacity> */}
             <SmallButton
               onPress={() => {
+                // if (showGenderOptions) {
+                //   dispatch(setShowGenderOptions(true));
+                // }
+                // if (onPress) {
+                //   onPress();
+                // }
+              }}
+              icon={<Call />}
+              title="Call"
+            />
+            <View style={styles.spacer} />
+            <SmallButton
+              title="Chat"
+              onPress={() => {
                 if (showGenderOptions) {
                   dispatch(setShowGenderOptions(true));
                 }
@@ -87,10 +101,8 @@ const AstrologerCard = ({
                   onPress();
                 }
               }}
-              icon={<Call />}
+              icon={<Chat />}
             />
-            <View style={styles.spacer} />
-            <SmallButton onPress={() => {}} icon={<Chat />} />
           </View>
         </View>
       </View>

@@ -19,7 +19,7 @@ const AstrologerOptions = ({visible, setVisible}: OptionsPropsType) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
-  const snapPoints = useMemo(() => ['25%', '75%'], []);
+  const snapPoints = useMemo(() => ['75%'], []);
 
   const handleSheetChanges = useCallback(
     (index: number) => {
@@ -34,7 +34,7 @@ const AstrologerOptions = ({visible, setVisible}: OptionsPropsType) => {
   useEffect(() => {
     if (visible === true) {
       console.log('visible', visible);
-      bottomSheetRef.current?.snapToIndex(1);
+      bottomSheetRef.current?.snapToIndex(0);
       console.log('bottomSheetRef.current');
     } else {
       bottomSheetRef.current?.close();
