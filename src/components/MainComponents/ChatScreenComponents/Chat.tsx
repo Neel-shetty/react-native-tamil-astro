@@ -12,7 +12,7 @@ import FeedbackModal from './FeedbackModal';
 const Chat = () => {
   const [showRechargeModal, setShowRechargeModal] = React.useState(false);
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
-  const [showFeedbackModal, setShowFeedbackModal] = React.useState(true);
+  const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
   const chats: {
     textAlign: 'right' | 'left';
     message: string;
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: layout.width - 20,
     borderWidth: 1,
+    marginBottom: 30,
   },
 });

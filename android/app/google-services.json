@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "432381671953",
+    "project_id": "tamil-astro-43e81",
+    "storage_bucket": "tamil-astro-43e81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432381671953:android:307b7f4f7ef26237700fb0",
+        "android_client_info": {
+          "package_name": "com.tamilastro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432381671953-4l6vb4spogkakc9gkpsm2h84rqpgvoqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_JclDdLiiYvzKpVs1E3yUOhpM1754DT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432381671953-4l6vb4spogkakc9gkpsm2h84rqpgvoqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
