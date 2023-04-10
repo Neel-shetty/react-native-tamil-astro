@@ -1,6 +1,8 @@
 import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AstrologerCard from './AstrologerCard';
+import {useQuery} from '@tanstack/react-query';
+import {FetchAstrologerCategories} from '../../../api/FetchAstrologerCategories';
 
 const AstrologerList = ({
   onPress,
@@ -35,6 +37,17 @@ const AstrologerList = ({
       experience: '8+ Years',
     },
   ];
+
+  const {data: AstrologerApiData, isLoading} = useQuery(
+    ['astrologers'],
+    FetchAstrologerCategories,
+  );
+
+  console.log(
+    '🚀 ~ file: AstrologerList.tsx:42 ~ AstrologerApiData:',
+    AstrologerApiData,
+  );
+
   return (
     <View style={styles.root}>
       <FlatList
@@ -50,6 +63,7 @@ const AstrologerList = ({
             title={item.title}
             onPress={onPress}
             showGenderOptions={showGenderOptions}
+            loading={isLoading}
           />
         )}
       />

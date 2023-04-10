@@ -41,8 +41,11 @@ const OtpScreen = () => {
         initialValues={{otp: ''}}
         onSubmit={async values => {
           console.log(values);
-          // let result = await VerifyOtp({otp: values.otp});
-          var result = true; // TODO: Remove this line
+          let result = await VerifyOtp({
+            otp: values.otp,
+            phone: route.params.phone,
+          });
+          // var result = true; // TODO: Remove this line
           if (result === true) {
             navigation.navigate(LanguageScreen.name);
           }

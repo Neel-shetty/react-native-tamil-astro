@@ -4,12 +4,17 @@ import {Provider} from 'react-redux';
 import Navigator from './src/router/Navigator';
 import './src/utils/i18n';
 import {StatusBar} from 'react-native';
+import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle={'light-content'} />
-      <Navigator />
+      <QueryClientProvider client={queryClient}>
+        <StatusBar barStyle={'light-content'} />
+        <Navigator />
+      </QueryClientProvider>
     </Provider>
   );
 };

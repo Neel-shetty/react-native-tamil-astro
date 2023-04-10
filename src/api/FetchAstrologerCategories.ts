@@ -1,18 +1,18 @@
 import {Alert} from 'react-native';
 import {api} from '.';
 
-export async function RequestOtp({phone}: {phone: string}) {
+export async function FetchAstrologerCategories() {
   return api
-    .post('/send-otp', {phone})
+    .post('/astro-category')
     .then(res => {
-      console.log(res.data);
-      return true;
+      // console.log(res.data);
+      return res.data.data;
     })
     .catch(error => {
       console.log(error);
       if (error) {
         Alert.alert('Error', error.response.data.message);
       }
-      return false;
+      return [];
     });
 }

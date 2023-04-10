@@ -41,9 +41,11 @@ const AstrologerWaitModal = ({
   const [time, setTime] = React.useState(0);
   console.log('🚀 ~ file: AstrologerWaitModal.tsx:42 ~ time:', time);
   useEffect(() => {
-    if (visible === false) return;
+    if (visible === false) {
+      return;
+    }
     const interval = setInterval(() => {
-      setTime(time => time + 1);
+      setTime(prevTime => prevTime + 1);
     }, 1000);
     return () => clearInterval(interval);
   }, [visible]);

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {layout} from '../../../constants/layout';
 import {colors} from '../../../themes/colors';
@@ -20,6 +20,7 @@ interface AstrologerCardProps {
   setVisible?: (visible: boolean) => void;
   onPress?: () => void;
   showGenderOptions?: boolean;
+  loading?: boolean;
 }
 
 const AstrologerCard = ({
@@ -31,6 +32,7 @@ const AstrologerCard = ({
   experience,
   onPress,
   showGenderOptions,
+  loading,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
   const dispatch = useDispatch();
@@ -38,34 +40,43 @@ const AstrologerCard = ({
   return (
     <View style={styles.background}>
       <View style={styles.root}>
-        <View style={styles.leftContainer}>
-          <View style={styles.leftTopContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingNumber}>{stars} </Text>
-              {rating.map((_, index) => (
-                <Star key={index} />
-              ))}
+        {loading ? (
+          <ActivityIndicator
+            style={styles.loading}
+            size={'small'}
+            color={colors.palette.primary500}
+          />
+        ) : (
+          <>
+            <View style={styles.leftContainer}>
+              <View style={styles.leftTopContainer}>
+                <Text style={styles.title}>{title}</Text>
+                <View style={styles.ratingContainer}>
+                  <Text style={styles.ratingNumber}>{stars} </Text>
+                  {rating.map((_, index) => (
+                    <Star key={index} />
+                  ))}
+                </View>
+              </View>
+              <View style={styles.leftBottomContainer}>
+                <Text
+                  style={[styles.cost, firstTime ? styles.firstTime : null]}>
+                  Rate: ₹{cost}/min
+                </Text>
+                {firstTime ? (
+                  <Text style={styles.free}>First Free!</Text>
+                ) : (
+                  <Text>{''}</Text>
+                )}
+              </View>
             </View>
-          </View>
-          <View style={styles.leftBottomContainer}>
-            <Text style={[styles.cost, firstTime ? styles.firstTime : null]}>
-              Rate: ₹{cost}/min
-            </Text>
-            {firstTime ? (
-              <Text style={styles.free}>First Free!</Text>
-            ) : (
-              <Text>{''}</Text>
-            )}
-          </View>
-        </View>
-        <View style={styles.rightContainer}>
-          <View style={styles.rightTopContainer}>
-            <Text style={styles.cost}>Clients: {clients}+</Text>
-            <Text style={styles.cost}>Exp: {experience}</Text>
-          </View>
-          <View style={styles.rightBottomContainer}>
-            {/* <TouchableOpacity
+            <View style={styles.rightContainer}>
+              <View style={styles.rightTopContainer}>
+                <Text style={styles.cost}>Clients: {clients}+</Text>
+                <Text style={styles.cost}>Exp: {experience}</Text>
+              </View>
+              <View style={styles.rightBottomContainer}>
+                {/* <TouchableOpacity
               onPress={() => {
                 if (setVisible) {
                   setVisible(true);
@@ -78,33 +89,35 @@ const AstrologerCard = ({
               <Call />
               <Text style={styles.cost}>Call</Text>
             </TouchableOpacity> */}
-            <SmallButton
-              onPress={() => {
-                // if (showGenderOptions) {
-                //   dispatch(setShowGenderOptions(true));
-                // }
-                // if (onPress) {
-                //   onPress();
-                // }
-              }}
-              icon={<Call />}
-              title="Call"
-            />
-            <View style={styles.spacer} />
-            <SmallButton
-              title="Chat"
-              onPress={() => {
-                if (showGenderOptions) {
-                  dispatch(setShowGenderOptions(true));
-                }
-                if (onPress) {
-                  onPress();
-                }
-              }}
-              icon={<Chat />}
-            />
-          </View>
-        </View>
+                <SmallButton
+                  onPress={() => {
+                    // if (showGenderOptions) {
+                    //   dispatch(setShowGenderOptions(true));
+                    // }
+                    // if (onPress) {
+                    //   onPress();
+                    // }
+                  }}
+                  icon={<Call />}
+                  title="Call"
+                />
+                <View style={styles.spacer} />
+                <SmallButton
+                  title="Chat"
+                  onPress={() => {
+                    if (showGenderOptions) {
+                      dispatch(setShowGenderOptions(true));
+                    }
+                    if (onPress) {
+                      onPress();
+                    }
+                  }}
+                  icon={<Chat />}
+                />
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
@@ -202,5 +215,9 @@ const styles = StyleSheet.create({
   firstTime: {
     textDecorationLine: 'line-through',
     textDecorationColor: 'red',
+  },
+  loading: {
+    flex: 1,
+    alignSelf: 'center',
   },
 });

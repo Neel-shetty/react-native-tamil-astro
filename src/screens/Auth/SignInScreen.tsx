@@ -27,8 +27,8 @@ const SignInScreen = () => {
         initialValues={{phone: ''}}
         onSubmit={async values => {
           console.log(values);
-          // let result = await RequestOtp({phone: values.phone});
-          var result = true; // TODO: Remove this line
+          let result = await RequestOtp({phone: values.phone});
+          // var result = true; // TODO: Remove this line
           if (result === true) {
             navigation.navigate(OtpScreen.name, {
               phone: values.phone ? values.phone : '9834567890',
