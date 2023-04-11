@@ -21,8 +21,8 @@ async function call() {
     },
   };
 
-  let localMediaStream;
-  let remoteMediaStream;
+  let localMediaStream: MediaStream;
+  let remoteMediaStream: MediaStream;
   let isVoiceOnly = false;
 
   try {
@@ -35,6 +35,7 @@ async function call() {
 
     localMediaStream = mediaStream;
   } catch (err) {
+    console.log('🚀 ~ file: CallSlice.ts:38 ~ call ~ err:', err);
     // Handle Error
   }
 
@@ -51,6 +52,10 @@ async function call() {
   peerConnection.addEventListener('connectionstatechange', event => {
     switch (peerConnection.connectionState) {
       case 'closed':
+        console.log(
+          '🚀 ~ file: CallSlice.ts:62 ~ call ~ peerConnection.connectionState:',
+          peerConnection.connectionState,
+        );
         // You can handle the call being disconnected here.
 
         break;

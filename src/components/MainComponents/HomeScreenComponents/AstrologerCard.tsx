@@ -123,7 +123,7 @@ const AstrologerCard = ({
   );
 };
 
-export default AstrologerCard;
+export default React.memo(AstrologerCard);
 
 const styles = StyleSheet.create({
   background: {

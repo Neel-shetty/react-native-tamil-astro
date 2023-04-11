@@ -28,7 +28,7 @@ const CategoryButton = ({title, logo, onPress}: CategoryButtonProps) => {
   );
 };
 
-export default CategoryButton;
+export default React.memo(CategoryButton);
 
 const styles = StyleSheet.create({
   root: {
