@@ -4,6 +4,7 @@ import {
   MediaStream,
   RTCIceCandidate,
   RTCPeerConnection,
+  RTCSessionDescription,
 } from 'react-native-webrtc';
 import {Button} from 'react-native';
 import {StyleProp} from 'react-native';
@@ -13,7 +14,7 @@ import {getMediaDevices} from '../../utils/CallUtils';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
-import {FirebaseInstallationsTypes} from '@react-native-firebase/installations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Call = () => {
   const [localstream, setLocalStream] = React.useState<MediaStream | null>();
@@ -74,10 +75,106 @@ const Call = () => {
       cRef.set(cWithOffer);
     }
   }
-  async function join() {}
-  async function hangup() {}
+  async function join() {
+    console.log('Joining...');
+    connecting.current = true;
+    setGettingCall(false);
+
+    const cRef = firestore().collection('meet').doc('chatId');
+    const offer = (await cRef.get()).data()?.offer;
+
+    if (offer) {
+      // setup webrtc
+      await setupWebRTC();
+
+      //excchange ice candicates
+      //check the paramerters, its reversed. seince the joining part is callee
+      collectIceCandidates(cRef, 'callee', 'caller');
+
+      if (pc.current) {
+        pc.current.setRemoteDescription(new RTCSessionDescription(offer));
+
+        // create answer for the call
+        // update the document with answer
+        const answer = await pc.current.createAnswer();
+        pc.current.setLocalDescription(answer);
+        const cWithAnswer = {
+          answer: {
+            type: answer.type,
+            sdp: answer.sdp,
+          },
+        };
+        cRef.update(cWithAnswer);
+      }
+    }
+  }
 
   //helper function
+  const streamCleanUpCallback = React.useCallback(
+    async function streamCleanUp() {
+      if (localstream) {
+        localstream.getTracks().forEach(track => track.stop());
+        localstream.release();
+      }
+      setLocalStream(null);
+      setRemoteStream(null);
+    },
+    [localstream],
+  );
+
+  /**
+   * for disconnecting the call close the connection, release the stream
+   * and delete the document for the call
+   */
+  const hangupCallback = React.useCallback(
+    async function hangup() {
+      setGettingCall(false);
+      connecting.current = false;
+      streamCleanUpCallback();
+      firestoreCleanUp();
+      if (pc.current) {
+        pc.current.close();
+      }
+    },
+    [streamCleanUpCallback],
+  );
+  // async function hangup() {
+  //   setGettingCall(false);
+  //   connecting.current = false;
+  //   streamCleanUp();
+  //   firestoreCleanUp();
+  //   if (pc.current) {
+  //     pc.current.close();
+  //   }
+  // }
+
+  //helper function
+  // async function streamCleanUp() {
+  //   if (localstream) {
+  //     localstream.getTracks().forEach(track => track.stop());
+  //     localstream.release();
+  //   }
+  //   setLocalStream(null);
+  //   setRemoteStream(null);
+  // }
+
+  async function firestoreCleanUp() {
+    const cRef = firestore().collection('meet').doc('chatId');
+
+    if (cRef) {
+      const calleeCandidate = await cRef.collection('callee').get();
+      calleeCandidate.forEach(async candidate => {
+        await candidate.ref.delete();
+      });
+      const callerCandidate = await cRef.collection('caller').get();
+      callerCandidate.forEach(async candidate => {
+        await candidate.ref.delete();
+      });
+
+      cRef.delete();
+    }
+  }
+
   const collectIceCandidates = async (
     cRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>,
     localName: string,
@@ -111,6 +208,45 @@ const Call = () => {
     });
   };
 
+  React.useEffect(() => {
+    const cRef = firestore().collection('meet').doc('chatId');
+
+    const subscribe = cRef.onSnapshot(async snapshot => {
+      const data = snapshot.data();
+
+      // on answer start the call
+      if (pc.current && !pc.current.remoteDescription && data?.answer) {
+        const answer = new RTCSessionDescription(data.answer);
+        await pc.current.setRemoteDescription(answer);
+      }
+
+      // if there is offer for chatid set the getting call to true
+      if (data?.offer && !connecting.current) {
+        setGettingCall(true);
+      }
+    });
+
+    //on delete of the collection call hangup
+    // the other side has clicked hangup
+    const subscribeDelete = cRef.collection('callee').onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(async change => {
+        if (change.type === 'removed') {
+          hangupCallback();
+        }
+      });
+    });
+
+    (async function () {
+      const id = await AsyncStorage.getItem('id');
+      console.log('🚀 ~ file: Call.tsx:27 ~ Call ~ id:', id);
+    })();
+
+    return () => {
+      subscribe();
+      subscribeDelete();
+    };
+  }, [hangupCallback]);
+
   // displays the incoming call screen
   if (gettingCall) {
     const root: StyleProp<ViewStyle> = {
@@ -124,7 +260,7 @@ const Call = () => {
       <View style={root}>
         <Text>Incoming Call!</Text>
         <Button onPress={join} title="Receive" />
-        <Button onPress={hangup} title="Reject" />
+        <Button onPress={hangupCallback} title="Reject" />
       </View>
     );
   }
@@ -132,7 +268,7 @@ const Call = () => {
   if (localstream) {
     return (
       <Video
-        hangup={hangup}
+        hangup={hangupCallback}
         remoteStream={remotestream}
         localStream={localstream}
       />
