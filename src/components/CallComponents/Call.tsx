@@ -20,6 +20,7 @@ const Call = () => {
   const [localstream, setLocalStream] = React.useState<MediaStream | null>();
   const [remotestream, setRemoteStream] = React.useState<MediaStream | null>();
   const [gettingCall, setGettingCall] = React.useState(false);
+  console.log('🚀 ~ file: Call.tsx:23 ~ Call ~ gettingCall:', gettingCall);
   const pc = React.useRef<RTCPeerConnection>();
   const connecting = React.useRef(false);
 
@@ -128,6 +129,7 @@ const Call = () => {
    */
   const hangupCallback = React.useCallback(
     async function hangup() {
+      console.log('hangup');
       setGettingCall(false);
       connecting.current = false;
       streamCleanUpCallback();
@@ -138,25 +140,6 @@ const Call = () => {
     },
     [streamCleanUpCallback],
   );
-  // async function hangup() {
-  //   setGettingCall(false);
-  //   connecting.current = false;
-  //   streamCleanUp();
-  //   firestoreCleanUp();
-  //   if (pc.current) {
-  //     pc.current.close();
-  //   }
-  // }
-
-  //helper function
-  // async function streamCleanUp() {
-  //   if (localstream) {
-  //     localstream.getTracks().forEach(track => track.stop());
-  //     localstream.release();
-  //   }
-  //   setLocalStream(null);
-  //   setRemoteStream(null);
-  // }
 
   async function firestoreCleanUp() {
     const cRef = firestore().collection('meet').doc('chatId');
@@ -215,13 +198,14 @@ const Call = () => {
       const data = snapshot.data();
 
       // on answer start the call
-      if (pc.current && !pc.current.remoteDescription && data?.answer) {
+      if (pc.current && !pc.current.remoteDescription && data && data.answer) {
         const answer = new RTCSessionDescription(data.answer);
         await pc.current.setRemoteDescription(answer);
       }
 
       // if there is offer for chatid set the getting call to true
-      if (data?.offer && !connecting.current) {
+      if (data && data.offer && !connecting.current) {
+        console.log('call offer exists in db');
         setGettingCall(true);
       }
     });

@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
     "lint": "eslint .",
-    "start": "adb reverse tcp:8081 tcp:8081; npx react-native start",
+    "start": "adb reverse tcp:8081 tcp:8081 && npx react-native start",
+    "avd": "cd D:\\apps\\androidSDK\\emulator && emulator @1_Pixel_4_API_31",
     "test": "jest"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
     "@types/react-native-razorpay": "^2.2.1",
+    "@types/react-native-webrtc": "^1.75.5",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
     "eslint": "^8.19.0",
