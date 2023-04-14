@@ -23,6 +23,8 @@ const InputFields = () => {
     problem: false,
   });
   const [lowBalance, setLowBalance] = useState(false);
+  const [date, setDate] = useState<Date>();
+  console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
 
   const validationSchema = yup.object({
     name: yup
@@ -53,6 +55,7 @@ const InputFields = () => {
             placeOfBirth: values.placeOfBirth,
             maritialStatus: maritalStatus,
             typeOfProblem: problem,
+            time,
           });
           console.log(values);
           // NOTE: Workaround for require cycle, screen name is not dynamic
@@ -85,7 +88,7 @@ const InputFields = () => {
                 dropdownErrors.gender ? 'This is a required field  ' : null
               }
             />
-            <DatePicker placeholder="Time of Birth*" />
+            <DatePicker setParentDate={setDate} placeholder="Time of Birth*" />
             <CustomInput
               placeholder="Place of Birth*"
               handleChange={handleChange('placeOfBirth')}

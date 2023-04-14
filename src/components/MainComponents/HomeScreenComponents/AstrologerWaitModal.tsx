@@ -8,6 +8,8 @@ import Star from '../../../../assets/icons/HomeScreen/star.svg';
 import {HomeScreenNavigationProp} from '../../../router/types';
 import {useNavigation} from '@react-navigation/native';
 import ChatScreen from '../../../screens/Main/ChatScreen';
+import {useQuery} from '@tanstack/react-query';
+import {AssignAstrologer} from '../../../api/AssignAstrologer';
 
 const AstrologerWaitModal = ({
   visible,
@@ -18,45 +20,60 @@ const AstrologerWaitModal = ({
   astroId: string;
   setVisible: (visible: boolean) => void;
 }) => {
-  const [astrologer, _] = React.useState({
-    name: 'Kethan Swami',
-    stars: 5,
-    clients: 6234,
-    experience: 10,
-    language: 'English, Tamil',
-    skills: 'Vedic, Numerology, Tarot',
-  });
-  const rating = Array(astrologer.stars).fill(1);
+  // const [astrologer, _] = React.useState({
+  //   name: 'Kethan Swami',
+  //   stars: 5,
+  //   clients: 6234,
+  //   experience: 10,
+  //   language: 'English, Tamil',
+  //   skills: 'Vedic, Numerology, Tarot',
+  // });
+
+  const [stars, setStars] = React.useState<string[]>(['1']);
+  console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
-  async function fetchAstrologer(id: string) {
-    console.log('astroId', id);
-  }
-
-  useEffect(() => {
-    fetchAstrologer(astroId);
-  }, [astroId]);
+  const {
+    data: astrologer,
+    error,
+    isLoading,
+  } = useQuery(['assign-astrologer'], AssignAstrologer);
+  console.log(
+    '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
+    astrologer,
+  );
+  // console.log('🚀 ~ file: AstrologerWaitModal.tsx:35 ~ data:', data, error);
 
   //mock waiting time
-  const [time, setTime] = React.useState(0);
-  console.log('🚀 ~ file: AstrologerWaitModal.tsx:42 ~ time:', time);
-  useEffect(() => {
-    if (visible === false) {
-      return;
-    }
-    const interval = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [visible]);
+  // const [time, setTime] = React.useState(0);
+  // console.log('🚀 ~ file: AstrologerWaitModal.tsx:42 ~ time:', time);
+  // useEffect(() => {
+  //   if (visible === false) {
+  //     return;
+  //   }
+  //   const interval = setInterval(() => {
+  //     setTime(prevTime => prevTime + 1);
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [visible]);
+
+  // useEffect(() => {
+  //   if (time === 5) {
+  //     navigation.navigate(ChatScreen.name);
+  //     setVisible(false);
+  //   }
+  // }, [time, setVisible, navigation]);
 
   useEffect(() => {
-    if (time === 5) {
-      navigation.navigate(ChatScreen.name);
-      setVisible(false);
+    if (astrologer) {
+      const rating = Array(Number(astrologer.rating)).fill('1');
+      setStars(rating);
     }
-  }, [time, setVisible, navigation]);
+  }, [astrologer]);
 
+  if (isLoading || !astrologer) {
+    return null;
+  }
   return (
     <Modal
       style={styles.modal}
@@ -83,7 +100,7 @@ const AstrologerWaitModal = ({
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{astrologer.name}</Text>
           <View style={styles.starContainer}>
-            {rating.map((__, index) => (
+            {stars.map((__, index) => (
               <Star key={index} />
             ))}
           </View>
@@ -96,7 +113,7 @@ const AstrologerWaitModal = ({
         </View>
         <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>
-            Astrologer Call connecting within {'5'} Sec...{'\n'}Please wait!
+            Astrologer Call connecting {'\n'}Please wait!
           </Text>
         </View>
       </View>

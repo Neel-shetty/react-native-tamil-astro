@@ -10,6 +10,7 @@ import Balance0Modal from './Balance0Modal';
 import FeedbackModal from './FeedbackModal';
 
 const Chat = () => {
+  const [messages, setMessages] = React.useState<string[]>([]);
   const [showRechargeModal, setShowRechargeModal] = React.useState(false);
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);

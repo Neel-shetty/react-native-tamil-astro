@@ -17,7 +17,7 @@ import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
 import CallScreen from './CallScreen';
 
 const HomeScreen = () => {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(true);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
   // const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
@@ -52,18 +52,6 @@ const HomeScreen = () => {
       dispatch(setFlow('category'));
     };
   }, [dispatch]);
-
-  // React.useEffect(() => {
-  //   const showGenderOptions = route.params?.showGenderOptions;
-  //   console.log(
-  //     '🚀 ~ file: HomeScreen.tsx:46 ~ React.useEffect ~ showGenderOptions:',
-  //     showGenderOptions,
-  //   );
-  //   if (showGenderOptions) {
-  //     setFlow('category');
-  //     setVisible(true);
-  //   }
-  // }, [route.params?.showGenderOptions]);
 
   return (
     <View style={styles.root}>

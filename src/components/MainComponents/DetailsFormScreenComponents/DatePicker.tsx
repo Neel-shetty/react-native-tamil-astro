@@ -6,7 +6,13 @@ import {colors} from '../../../themes/colors';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 
-const DatePicker = ({placeholder}: {placeholder: string}) => {
+const DatePicker = ({
+  placeholder,
+  setParentDate,
+}: {
+  placeholder: string;
+  setParentDate: (date: Date) => void;
+}) => {
   const [date, setDate] = useState<Date>();
   const [show, setShow] = useState(false);
 
@@ -14,6 +20,7 @@ const DatePicker = ({placeholder}: {placeholder: string}) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    setParentDate(currentDate);
   };
 
   return (
@@ -37,8 +44,8 @@ const DatePicker = ({placeholder}: {placeholder: string}) => {
         <DateTimePicker
           testID="dateTimePicker"
           value={date ? date : new Date()}
-          mode={'time'}
-          is24Hour={true}
+          mode={'date'}
+          is24Hour={false}
           display="default"
           onChange={onChange}
         />
