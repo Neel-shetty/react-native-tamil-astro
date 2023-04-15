@@ -20,36 +20,11 @@ import {useQuery} from '@tanstack/react-query';
 import {FetchRecharge} from '../../../api/FetchRecharge';
 
 const Recharge = () => {
-  const optionData = [
-    {
-      popular: true,
-      amount: 150,
-      bonus: 23,
-    },
-    {
-      popular: false,
-      amount: 250,
-      bonus: 23,
-    },
-    {
-      popular: false,
-      amount: 500,
-      bonus: 23,
-    },
-    {
-      popular: false,
-      amount: 750,
-      bonus: 23,
-    },
-    {
-      popular: false,
-      amount: 1000,
-      bonus: 23,
-    },
-  ];
-
-  const {data, error, isLoading} = useQuery(['fetchRecharge'], FetchRecharge);
-  console.log('🚀 ~ file: Recharge.tsx:44 ~ Recharge ~ data:', data);
+  const {
+    data: rechargeData,
+    error: rechargeError,
+    isLoading,
+  } = useQuery(['fetchRecharge'], FetchRecharge);
 
   async function pay(amount: number) {
     api.post('/create/order/id', {amount: amount}).then(res => {
@@ -90,7 +65,7 @@ const Recharge = () => {
     });
   }
 
-  if (error || isLoading || !data) {
+  if (rechargeError || isLoading || !rechargeData) {
     return <ActivityIndicator color={colors.palette.primary500} />;
   }
 
@@ -132,7 +107,7 @@ const Recharge = () => {
         </View>
         {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
         <FlatList
-          data={data}
+          data={rechargeData}
           numColumns={3}
           renderItem={({item}) => (
             <BalanceOptions
