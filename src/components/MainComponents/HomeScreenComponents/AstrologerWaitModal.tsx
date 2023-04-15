@@ -30,7 +30,7 @@ const AstrologerWaitModal = ({
   // });
 
   const [stars, setStars] = React.useState<string[]>(['1']);
-  console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
+  // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
   const {
@@ -38,10 +38,10 @@ const AstrologerWaitModal = ({
     error,
     isLoading,
   } = useQuery(['assign-astrologer'], AssignAstrologer);
-  console.log(
-    '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
-    astrologer,
-  );
+  // console.log(
+  //   '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
+  //   astrologer,
+  // );
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:35 ~ data:', data, error);
 
   //mock waiting time

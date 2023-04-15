@@ -12,8 +12,8 @@ const BalanceOptions = ({
   onPress,
 }: {
   popular?: boolean;
-  amount: number;
-  bonus?: number;
+  amount: string;
+  bonus?: string;
   onPress: () => void;
 }) => {
   return (

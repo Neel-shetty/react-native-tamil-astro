@@ -1,4 +1,12 @@
-import {Alert, FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React from 'react';
 import PrimaryButton from '../../UI/PrimaryButton';
 import {layout} from '../../../constants/layout';
@@ -8,6 +16,8 @@ import {Formik} from 'formik';
 import BalanceOptions from './BalanceOptions';
 import RazorpayCheckout from 'react-native-razorpay';
 import {api} from '../../../api';
+import {useQuery} from '@tanstack/react-query';
+import {FetchRecharge} from '../../../api/FetchRecharge';
 
 const Recharge = () => {
   const optionData = [
@@ -38,13 +48,16 @@ const Recharge = () => {
     },
   ];
 
+  const {data, error, isLoading} = useQuery(['fetchRecharge'], FetchRecharge);
+  console.log('🚀 ~ file: Recharge.tsx:44 ~ Recharge ~ data:', data);
+
   async function pay(amount: number) {
     api.post('/create/order/id', {amount: amount}).then(res => {
       var options = {
         description: 'Balance Recharge',
         image: 'https://i.imgur.com/3g7nmJC.jpg',
         currency: 'INR',
-        key: '<YOUR_KEY_ID>',
+        key: 'rzp_test_sx9x0KmOhUZ0Lb',
         amount: amount,
         name: 'Acme Corp',
         order_id: res.data.data, //Replace this with an order_id created using Orders API.
@@ -75,6 +88,10 @@ const Recharge = () => {
           console.log(err);
         });
     });
+  }
+
+  if (error || isLoading || !data) {
+    return <ActivityIndicator color={colors.palette.primary500} />;
   }
 
   return (
@@ -115,15 +132,15 @@ const Recharge = () => {
         </View>
         {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
         <FlatList
-          data={optionData}
+          data={data}
           numColumns={3}
           renderItem={({item}) => (
             <BalanceOptions
-              popular={item.popular}
+              popular={item.tag === 'Popular' ? true : false}
               amount={item.amount}
               bonus={item.bonus}
               onPress={() => {
-                pay(item.amount);
+                pay(Number(item.amount));
               }}
             />
           )}
