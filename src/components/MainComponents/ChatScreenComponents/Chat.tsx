@@ -8,6 +8,7 @@ import {Formik} from 'formik';
 import RechargeModal from './RechargeModal';
 import Balance0Modal from './Balance0Modal';
 import FeedbackModal from './FeedbackModal';
+import Auth from '@react-native-firebase/auth';
 
 const Chat = () => {
   const [messages, setMessages] = React.useState<string[]>([]);
@@ -33,6 +34,8 @@ const Chat = () => {
       textAlign: 'right',
     },
   ];
+
+  console.log(Auth().currentUser);
 
   return (
     <View style={styles.root}>
