@@ -10,6 +10,8 @@ import {useNavigation} from '@react-navigation/native';
 import ChatScreen from '../../../screens/Main/ChatScreen';
 import {useQuery} from '@tanstack/react-query';
 import {AssignAstrologer} from '../../../api/AssignAstrologer';
+import Auth from '@react-native-firebase/auth';
+import FireStore from '@react-native-firebase/firestore';
 
 const AstrologerWaitModal = ({
   visible,
@@ -20,15 +22,6 @@ const AstrologerWaitModal = ({
   astroId: string;
   setVisible: (visible: boolean) => void;
 }) => {
-  // const [astrologer, _] = React.useState({
-  //   name: 'Kethan Swami',
-  //   stars: 5,
-  //   clients: 6234,
-  //   experience: 10,
-  //   language: 'English, Tamil',
-  //   skills: 'Vedic, Numerology, Tarot',
-  // });
-
   const [stars, setStars] = React.useState<string[]>(['1']);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
@@ -38,31 +31,57 @@ const AstrologerWaitModal = ({
     error,
     isLoading,
   } = useQuery(['assign-astrologer'], AssignAstrologer);
+
+  const combinedUserId = React.useMemo(() => {
+    const user = Auth().currentUser;
+    if (!user || !astrologer) return null;
+    return Number(user?.uid) > Number(astrologer.id)
+      ? `${astrologer.id}-${user?.uid}`
+      : `${user?.uid}-${astrologer.id}`;
+  }, [astrologer]);
+
   // console.log(
   //   '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
   //   astrologer,
   // );
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:35 ~ data:', data, error);
 
-  //mock waiting time
-  // const [time, setTime] = React.useState(0);
-  // console.log('🚀 ~ file: AstrologerWaitModal.tsx:42 ~ time:', time);
-  // useEffect(() => {
-  //   if (visible === false) {
-  //     return;
-  //   }
-  //   const interval = setInterval(() => {
-  //     setTime(prevTime => prevTime + 1);
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [visible]);
+  useEffect(() => {
+    // create chat between user and astrologer
+    if (astrologer) {
+      const user = Auth().currentUser;
+      console.log(
+        '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
+        user.uid,
+      );
 
-  // useEffect(() => {
-  //   if (time === 5) {
-  //     navigation.navigate(ChatScreen.name);
-  //     setVisible(false);
-  //   }
-  // }, [time, setVisible, navigation]);
+      const combinedUserId =
+        Number(user?.uid) > Number(astrologer.id)
+          ? //@ts-ignore
+            `${astrologer.id}-${user?.uid}`
+          : //@ts-ignore
+            `${user?.uid}-${astrologer.id}`;
+      console.log(
+        '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
+        combinedUserId,
+      );
+
+      FireStore().collection('chats').doc(combinedUserId).set({
+        messages: [],
+        userId: user?.uid,
+        astrologerId: astrologer.id,
+        astologerImage: astrologer.image,
+        astrologerName: astrologer.name,
+        astrologerRating: astrologer.rating,
+        astrologerPrice: 12,
+        atrologerSkills: astrologer.skills,
+        astrologerExperience: astrologer.experience,
+        chat: true,
+        time: FireStore.FieldValue.serverTimestamp(),
+        // astrologerPrice: astrologer.,
+      });
+    }
+  }, [astrologer]);
 
   useEffect(() => {
     if (astrologer) {
@@ -112,7 +131,11 @@ const AstrologerWaitModal = ({
           <Text style={styles.infoText}>Skills: {astrologer.skills}</Text>
         </View>
         <View style={styles.subTitleContainer}>
-          <Text style={styles.subTitle}>
+          <Text
+            onPress={() => {
+              navigation.navigate(ChatScreen.name, {chatId: astrologer.id});
+            }}
+            style={styles.subTitle}>
             Astrologer Call connecting {'\n'}Please wait!
           </Text>
         </View>

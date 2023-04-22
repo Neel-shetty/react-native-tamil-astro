@@ -11,7 +11,16 @@ import File from '../../../../assets/icons/HistoryScreen/file.svg';
 import Play from '../../../../assets/icons/HistoryScreen/play.svg';
 
 interface HistoryCardPropTypes {
-  astrologer?: any;
+  astrologer: {
+    name: string;
+    language: string;
+    skills: string;
+    experience: string;
+    clients: string;
+    stars: number;
+    chat: boolean;
+    cost: string;
+  };
 }
 
 const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {

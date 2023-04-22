@@ -46,7 +46,7 @@ const InputFields = () => {
           if (!gender) {
             // dropdownErrors.gender = true;
             setDropdownErrors({...dropdownErrors, gender: true});
-            return;
+            // return; // NOTE: uncommnet this later
           }
           setDropdownErrors({...dropdownErrors, gender: false});
           await SubmitDetails({
@@ -55,13 +55,14 @@ const InputFields = () => {
             placeOfBirth: values.placeOfBirth,
             maritialStatus: maritalStatus,
             typeOfProblem: problem,
-            time,
+            date: date,
           });
           console.log(values);
           // NOTE: Workaround for require cycle, screen name is not dynamic
           navigation.navigate('HomeScreen', {astrologer: '1'});
         }}
-        validationSchema={validationSchema}>
+        // validationSchema={validationSchema}
+      >
         {({
           handleChange,
           handleBlur,

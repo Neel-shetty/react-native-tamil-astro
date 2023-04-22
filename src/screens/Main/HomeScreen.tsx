@@ -42,11 +42,6 @@ const HomeScreen = () => {
     }
   }, [route.params?.astrologer]);
 
-  // function showAstrologerOptions() {
-  //   console.log('running');
-  //   setAstrologerOptionsVisible(true);
-  // }
-
   React.useEffect(() => {
     return () => {
       dispatch(setFlow('category'));

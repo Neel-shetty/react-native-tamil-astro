@@ -7,6 +7,7 @@ interface SubmitDetailsProps {
   placeOfBirth: string;
   maritialStatus?: string;
   typeOfProblem?: string;
+  date: Date | undefined;
 }
 
 export async function SubmitDetails({
