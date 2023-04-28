@@ -25,13 +25,14 @@ const Chat = () => {
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
 
   const route = useRoute<ChatScreenNavigationProp['route']>();
+  const flatListRef = React.useRef<FlatList>(null);
 
-  const chatId = React.useMemo(() => route.params?.chatId, [route]);
+  // const chatId = React.useMemo(() => route.params?.chatId, [route]);
 
   async function getMessages() {
     firestore()
       .collection('chats')
-      .doc('12-16')
+      .doc(route.params?.chatId)
       .onSnapshot(doc => {
         // console.log('Current data: ', doc.data());
         setMessages(doc.data()?.messages);
@@ -43,7 +44,7 @@ const Chat = () => {
     // limit it to 50 recent messages
     await firestore()
       .collection('chats')
-      .doc('12-16')
+      .doc(route.params?.chatId)
       .update({
         messages: firestore.FieldValue.arrayUnion({
           message,
@@ -75,6 +76,10 @@ const Chat = () => {
                 message={item.message}
               />
             );
+          }}
+          ref={flatListRef}
+          onContentSizeChange={({}) => {
+            flatListRef.current?.scrollToEnd({animated: true});
           }}
         />
         <Formik

@@ -39,6 +39,10 @@ const AstrologerWaitModal = ({
       ? `${astrologer.id}-${user?.uid}`
       : `${user?.uid}-${astrologer.id}`;
   }, [astrologer]);
+  console.log(
+    '🚀 ~ file: AstrologerWaitModal.tsx:42 ~ combinedUserId ~ combinedUserId:',
+    combinedUserId,
+  );
 
   // console.log(
   //   '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
@@ -127,13 +131,13 @@ const AstrologerWaitModal = ({
           <Text style={styles.infoText}>
             Experience: {astrologer.experience}Yrs
           </Text>
-          <Text style={styles.infoText}>Language: {astrologer.language}</Text>
+          <Text style={styles.infoText}>Language: {astrologer?.language}</Text>
           <Text style={styles.infoText}>Skills: {astrologer.skills}</Text>
         </View>
         <View style={styles.subTitleContainer}>
           <Text
             onPress={() => {
-              navigation.navigate(ChatScreen.name, {chatId: astrologer.id});
+              navigation.navigate(ChatScreen.name, {chatId: combinedUserId});
             }}
             style={styles.subTitle}>
             Astrologer Call connecting {'\n'}Please wait!
