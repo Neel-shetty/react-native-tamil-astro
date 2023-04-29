@@ -17,7 +17,7 @@ import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
 import CallScreen from './CallScreen';
 
 const HomeScreen = () => {
-  const [showModal, setShowModal] = React.useState(true);
+  const [showModal, setShowModal] = React.useState(false);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
   // const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
@@ -80,6 +80,9 @@ const HomeScreen = () => {
           dispatch(setFlow('astrologer'));
         }}
         showGenderOptions={true}
+        onPressCall={() => {
+          dispatch(setFlow('astrologer'));
+        }}
       />
       <View style={styles.bottomSpacer} />
       <GenderOptions

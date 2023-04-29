@@ -79,7 +79,9 @@ const Chat = () => {
           }}
           ref={flatListRef}
           onContentSizeChange={({}) => {
-            flatListRef.current?.scrollToEnd({animated: true});
+            if (messages.length > 0) {
+              flatListRef.current?.scrollToEnd({animated: true});
+            }
           }}
         />
         <Formik

@@ -15,6 +15,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRoute} from '@react-navigation/native';
 
 const Call = () => {
   const [localstream, setLocalStream] = React.useState<MediaStream | null>();
@@ -23,6 +24,10 @@ const Call = () => {
   console.log('🚀 ~ file: Call.tsx:23 ~ Call ~ gettingCall:', gettingCall);
   const pc = React.useRef<RTCPeerConnection>();
   const connecting = React.useRef(false);
+
+  const route = useRoute();
+  const chatId = React.useMemo(() => route.params?.chatId, [route]);
+  console.log('🚀 ~ file: Call.tsx:30 ~ Call ~ chatId:', chatId);
 
   async function setupWebRTC() {
     pc.current = new RTCPeerConnection({

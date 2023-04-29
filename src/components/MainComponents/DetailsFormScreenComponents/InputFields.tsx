@@ -6,7 +6,7 @@ import {Formik} from 'formik';
 import PrimaryButton from '../../UI/PrimaryButton';
 import * as yup from 'yup';
 import {SubmitDetails} from '../../../api/SubmitDetails';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {DetailsFormScreenNavigationProp} from '../../../router/types';
 // import HomeScreen from '../../../screens/Main/HomeScreen';
 import DatePicker from './DatePicker';
@@ -25,6 +25,11 @@ const InputFields = () => {
   const [lowBalance, setLowBalance] = useState(false);
   const [date, setDate] = useState<Date>();
   console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
+  const route = useRoute<DetailsFormScreenNavigationProp['route']>();
+  console.log(
+    '🚀 ~ file: InputFields.tsx:29 ~ InputFields ~ route:',
+    route.params?.communicationType,
+  );
 
   const validationSchema = yup.object({
     name: yup
@@ -59,7 +64,10 @@ const InputFields = () => {
           });
           console.log(values);
           // NOTE: Workaround for require cycle, screen name is not dynamic
-          navigation.navigate('HomeScreen', {astrologer: '1'});
+          navigation.navigate('HomeScreen', {
+            astrologer: '1',
+            communicationType: route.params?.communicationType,
+          });
         }}
         // validationSchema={validationSchema}
       >

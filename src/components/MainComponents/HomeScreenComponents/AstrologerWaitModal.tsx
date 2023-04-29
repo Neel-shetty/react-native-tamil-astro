@@ -6,12 +6,13 @@ import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
 import Star from '../../../../assets/icons/HomeScreen/star.svg';
 import {HomeScreenNavigationProp} from '../../../router/types';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import ChatScreen from '../../../screens/Main/ChatScreen';
 import {useQuery} from '@tanstack/react-query';
 import {AssignAstrologer} from '../../../api/AssignAstrologer';
 import Auth from '@react-native-firebase/auth';
 import FireStore from '@react-native-firebase/firestore';
+import CallScreen from '../../../screens/Main/CallScreen';
 
 const AstrologerWaitModal = ({
   visible,
@@ -25,6 +26,11 @@ const AstrologerWaitModal = ({
   const [stars, setStars] = React.useState<string[]>(['1']);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
+  const route = useRoute<HomeScreenNavigationProp['route']>();
+  console.log(
+    '🚀 ~ file: AstrologerWaitModal.tsx:29 ~ route:',
+    route.params?.communicationType,
+  );
 
   const {
     data: astrologer,
@@ -52,7 +58,8 @@ const AstrologerWaitModal = ({
 
   useEffect(() => {
     // create chat between user and astrologer
-    if (astrologer) {
+    if (route.params?.communicationType === 'chat' && astrologer) {
+      // if (astrologer) {
       const user = Auth().currentUser;
       console.log(
         '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
@@ -85,7 +92,31 @@ const AstrologerWaitModal = ({
         // astrologerPrice: astrologer.,
       });
     }
-  }, [astrologer]);
+
+    // create call between user and astrologer
+    if (route.params?.communicationType === 'call' && astrologer) {
+      const user = Auth().currentUser;
+      console.log(
+        '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
+        user.uid,
+      );
+
+      const combinedUserId =
+        Number(user?.uid) > Number(astrologer.id)
+          ? //@ts-ignore
+            `${astrologer.id}-${user?.uid}`
+          : //@ts-ignore
+            `${user?.uid}-${astrologer.id}`;
+      console.log(
+        '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
+        combinedUserId,
+      );
+
+      navigation.navigate(CallScreen.name, {
+        combinedUserId,
+      });
+    }
+  }, [astrologer, route.params?.communicationType]);
 
   useEffect(() => {
     if (astrologer) {
@@ -93,6 +124,14 @@ const AstrologerWaitModal = ({
       setStars(rating);
     }
   }, [astrologer]);
+
+  // useEffect(() => {
+  //   // create a 10 seconds countdown
+  //   // const timer = setTimeout(() => {
+  //   //   // setVisible(false);
+  //   // }, 10000);
+  //   // return () => clearTimeout(timer);
+  // }, [setVisible]);
 
   if (isLoading || !astrologer) {
     return null;
@@ -137,7 +176,12 @@ const AstrologerWaitModal = ({
         <View style={styles.subTitleContainer}>
           <Text
             onPress={() => {
-              navigation.navigate(ChatScreen.name, {chatId: combinedUserId});
+              if (route.params?.communicationType === 'chat') {
+                navigation.navigate(ChatScreen.name, {chatId: combinedUserId});
+              }
+              if (route.params?.communicationType === 'call') {
+                navigation.navigate(CallScreen.name, {combinedUserId});
+              }
             }}
             style={styles.subTitle}>
             Astrologer Call connecting {'\n'}Please wait!

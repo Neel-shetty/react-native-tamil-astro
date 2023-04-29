@@ -21,6 +21,7 @@ interface AstrologerCardProps {
   onPress?: () => void;
   showGenderOptions?: boolean;
   loading?: boolean;
+  onPressCall: () => void;
 }
 
 const AstrologerCard = ({
@@ -33,6 +34,7 @@ const AstrologerCard = ({
   onPress,
   showGenderOptions,
   loading,
+  onPressCall,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
   const dispatch = useDispatch();
@@ -91,12 +93,12 @@ const AstrologerCard = ({
             </TouchableOpacity> */}
                 <SmallButton
                   onPress={() => {
-                    // if (showGenderOptions) {
-                    //   dispatch(setShowGenderOptions(true));
-                    // }
-                    // if (onPress) {
-                    //   onPress();
-                    // }
+                    if (showGenderOptions) {
+                      dispatch(setShowGenderOptions(true));
+                    }
+                    if (onPress) {
+                      onPressCall();
+                    }
                   }}
                   icon={<Call />}
                   title="Call"

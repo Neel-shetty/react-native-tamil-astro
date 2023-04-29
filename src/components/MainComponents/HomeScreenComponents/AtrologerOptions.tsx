@@ -56,7 +56,15 @@ const AstrologerOptions = ({visible, setVisible}: OptionsPropsType) => {
         <View style={styles.buttonContainer}>
           <AstrologerList
             onPress={() => {
-              navigation.navigate(DetailsFormScreen.name);
+              navigation.navigate(DetailsFormScreen.name, {
+                communicationType: 'chat',
+              });
+              bottomSheetRef.current?.close();
+            }}
+            onPressCall={() => {
+              navigation.navigate(DetailsFormScreen.name, {
+                communicationType: 'call',
+              });
               bottomSheetRef.current?.close();
             }}
           />

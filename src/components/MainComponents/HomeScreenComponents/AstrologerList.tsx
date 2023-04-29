@@ -7,9 +7,11 @@ import {FetchAstrologerCategories} from '../../../api/FetchAstrologerCategories'
 const AstrologerList = ({
   onPress,
   showGenderOptions,
+  onPressCall,
 }: {
   onPress?: () => void;
   showGenderOptions?: boolean;
+  onPressCall: () => void;
 }) => {
   const data = [
     {
@@ -64,6 +66,7 @@ const AstrologerList = ({
             onPress={onPress}
             showGenderOptions={showGenderOptions}
             loading={isLoading}
+            onPressCall={onPressCall}
           />
         )}
       />
