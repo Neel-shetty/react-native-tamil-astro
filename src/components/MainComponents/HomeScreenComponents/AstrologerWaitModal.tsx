@@ -13,6 +13,8 @@ import {AssignAstrologer} from '../../../api/AssignAstrologer';
 import Auth from '@react-native-firebase/auth';
 import FireStore from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../store';
 
 const AstrologerWaitModal = ({
   visible,
@@ -30,6 +32,13 @@ const AstrologerWaitModal = ({
   console.log(
     '🚀 ~ file: AstrologerWaitModal.tsx:29 ~ route:',
     route.params?.communicationType,
+  );
+  const communicationType = useSelector(
+    (state: RootState) => state.ui.communicationType,
+  );
+  console.log(
+    '🚀 ~ file: AstrologerWaitModal.tsx:39 ~ communicationType:',
+    communicationType,
   );
 
   const {
@@ -176,15 +185,22 @@ const AstrologerWaitModal = ({
         <View style={styles.subTitleContainer}>
           <Text
             onPress={() => {
-              if (route.params?.communicationType === 'chat') {
+              
+              if (
+                route.params?.communicationType === 'chat' ||
+                communicationType === 'chat'
+              ) {
                 navigation.navigate(ChatScreen.name, {chatId: combinedUserId});
               }
-              if (route.params?.communicationType === 'call') {
+              if (
+                route.params?.communicationType === 'call' ||
+                communicationType === 'call'
+              ) {
                 navigation.navigate(CallScreen.name, {combinedUserId});
               }
             }}
             style={styles.subTitle}>
-            Astrologer Call connecting {'\n'}Please wait!
+            Astrologer Call connecting {'\n'} Go To {communicationType}
           </Text>
         </View>
       </View>

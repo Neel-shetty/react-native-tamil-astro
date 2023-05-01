@@ -13,7 +13,11 @@ import AstrologerOptions from '../../components/MainComponents/HomeScreenCompone
 import ChatScreen from './ChatScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
-import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
+import {
+  setCommunicationType,
+  setFlow,
+  setShowGenderOptions,
+} from '../../store/UiSlice';
 import CallScreen from './CallScreen';
 
 const HomeScreen = () => {
@@ -78,10 +82,12 @@ const HomeScreen = () => {
       <AstrologerList
         onPress={() => {
           dispatch(setFlow('astrologer'));
+          dispatch(setCommunicationType('chat'));
         }}
         showGenderOptions={true}
         onPressCall={() => {
           dispatch(setFlow('astrologer'));
+          dispatch(setCommunicationType('call'));
         }}
       />
       <View style={styles.bottomSpacer} />

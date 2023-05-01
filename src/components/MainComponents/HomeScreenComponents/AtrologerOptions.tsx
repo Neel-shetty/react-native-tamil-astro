@@ -9,6 +9,8 @@ import {useNavigation} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../../router/types';
 import DetailsFormScreen from '../../../screens/Main/DetailsFormScreen';
 import AstrologerList from './AstrologerList';
+import {useDispatch} from 'react-redux';
+import {setCommunicationType} from '../../../store/UiSlice';
 
 interface OptionsPropsType {
   visible: boolean;
@@ -20,6 +22,7 @@ const AstrologerOptions = ({visible, setVisible}: OptionsPropsType) => {
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
 
   const snapPoints = useMemo(() => ['75%'], []);
+  const dispatch = useDispatch();
 
   const handleSheetChanges = useCallback(
     (index: number) => {
@@ -56,12 +59,14 @@ const AstrologerOptions = ({visible, setVisible}: OptionsPropsType) => {
         <View style={styles.buttonContainer}>
           <AstrologerList
             onPress={() => {
+              dispatch(setCommunicationType('chat'));
               navigation.navigate(DetailsFormScreen.name, {
                 communicationType: 'chat',
               });
               bottomSheetRef.current?.close();
             }}
             onPressCall={() => {
+              dispatch(setCommunicationType('call'));
               navigation.navigate(DetailsFormScreen.name, {
                 communicationType: 'call',
               });

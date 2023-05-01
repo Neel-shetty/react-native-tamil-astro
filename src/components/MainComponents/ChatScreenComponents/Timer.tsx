@@ -2,11 +2,16 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const Timer = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.root}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('HomeScreen');
+        }}>
         <Text style={styles.text}>End Chat</Text>
       </TouchableOpacity>
       <View style={styles.timeContainer}>

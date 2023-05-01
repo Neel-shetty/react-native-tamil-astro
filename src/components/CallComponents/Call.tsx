@@ -242,7 +242,8 @@ const Call = () => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'pink',
+      // backgroundColor: 'pink',
+      width: '100%',
     };
 
     return (
