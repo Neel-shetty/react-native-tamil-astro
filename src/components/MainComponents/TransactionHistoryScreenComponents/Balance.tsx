@@ -1,11 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import PrimaryButton from '../../UI/PrimaryButton';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
+import {useQuery} from '@tanstack/react-query';
+import {FetchBalance} from '../../../api/FetchBalance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Balance = () => {
+  const {data, error, isLoading} = useQuery(['userBalance'], async () => {
+    const id: string = await AsyncStorage.getItem('id');
+    return FetchBalance(id);
+  });
+  console.log(
+    '🚀 ~ file: Balance.tsx:16 ~ const{data,error,isLoading}=useQuery ~ data:',
+    data,
+  );
+
   return (
     <View style={styles.root}>
       <View style={styles.titleContainer}>
@@ -13,7 +25,8 @@ const Balance = () => {
       </View>
       <View style={styles.balanceContainer}>
         <Text style={styles.amount}>
-          <Text style={styles.size20}>₹</Text>250
+          <Text style={styles.size20}>₹</Text>
+          {data?.balance ?? 'loading...'}
         </Text>
         <PrimaryButton onPress={() => {}} title="Recharge" />
       </View>

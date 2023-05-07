@@ -18,6 +18,8 @@ import RazorpayCheckout from 'react-native-razorpay';
 import {api} from '../../../api';
 import {useQuery} from '@tanstack/react-query';
 import {FetchRecharge} from '../../../api/FetchRecharge';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FetchBalance} from '../../../api/FetchBalance';
 
 const Recharge = () => {
   const {
@@ -25,6 +27,15 @@ const Recharge = () => {
     error: rechargeError,
     isLoading,
   } = useQuery(['fetchRecharge'], FetchRecharge);
+
+  const {
+    data: balanceData,
+    error: balanceError,
+    isLoading: balanceLoading,
+  } = useQuery(['userBalance'], async () => {
+    const id: string = await AsyncStorage.getItem('id');
+    return FetchBalance(id);
+  });
 
   async function pay(amount: number) {
     api.post('/create/order/id', {amount: amount}).then(res => {
@@ -65,7 +76,7 @@ const Recharge = () => {
     });
   }
 
-  if (rechargeError || isLoading || !rechargeData) {
+  if (rechargeError || isLoading || !rechargeData || balanceLoading) {
     return <ActivityIndicator color={colors.palette.primary500} />;
   }
 
@@ -74,7 +85,8 @@ const Recharge = () => {
       <View style={styles.balanceContainer}>
         <Text style={styles.title}>Available Balance</Text>
         <Text style={styles.amount}>
-          <Text style={styles.size20}>₹</Text>250
+          <Text style={styles.size20}>₹</Text>
+          {balanceData?.balance}
         </Text>
         <View style={styles.addMoneyContainer}>
           <Formik

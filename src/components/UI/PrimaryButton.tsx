@@ -1,4 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes/colors';
 import {fonts} from '../../themes/fonts';
@@ -6,12 +11,21 @@ import {fonts} from '../../themes/fonts';
 interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
+  loading?: boolean;
 }
 
-const PrimaryButton = ({title, onPress}: PrimaryButtonProps) => {
+const PrimaryButton = ({
+  title,
+  onPress,
+  loading = false,
+}: PrimaryButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Text style={styles.text}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
