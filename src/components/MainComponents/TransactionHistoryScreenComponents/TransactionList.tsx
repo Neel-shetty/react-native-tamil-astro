@@ -2,6 +2,9 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import Transaction from './Transaction';
 import {layout} from '../../../constants/layout';
+import {useQuery} from '@tanstack/react-query';
+import {FetchTransactionHistory} from '../../../api/FetchTransactionHistory';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface TransactionType {
   date: string;
@@ -21,6 +24,14 @@ const TransactionList = () => {
     transaction,
     transaction,
   ]);
+
+  const {} = useQuery(['TransactionHistory'], async () => {
+    const id = await AsyncStorage.getItem('id');
+    if (id) {
+      FetchTransactionHistory(id);
+    }
+  });
+
   return (
     <View style={styles.root}>
       <FlatList

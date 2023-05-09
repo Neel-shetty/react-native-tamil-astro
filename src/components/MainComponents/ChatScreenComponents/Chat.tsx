@@ -12,6 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import Auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
 import {ChatScreenNavigationProp} from '../../../router/types';
+import {SendMessage} from '../../../api/SendMessage';
 
 const Chat = () => {
   const [messages, setMessages] = React.useState<
@@ -39,7 +40,20 @@ const Chat = () => {
       });
   }
 
+  const userID = React.useMemo(() => Auth().currentUser?.uid, []);
+  async function sendMessageToMyServer(message: string) {
+    const ids = route.params?.chatId?.split('-');
+    const astroId = ids?.filter(id => id !== userID);
+
+    //generate random number of 6 digits
+    const uniqueId = Math.floor(100000 + Math.random() * 900000);
+    if (astroId) {
+      SendMessage({to: astroId[0], message, from: userID, uniqueId});
+    }
+  }
+
   async function sendMessage(message: string) {
+    sendMessageToMyServer(message);
     const user = Auth().currentUser;
     // limit it to 50 recent messages
     await firestore()

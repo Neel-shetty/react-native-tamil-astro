@@ -20,6 +20,7 @@ import {useQuery} from '@tanstack/react-query';
 import {FetchRecharge} from '../../../api/FetchRecharge';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FetchBalance} from '../../../api/FetchBalance';
+import {RechargeBalance} from '../../../api/RechargeBalance';
 
 const Recharge = () => {
   const {
@@ -64,7 +65,9 @@ const Recharge = () => {
               razorpay_order_id: res.data.data,
               razorpay_signature: data.razorpay_signature,
             })
-            .then(() => {})
+            .then(() => {
+              RechargeBalance('12');
+            })
             .catch(error => {
               // handle failure
               Alert.alert(`Error: ${error.code} | ${error.description}`);
