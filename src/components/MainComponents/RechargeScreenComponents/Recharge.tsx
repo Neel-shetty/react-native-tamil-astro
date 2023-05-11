@@ -66,7 +66,10 @@ const Recharge = () => {
               razorpay_signature: data.razorpay_signature,
             })
             .then(() => {
-              RechargeBalance('12');
+              RechargeBalance({
+                amount,
+                transaction_id: data.razorpay_payment_id,
+              });
             })
             .catch(error => {
               // handle failure

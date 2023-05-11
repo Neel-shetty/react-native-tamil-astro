@@ -1,43 +1,52 @@
-import {FlatList, StyleSheet, View} from 'react-native';
-import React from 'react';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect, useMemo} from 'react';
 import Transaction from './Transaction';
 import {layout} from '../../../constants/layout';
 import {useQuery} from '@tanstack/react-query';
 import {FetchTransactionHistory} from '../../../api/FetchTransactionHistory';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export interface TransactionType {
-  date: string;
-  amount: number;
-  bonus?: number;
-}
+// export interface TransactionType {
+//   date: string;
+//   amount: number;
+//   bonus?: number;
+// }
 
 const TransactionList = () => {
-  const transaction: TransactionType = {
-    date: '12-Dec-22',
-    amount: 250,
-    bonus: 25,
-  };
-  const [transactions, _] = React.useState<TransactionType[]>([
-    transaction,
-    {...transaction, bonus: undefined},
-    transaction,
-    transaction,
-  ]);
+  const random = useMemo(() => Math.random(), []);
 
-  const {} = useQuery(['TransactionHistory'], async () => {
+  const {
+    data: transactions,
+    isError,
+    isLoading,
+    refetch,
+  } = useQuery(['TransactionHistory', JSON.stringify(random)], async () => {
     const id = await AsyncStorage.getItem('id');
-    if (id) {
-      FetchTransactionHistory(id);
+    if (!id) {
+      return;
     }
+    return FetchTransactionHistory(id);
   });
+
+  useEffect(() => {
+    console.log('mounting');
+    refetch();
+  }, [refetch]);
 
   return (
     <View style={styles.root}>
-      <FlatList
-        data={transactions}
-        renderItem={({item}) => <Transaction transaction={item} />}
-      />
+      {isLoading || !transactions ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          refreshing={isLoading}
+          onRefresh={() => {
+            refetch();
+          }}
+          data={transactions.reverse()}
+          renderItem={({item}) => <Transaction transaction={item} />}
+        />
+      )}
     </View>
   );
 };

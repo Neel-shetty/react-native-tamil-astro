@@ -3,9 +3,9 @@ import React from 'react';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
-import {TransactionType} from './TransactionList';
+import {TransactionHistoryType} from '../../../api/FetchTransactionHistory';
 
-const Transaction = ({transaction}: {transaction: TransactionType}) => {
+const Transaction = ({transaction}: {transaction: TransactionHistoryType}) => {
   return (
     <View style={styles.root}>
       <View style={styles.leftContainer}>
