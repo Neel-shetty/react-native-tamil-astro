@@ -49,6 +49,7 @@ export type TabStackParamList = {
   [HomeScreen.name]: {
     astrologer?: string;
     showGenderOptions?: boolean;
+    communicationType?: 'chat' | 'call';
   };
   [DetailsFormScreen.name]: undefined;
   [ChatScreen.name]: {chatId?: string};

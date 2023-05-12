@@ -24,6 +24,7 @@ const Chat = () => {
   const [showRechargeModal, setShowRechargeModal] = React.useState(false);
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
+  const [randomId, setRandomId] = React.useState<number>(0);
 
   const route = useRoute<ChatScreenNavigationProp['route']>();
   const flatListRef = React.useRef<FlatList>(null);
@@ -41,14 +42,27 @@ const Chat = () => {
   }
 
   const userID = React.useMemo(() => Auth().currentUser?.uid, []);
+  const uniqueId = React.useMemo(
+    () => Math.floor(100000 + Math.random() * 900000),
+    [],
+  );
   async function sendMessageToMyServer(message: string) {
     const ids = route.params?.chatId?.split('-');
     const astroId = ids?.filter(id => id !== userID);
 
     //generate random number of 6 digits
-    const uniqueId = Math.floor(100000 + Math.random() * 900000);
+    console.log(
+      '🚀 ~ file: Chat.tsx:50 ~ sendMessageToMyServer ~ uniqueId:',
+      uniqueId,
+    );
     if (astroId) {
-      SendMessage({to: astroId[0], message, from: userID, uniqueId});
+      const res = await SendMessage({
+        to: astroId[0],
+        message,
+        from: userID,
+        uniqueId,
+      });
+      console.log('send message result- ---- ', res);
     }
   }
 
@@ -70,6 +84,11 @@ const Chat = () => {
   React.useEffect(() => {
     getMessages();
   }, []);
+
+  // React.useEffect(() => {
+  //   const uniqueId = Math.floor(100000 + Math.random() * 900000);
+  //   setRandomId(uniqueId);
+  // }, [setRandomId]);
 
   //wrap user in useMemo
   const user = React.useMemo(() => Auth().currentUser, []);

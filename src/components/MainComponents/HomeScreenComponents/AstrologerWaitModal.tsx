@@ -11,7 +11,7 @@ import ChatScreen from '../../../screens/Main/ChatScreen';
 import {useQuery} from '@tanstack/react-query';
 import {AssignAstrologer} from '../../../api/AssignAstrologer';
 import Auth from '@react-native-firebase/auth';
-import FireStore from '@react-native-firebase/firestore';
+import FireStore, {firebase} from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store';
@@ -121,8 +121,16 @@ const AstrologerWaitModal = ({
         combinedUserId,
       );
 
-      navigation.navigate(CallScreen.name, {
-        combinedUserId,
+      FireStore().collection('calls').doc().set({
+        userId: user?.uid,
+        astrologerId: astrologer.id,
+        astologerImage: astrologer.image,
+        astrologerName: astrologer.name,
+        astrologerRating: astrologer.rating,
+        astrologerPrice: 12,
+        atrologerSkills: astrologer.skills,
+        astrologerExperience: astrologer.experience,
+        time: FireStore.FieldValue.serverTimestamp(),
       });
     }
   }, [astrologer, route.params?.communicationType]);
@@ -185,7 +193,6 @@ const AstrologerWaitModal = ({
         <View style={styles.subTitleContainer}>
           <Text
             onPress={() => {
-              
               if (
                 route.params?.communicationType === 'chat' ||
                 communicationType === 'chat'
