@@ -17,6 +17,7 @@ import {ChatScreenNavigationProp} from '../../../router/types';
 import {SendMessage} from '../../../api/SendMessage';
 import {DeductBalance} from '../../../api/DeductBalance';
 import {ExpireTrial} from '../../../api/ExpireTrial';
+import {FlashList} from '@shopify/flash-list';
 
 export type messagesType = {
   uid: string;
@@ -28,11 +29,9 @@ const Chat = () => {
   const [showRechargeModal, setShowRechargeModal] = React.useState(false);
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
-  const [randomId, setRandomId] = React.useState<number>(0);
-  const [time, setTime] = React.useState<number>(0);
 
   const route = useRoute<ChatScreenNavigationProp['route']>();
-  console.log('🚀 ~ file: Chat.tsx:31 ~ Chat ~ route:', route.params.history);
+  console.log('🚀 ~ file: Chat.tsx:31 ~ Chat ~ route:', route.params);
   const flatListRef = React.useRef<FlatList>(null);
 
   // const chatId = React.useMemo(() => route.params?.chatId, [route]);
@@ -45,9 +44,16 @@ const Chat = () => {
     firestore()
       .collection('chats')
       .doc(route.params?.chatId)
+      .collection('messages')
+      .orderBy('createdAt', 'asc')
+      // .limitToLast(5)
       .onSnapshot(doc => {
-        // console.log('Current data: ', doc.data());
-        setMessages(doc.data()?.messages);
+        console.log('🚀 ~ file: Chat.tsx:58 ~ getMessages ~ doc:', doc);
+        const texts: messagesType = [];
+        doc.forEach(message => {
+          texts.push(message.data() as messagesType[0]);
+        });
+        setMessages(texts);
       });
   }
 
@@ -94,6 +100,10 @@ const Chat = () => {
   async function sendMessageToMyServer(message: string) {
     const ids = route.params?.chatId?.split('-');
     const astroId = ids?.filter(id => id !== userID);
+    console.log(
+      '🚀 ~ file: Chat.tsx:97 ~ sendMessageToMyServer ~ astroId:',
+      astroId,
+    );
 
     //generate random number of 6 digits
     console.log(
@@ -101,13 +111,13 @@ const Chat = () => {
       uniqueId,
     );
     if (astroId) {
-      const res = await SendMessage({
+      const res = SendMessage({
         to: astroId[0],
         message,
         from: userID,
         uniqueId,
       });
-      console.log('send message result- ---- ', res);
+      // console.log('send message result- ---- ', res);
     }
   }
 
@@ -118,11 +128,11 @@ const Chat = () => {
     await firestore()
       .collection('chats')
       .doc(route.params?.chatId)
-      .update({
-        messages: firestore.FieldValue.arrayUnion({
-          message,
-          uid: user?.uid,
-        }),
+      .collection('messages')
+      .add({
+        uid: user?.uid,
+        message,
+        createdAt: firestore.FieldValue.serverTimestamp(),
       });
   }
 
@@ -146,7 +156,7 @@ const Chat = () => {
       </View>
       <View style={styles.chatContainer}>
         {/* make it scroll to bottom automatically*/}
-        <FlatList
+        <FlashList
           data={messages}
           renderItem={({item}) => {
             return (
@@ -162,6 +172,7 @@ const Chat = () => {
               flatListRef.current?.scrollToEnd({animated: true});
             }
           }}
+          estimatedItemSize={100}
         />
         {!route.params?.history && (
           <Formik

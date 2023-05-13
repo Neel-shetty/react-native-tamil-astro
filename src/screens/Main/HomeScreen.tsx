@@ -59,7 +59,7 @@ const HomeScreen = () => {
       <View style={styles.headingContainer}>
         <Text
           onPress={() => {
-            navigation.navigate(ChatScreen.name);
+            navigation.navigate(ChatScreen.name, {chatId: '16-17'});
           }}
           style={styles.heading}>
           In which area of life do you want guidance?

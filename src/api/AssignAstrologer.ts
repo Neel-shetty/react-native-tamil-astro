@@ -35,7 +35,7 @@ export interface AssignedAstrologerType {
 
 export async function AssignAstrologer() {
   return api
-    .post('find-astro')
+    .post('find-astro', {gender: 'male', category_id: 1})
     .then(res => {
       // console.log(res.data);
       return res.data?.data as AssignedAstrologerType;

@@ -54,7 +54,7 @@ export type TabStackParamList = {
   };
   [DetailsFormScreen.name]: undefined;
   [ChatScreen.name]: {chatId?: string; history?: messagesType};
-  [CallScreen.name]: undefined;
+  [CallScreen.name]: {combinedUserId?: string | null};
 };
 
 export type DrawerNavigatorNavigationProp = BottomTabScreenProps<

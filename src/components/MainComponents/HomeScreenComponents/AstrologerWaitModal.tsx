@@ -54,11 +54,17 @@ const AstrologerWaitModal = ({
 
   const combinedUserId = React.useMemo(() => {
     const user = Auth().currentUser;
-    if (!user || !astrologer) return null;
+    if (!user || !astrologer) {
+      return null;
+    }
     return Number(user?.uid) > Number(astrologer.id)
       ? `${astrologer.id}-${user?.uid}`
       : `${user?.uid}-${astrologer.id}`;
   }, [astrologer]);
+  console.log(
+    '🚀 ~ file: AstrologerWaitModal.tsx:64 ~ combinedUserId ~ combinedUserId:',
+    combinedUserId,
+  );
 
   //use Effect for chat
   useEffect(() => {
@@ -70,10 +76,10 @@ const AstrologerWaitModal = ({
         const user = Auth().currentUser;
         console.log(
           '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
-          user.uid,
+          user?.uid,
         );
 
-        const combinedUserId =
+        const combinedUid =
           Number(user?.uid) > Number(astrologer.id)
             ? //@ts-ignore
               `${astrologer.id}-${user?.uid}`
@@ -81,11 +87,11 @@ const AstrologerWaitModal = ({
               `${user?.uid}-${astrologer.id}`;
         console.log(
           '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
-          combinedUserId,
+          combinedUid,
         );
         const doc = await FireStore()
           .collection('chats')
-          .doc(combinedUserId)
+          .doc(combinedUid)
           .get();
 
         if (doc.exists) {
@@ -102,7 +108,7 @@ const AstrologerWaitModal = ({
           languages += ' Tamil ';
         }
 
-        FireStore().collection('chats').doc(combinedUserId).set({
+        FireStore().collection('chats').doc(combinedUid).set({
           messages: [],
           userId: user?.uid,
           astrologerId: astrologer.id,
@@ -131,7 +137,7 @@ const AstrologerWaitModal = ({
     if (communicationType === 'call' && astrologer && visible) {
       console.log('call use effect running');
       const user = Auth().currentUser;
-      const combinedUserId =
+      const combinedUid =
         Number(user?.uid) > Number(astrologer.id)
           ? //@ts-ignore
             `${astrologer.id}-${user?.uid}`
@@ -139,7 +145,7 @@ const AstrologerWaitModal = ({
             `${user?.uid}-${astrologer.id}`;
       console.log(
         '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
-        combinedUserId,
+        combinedUid,
       );
       FireStore().collection('calls').doc().set({
         userId: user?.uid,
@@ -151,7 +157,7 @@ const AstrologerWaitModal = ({
         atrologerSkills: astrologer.skills,
         astrologerExperience: astrologer.experience,
         time: FireStore.FieldValue.serverTimestamp(),
-        combinedUserId,
+        combinedUserId: combinedUid,
       });
     }
   }, [astrologer, visible, communicationType]);
@@ -175,6 +181,17 @@ const AstrologerWaitModal = ({
     setVisible(false);
     Alert.alert('Error', 'Something went wrong, please try again later');
     return null;
+  }
+
+  let languages = '';
+  if (astrologer?.speak_hindi === '1') {
+    languages += ' Hindi ';
+  }
+  if (astrologer?.speak_english === '1') {
+    languages += ' English ';
+  }
+  if (astrologer?.speak_tamil === '1') {
+    languages += ' Tamil ';
   }
 
   return (
@@ -215,10 +232,12 @@ const AstrologerWaitModal = ({
               <Text style={styles.infoText}>
                 Experience: {astrologer.experience}Yrs
               </Text>
-              <Text style={styles.infoText}>
-                Language: {astrologer?.language}
+              <Text numberOfLines={1} style={styles.infoText}>
+                Language: {languages}
               </Text>
-              <Text style={styles.infoText}>Skills: {astrologer.skills}</Text>
+              <Text numberOfLines={1} style={styles.infoText}>
+                Skills: {astrologer.skills}
+              </Text>
             </View>
             <View style={styles.subTitleContainer}>
               <Text
@@ -229,7 +248,7 @@ const AstrologerWaitModal = ({
                   ) {
                     setVisible(false);
                     navigation.navigate(ChatScreen.name, {
-                      chatId: combinedUserId,
+                      chatId: combinedUserId as string,
                     });
                   }
                   if (

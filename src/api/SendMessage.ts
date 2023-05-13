@@ -13,6 +13,13 @@ export async function SendMessage({
   uniqueId: number;
   message: string;
 }) {
+  console.log(
+    '🚀 ~ file: SendMessage.ts:16 ~ to:',
+    to,
+    from,
+    uniqueId,
+    message,
+  );
   return api
     .post('/chat-insert', {
       to_user: to,
@@ -24,6 +31,7 @@ export async function SendMessage({
       return res.data as SendMessageType;
     })
     .catch(err => {
+      console.log('🚀 ~ file: SendMessage.ts:30 ~ err:', err?.response?.data);
       return err;
     }) as Promise<SendMessageType>;
 }
