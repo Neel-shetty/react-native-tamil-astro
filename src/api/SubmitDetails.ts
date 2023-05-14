@@ -44,13 +44,13 @@ export async function SubmitDetails({
     .then(res => {
       console.log(res.data);
       if (res.data?.status) {
-        Alert.alert('Success', res.data?.message);
+        // Alert.alert('Success', res.data?.message);
       }
     })
     .catch(error => {
       console.log(error);
       if (error) {
-        Alert.alert('Error', error?.response?.data?.message);
+        // Alert.alert('Error', error?.response?.data?.message);
       }
     });
 }

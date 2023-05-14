@@ -10,6 +10,12 @@ import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
 import File from '../../../../assets/icons/HistoryScreen/file.svg';
 import Play from '../../../../assets/icons/HistoryScreen/play.svg';
 import {use} from 'i18next';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ChatScreenNavigationProp,
+  HistoryTabDrawerNavigatorNavigationProp,
+} from '../../../router/types';
+import ChatScreen from '../../../screens/Main/ChatScreen';
 
 interface HistoryCardPropTypes {
   astrologer: {
@@ -44,6 +50,7 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
   );
   const [rating, setRating] = React.useState<string[]>(['1']);
   console.log('🚀 ~ file: HistoryCard.tsx:46 ~ HistoryCard ~ rating:', rating);
+  const navigation = useNavigation<ChatScreenNavigationProp['navigation']>();
 
   useEffect(() => {
     const rate = Array(Math.round(Number(astrologer.astrologerRating))).fill(
@@ -104,7 +111,13 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
             </View>
             <View style={styles.buttonContainer}>
               <View style={styles.topButton}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate(ChatScreen.name, {
+                      history: astrologer.messages,
+                    });
+                  }}
+                  style={styles.button}>
                   {astrologer.chat ? <File /> : <Play />}
                   <Text style={styles.buttonText}>
                     {astrologer.chat ? 'Read Past Chat' : 'Play Past Call'}

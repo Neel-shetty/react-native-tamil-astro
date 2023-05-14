@@ -8,31 +8,38 @@ import {Formik} from 'formik';
 import RechargeModal from './RechargeModal';
 import Balance0Modal from './Balance0Modal';
 import FeedbackModal from './FeedbackModal';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 import Auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
 import {ChatScreenNavigationProp} from '../../../router/types';
 import {SendMessage} from '../../../api/SendMessage';
 import {DeductBalance} from '../../../api/DeductBalance';
 
+export type messagesType = {
+  uid: string;
+  message: string;
+}[];
+
 const Chat = () => {
-  const [messages, setMessages] = React.useState<
-    {
-      uid: string;
-      message: string;
-    }[]
-  >([]);
+  const [messages, setMessages] = React.useState<messagesType>([]);
   const [showRechargeModal, setShowRechargeModal] = React.useState(false);
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
   const [randomId, setRandomId] = React.useState<number>(0);
 
   const route = useRoute<ChatScreenNavigationProp['route']>();
+  console.log('🚀 ~ file: Chat.tsx:31 ~ Chat ~ route:', route.params.history);
   const flatListRef = React.useRef<FlatList>(null);
 
   // const chatId = React.useMemo(() => route.params?.chatId, [route]);
 
   async function getMessages() {
+    if (route.params?.history) {
+      setMessages(route.params?.history);
+      return;
+    }
     firestore()
       .collection('chats')
       .doc(route.params?.chatId)
@@ -50,14 +57,25 @@ const Chat = () => {
 
   React.useEffect(() => {
     // a function that runs every 1 minute
+    if (route.params?.history) {
+      return;
+    }
+    let chatDetails: FirebaseFirestoreTypes.DocumentData;
+    firestore()
+      .collection('chats')
+      .doc(route.params?.chatId)
+      .get()
+      .then(doc => {
+        chatDetails = doc;
+      });
+    console.log(
+      '🚀 ~ file: Chat.tsx:70 ~ React.useEffect ~ chatDetails:',
+      chatDetails,
+    );
     const interval = setInterval(() => {
       const id = Auth().currentUser?.uid;
       console.log('This will run every 1 minute!');
       async function run() {
-        const chatDetails = await firestore()
-          .collection('chats')
-          .doc(route.params?.chatId)
-          .get();
         DeductBalance({
           id: id as string,
           amount: chatDetails.data()?.astrologerPrice,
@@ -65,8 +83,7 @@ const Chat = () => {
           astrologerName: chatDetails.data()?.astrologerName,
         });
       }
-      // run();
-      // setRandomId(Math.floor(100000 + Math.random() * 900000));
+      run();
     }, 60000);
     return () => clearInterval(interval);
   }, [uniqueId, route.params?.chatId]);
@@ -121,7 +138,7 @@ const Chat = () => {
   return (
     <View style={styles.root}>
       <View style={styles.timerContainer}>
-        <Timer />
+        {!route.params?.history && <Timer />}
       </View>
       <View style={styles.chatContainer}>
         {/* make it scroll to bottom automatically*/}
@@ -137,27 +154,29 @@ const Chat = () => {
           }}
           ref={flatListRef}
           onContentSizeChange={({}) => {
-            if (messages.length > 0) {
+            if (messages?.length > 0) {
               flatListRef.current?.scrollToEnd({animated: true});
             }
           }}
         />
-        <Formik
-          initialValues={{message: ''}}
-          onSubmit={(values, {resetForm}) => {
-            console.log(values);
-            sendMessage(values.message);
-            resetForm();
-          }}>
-          {({handleChange, handleBlur, handleSubmit, values}) => (
-            <ChatInput
-              handleBlur={handleBlur('message')}
-              handleChange={handleChange('message')}
-              value={values.message}
-              onPress={handleSubmit}
-            />
-          )}
-        </Formik>
+        {!route.params?.history && (
+          <Formik
+            initialValues={{message: ''}}
+            onSubmit={(values, {resetForm}) => {
+              console.log(values);
+              sendMessage(values.message);
+              resetForm();
+            }}>
+            {({handleChange, handleBlur, handleSubmit, values}) => (
+              <ChatInput
+                handleBlur={handleBlur('message')}
+                handleChange={handleChange('message')}
+                value={values.message}
+                onPress={handleSubmit}
+              />
+            )}
+          </Formik>
+        )}
       </View>
       <RechargeModal
         visible={showRechargeModal}
