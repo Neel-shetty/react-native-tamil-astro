@@ -91,6 +91,17 @@ const AstrologerWaitModal = ({
         if (doc.exists) {
           return;
         }
+        let languages = '';
+        if (astrologer.speak_hindi) {
+          languages += ' Hindi ';
+        }
+        if (astrologer.speak_english) {
+          languages += ' English ';
+        }
+        if (astrologer.speak_tamil) {
+          languages += ' Tamil ';
+        }
+
         FireStore().collection('chats').doc(combinedUserId).set({
           messages: [],
           userId: user?.uid,
@@ -101,8 +112,10 @@ const AstrologerWaitModal = ({
           astrologerPrice: 12,
           atrologerSkills: astrologer.skills,
           astrologerExperience: astrologer.experience,
+          astrologerClients: astrologer.clients,
           chat: true,
           time: FireStore.FieldValue.serverTimestamp(),
+          languages,
           // astrologerPrice: astrologer.,
         });
       }
@@ -145,7 +158,7 @@ const AstrologerWaitModal = ({
 
   useEffect(() => {
     if (astrologer) {
-      const rating = Array(Number(astrologer.rating)).fill('1');
+      const rating = Array(astrologer.rating).fill('1');
       setStars(rating);
     }
   }, [astrologer]);

@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {colors} from '../../../themes/colors';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
@@ -9,6 +9,7 @@ import Call from '../../../../assets/icons/HomeScreen/call.svg';
 import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
 import File from '../../../../assets/icons/HistoryScreen/file.svg';
 import Play from '../../../../assets/icons/HistoryScreen/play.svg';
+import {use} from 'i18next';
 
 interface HistoryCardPropTypes {
   astrologer: {
@@ -37,7 +38,20 @@ interface HistoryCardPropTypes {
 }
 
 const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
-  const rating = Array(Number(astrologer.astrologerRating)).fill(1);
+  console.log(
+    '🚀 ~ file: HistoryCard.tsx:40 ~ HistoryCard ~ astrologer:',
+    astrologer.astrologerRating,
+  );
+  const [rating, setRating] = React.useState<string[]>(['1']);
+  console.log('🚀 ~ file: HistoryCard.tsx:46 ~ HistoryCard ~ rating:', rating);
+
+  useEffect(() => {
+    const rate = Array(Math.round(Number(astrologer.astrologerRating))).fill(
+      '1',
+    );
+    setRating(rate);
+  }, [astrologer.astrologerRating]);
+
   return (
     <View style={styles.background}>
       <View style={styles.root}>

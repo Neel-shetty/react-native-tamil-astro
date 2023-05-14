@@ -17,6 +17,7 @@ import firestore, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useRoute} from '@react-navigation/native';
 import Auth from '@react-native-firebase/auth';
+import PrimaryButton from '../UI/PrimaryButton';
 
 const Call = () => {
   const [localstream, setLocalStream] = React.useState<MediaStream | null>();
@@ -315,7 +316,8 @@ const Call = () => {
   //display call button
   return (
     <View>
-      <Button title="Call" onPress={create} />
+      {/* <Button title="Call" onPress={create} /> */}
+      <PrimaryButton title="Call" onPress={create} />
     </View>
   );
 };

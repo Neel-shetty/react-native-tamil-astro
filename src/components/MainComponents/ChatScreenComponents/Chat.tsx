@@ -13,6 +13,7 @@ import Auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
 import {ChatScreenNavigationProp} from '../../../router/types';
 import {SendMessage} from '../../../api/SendMessage';
+import {DeductBalance} from '../../../api/DeductBalance';
 
 const Chat = () => {
   const [messages, setMessages] = React.useState<
@@ -46,6 +47,30 @@ const Chat = () => {
     () => Math.floor(100000 + Math.random() * 900000),
     [],
   );
+
+  React.useEffect(() => {
+    // a function that runs every 1 minute
+    const interval = setInterval(() => {
+      const id = Auth().currentUser?.uid;
+      console.log('This will run every 1 minute!');
+      async function run() {
+        const chatDetails = await firestore()
+          .collection('chats')
+          .doc(route.params?.chatId)
+          .get();
+        DeductBalance({
+          id: id as string,
+          amount: chatDetails.data()?.astrologerPrice,
+          uniqueId: uniqueId,
+          astrologerName: chatDetails.data()?.astrologerName,
+        });
+      }
+      // run();
+      // setRandomId(Math.floor(100000 + Math.random() * 900000));
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [uniqueId, route.params?.chatId]);
+
   async function sendMessageToMyServer(message: string) {
     const ids = route.params?.chatId?.split('-');
     const astroId = ids?.filter(id => id !== userID);

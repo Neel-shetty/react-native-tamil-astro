@@ -29,7 +29,7 @@ export async function SubmitDetails({
     formdata.append('time_of_birth', date.toISOString());
   }
   if (maritialStatus) {
-    formdata.append('maritial_status', maritialStatus);
+    formdata.append('marital_status', maritialStatus);
   }
   if (typeOfProblem) {
     formdata.append('type_of_problem', typeOfProblem);
