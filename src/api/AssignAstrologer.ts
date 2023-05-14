@@ -37,11 +37,11 @@ export async function AssignAstrologer() {
   return api
     .post('find-astro')
     .then(res => {
-      console.log(res.data);
-      return res.data.data as AssignedAstrologerType;
+      // console.log(res.data);
+      return res.data?.data as AssignedAstrologerType;
     })
     .catch(err => {
-      console.log(err.data);
+      console.error(err?.response?.data);
       return err;
     }) as Promise<AssignedAstrologerType>;
 }

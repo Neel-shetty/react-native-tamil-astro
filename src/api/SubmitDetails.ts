@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import {api} from '.';
+import auth from '@react-native-firebase/auth';
 
 interface SubmitDetailsProps {
   name: string;
@@ -16,29 +17,40 @@ export async function SubmitDetails({
   placeOfBirth,
   maritialStatus,
   typeOfProblem,
+  date,
 }: SubmitDetailsProps) {
+  const user_id = auth().currentUser?.uid;
   const formdata = new FormData();
+  formdata.append('user_id', user_id);
   formdata.append('name', name);
   formdata.append('gender', gender);
-  formdata.append('placeOfBirth', placeOfBirth);
+  formdata.append('place_of_birth', placeOfBirth);
+  if (date) {
+    formdata.append('time_of_birth', date.toISOString());
+  }
   if (maritialStatus) {
-    formdata.append('maritialStatus', maritialStatus);
+    formdata.append('maritial_status', maritialStatus);
   }
   if (typeOfProblem) {
-    formdata.append('typeOfProblem', typeOfProblem);
+    formdata.append('type_of_problem', typeOfProblem);
   }
   api
-    .post('', formdata)
+    .post('astro-detail-update', formdata, {
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then(res => {
       console.log(res.data);
       if (res.data?.status) {
-        Alert.alert('Success', res.data.message);
+        Alert.alert('Success', res.data?.message);
       }
     })
     .catch(error => {
       console.log(error);
       if (error) {
-        Alert.alert('Error', error.response.data.message);
+        Alert.alert('Error', error?.response?.data?.message);
       }
     });
 }

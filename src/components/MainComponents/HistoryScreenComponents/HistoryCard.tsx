@@ -12,19 +12,32 @@ import Play from '../../../../assets/icons/HistoryScreen/play.svg';
 
 interface HistoryCardPropTypes {
   astrologer: {
-    name: string;
-    language: string;
-    skills: string;
-    experience: string;
-    clients: string;
-    stars: number;
+    //   name: string;
+    //   language: string;
+    //   skills: string;
+    //   experience: string;
+    //   clients: string;
+    //   stars: number;
+    //   chat: boolean;
+    //   cost: string;
+    // };
+
+    astrologerId: number;
+    astrologerExperience: string;
+    astrologerImage: string;
+    astrologerRating: string;
+    userId: string;
+    astrologerName: string;
+    astrologerPrice: number;
+    astrologerSkills: string;
     chat: boolean;
-    cost: string;
+    messages: {message: string; uid: string}[];
+    time: any;
   };
 }
 
 const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
-  const rating = Array(astrologer.stars).fill(1);
+  const rating = Array(Number(astrologer.astrologerRating)).fill(1);
   return (
     <View style={styles.background}>
       <View style={styles.root}>
@@ -45,13 +58,15 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
           </View>
           <View style={styles.topRight}>
             <Text style={styles.title} numberOfLines={1}>
-              {astrologer.name}
+              {astrologer.astrologerName}
               <Text style={styles.text}>
-                {'  '}[{astrologer.language}]
+                {'  '}[{astrologer?.astrologerLanguage}]
               </Text>
             </Text>
-            <Text style={styles.text}>{astrologer.skills}</Text>
-            <Text style={styles.text}>Exp: {astrologer.experience}Yrs </Text>
+            <Text style={styles.text}>{astrologer.astrologerSkills}</Text>
+            <Text style={styles.text}>
+              Exp: {astrologer.astrologerExperience}Yrs{' '}
+            </Text>
           </View>
         </View>
         <View style={styles.bottomContainer}>
@@ -67,7 +82,9 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
           <View style={styles.bottomRight}>
             <View style={styles.costContainer}>
               <View style={styles.idk}>
-                <Text style={styles.text}>₹{astrologer.cost}/min</Text>
+                <Text style={styles.text}>
+                  ₹{astrologer.astrologerPrice}/min
+                </Text>
               </View>
               <View style={styles.flex} />
             </View>

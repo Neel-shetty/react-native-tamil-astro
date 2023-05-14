@@ -12,25 +12,45 @@ import {DetailsFormScreenNavigationProp} from '../../../router/types';
 import DatePicker from './DatePicker';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../store';
+import {useQuery} from '@tanstack/react-query';
+import {FetchBalance} from '../../../api/FetchBalance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const InputFields = () => {
-  const [gender, setGender] = useState<string>();
+  const [gender, setGender] = useState<'male' | 'female' | 'other'>();
   const [maritalStatus, setMaritalStatus] = useState<string>();
   const [problem, setProblem] = useState<string>();
   const [dropdownErrors, setDropdownErrors] = useState({
     gender: false,
     maritalStatus: false,
     problem: false,
+    time: false,
   });
   const [lowBalance, setLowBalance] = useState(false);
   const [date, setDate] = useState<Date>();
   console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
-  const route = useRoute<DetailsFormScreenNavigationProp['route']>();
+
+  const communicationType = useSelector(
+    (state: RootState) => state.ui.communicationType,
+  );
   console.log(
-    '🚀 ~ file: InputFields.tsx:29 ~ InputFields ~ route:',
-    route.params?.communicationType,
+    '🚀 ~ file: InputFields.tsx:40 ~ InputFields ~ communicationType:',
+    communicationType,
   );
 
+  const {
+    data: balanceData,
+    error: balanceError,
+    isLoading: balanceLoading,
+  } = useQuery(['userBalance'], async () => {
+    const id: string = (await AsyncStorage.getItem('id')) as string;
+    return FetchBalance(id);
+  });
+  if (balanceData?.balance && balanceData?.balance < 50) {
+    setLowBalance(true);
+  }
   const validationSchema = yup.object({
     name: yup
       .string()
@@ -51,7 +71,10 @@ const InputFields = () => {
           if (!gender) {
             // dropdownErrors.gender = true;
             setDropdownErrors({...dropdownErrors, gender: true});
-            // return; // NOTE: uncommnet this later
+            return; // NOTE: uncommnet this later
+          }
+          if (!date) {
+            setDropdownErrors({...dropdownErrors, time: true});
           }
           setDropdownErrors({...dropdownErrors, gender: false});
           await SubmitDetails({
@@ -66,11 +89,10 @@ const InputFields = () => {
           // NOTE: Workaround for require cycle, screen name is not dynamic
           navigation.navigate('HomeScreen', {
             astrologer: '1',
-            communicationType: route.params?.communicationType,
+            communicationType: communicationType,
           });
         }}
-        // validationSchema={validationSchema}
-      >
+        validationSchema={validationSchema}>
         {({
           handleChange,
           handleBlur,
@@ -89,15 +111,6 @@ const InputFields = () => {
                 errors.name && touched.name ? 'Name field is required' : ''
               }
             />
-            <CustomDropdown
-              placeholder="Gender*"
-              value={gender}
-              setValue={setGender}
-              error={
-                dropdownErrors.gender ? 'This is a required field  ' : null
-              }
-            />
-            <DatePicker setParentDate={setDate} placeholder="Time of Birth*" />
             <CustomInput
               placeholder="Place of Birth*"
               handleChange={handleChange('placeOfBirth')}
@@ -109,17 +122,37 @@ const InputFields = () => {
                   : ''
               }
             />
+
+            <DatePicker setParentDate={setDate} placeholder="Time of Birth*" />
+            <CustomDropdown
+              placeholder="Gender*"
+              value={gender}
+              setValue={setGender}
+              data={[
+                {label: 'male', value: 'male'},
+                {label: 'female', value: 'female'},
+                {label: 'other', value: 'other'},
+              ]}
+              error={
+                dropdownErrors.gender ? 'This is a required field  ' : null
+              }
+            />
             <CustomDropdown
               placeholder="Marital Status"
               value={maritalStatus}
               setValue={setMaritalStatus}
               error={''}
+              data={[
+                {label: 'single', value: 'single'},
+                {label: 'married', value: 'married'},
+              ]}
             />
             <CustomDropdown
               placeholder="Type of Problem"
               value={problem}
               setValue={setProblem}
               error={''}
+              data={[{label: 'money', value: 'money'}]}
             />
             <View style={styles.bottomContainer}>
               <Text style={styles.subtitle}>

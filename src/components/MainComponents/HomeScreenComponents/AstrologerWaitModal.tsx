@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import Modal from 'react-native-modal';
 import {layout} from '../../../constants/layout';
@@ -11,28 +18,22 @@ import ChatScreen from '../../../screens/Main/ChatScreen';
 import {useQuery} from '@tanstack/react-query';
 import {AssignAstrologer} from '../../../api/AssignAstrologer';
 import Auth from '@react-native-firebase/auth';
-import FireStore, {firebase} from '@react-native-firebase/firestore';
+import FireStore from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store';
 
 const AstrologerWaitModal = ({
   visible,
-  astroId,
   setVisible,
 }: {
   visible: boolean;
-  astroId: string;
   setVisible: (visible: boolean) => void;
 }) => {
   const [stars, setStars] = React.useState<string[]>(['1']);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const route = useRoute<HomeScreenNavigationProp['route']>();
-  console.log(
-    '🚀 ~ file: AstrologerWaitModal.tsx:29 ~ route:',
-    route.params?.communicationType,
-  );
   const communicationType = useSelector(
     (state: RootState) => state.ui.communicationType,
   );
@@ -45,7 +46,11 @@ const AstrologerWaitModal = ({
     data: astrologer,
     error,
     isLoading,
-  } = useQuery(['assign-astrologer'], AssignAstrologer);
+  } = useQuery(
+    ['assign-astrologer', visible],
+    visible ? AssignAstrologer : () => null,
+  );
+  console.log('🚀 ~ file: AstrologerWaitModal.tsx:49 ~ error:', error);
 
   const combinedUserId = React.useMemo(() => {
     const user = Auth().currentUser;
@@ -54,62 +59,65 @@ const AstrologerWaitModal = ({
       ? `${astrologer.id}-${user?.uid}`
       : `${user?.uid}-${astrologer.id}`;
   }, [astrologer]);
-  console.log(
-    '🚀 ~ file: AstrologerWaitModal.tsx:42 ~ combinedUserId ~ combinedUserId:',
-    combinedUserId,
-  );
 
-  // console.log(
-  //   '🚀 ~ file: AstrologerWaitModal.tsx:38 ~ astrologer:',
-  //   astrologer,
-  // );
-  // console.log('🚀 ~ file: AstrologerWaitModal.tsx:35 ~ data:', data, error);
-
+  //use Effect for chat
   useEffect(() => {
+    console.log('use Effect running');
+    console.log(astrologer);
     // create chat between user and astrologer
-    if (route.params?.communicationType === 'chat' && astrologer) {
-      // if (astrologer) {
-      const user = Auth().currentUser;
-      console.log(
-        '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
-        user.uid,
-      );
+    async function createChat() {
+      if (communicationType === 'chat' && astrologer && visible) {
+        const user = Auth().currentUser;
+        console.log(
+          '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
+          user.uid,
+        );
 
-      const combinedUserId =
-        Number(user?.uid) > Number(astrologer.id)
-          ? //@ts-ignore
-            `${astrologer.id}-${user?.uid}`
-          : //@ts-ignore
-            `${user?.uid}-${astrologer.id}`;
-      console.log(
-        '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
-        combinedUserId,
-      );
+        const combinedUserId =
+          Number(user?.uid) > Number(astrologer.id)
+            ? //@ts-ignore
+              `${astrologer.id}-${user?.uid}`
+            : //@ts-ignore
+              `${user?.uid}-${astrologer.id}`;
+        console.log(
+          '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
+          combinedUserId,
+        );
+        const doc = await FireStore()
+          .collection('chats')
+          .doc(combinedUserId)
+          .get();
 
-      FireStore().collection('chats').doc(combinedUserId).set({
-        messages: [],
-        userId: user?.uid,
-        astrologerId: astrologer.id,
-        astologerImage: astrologer.image,
-        astrologerName: astrologer.name,
-        astrologerRating: astrologer.rating,
-        astrologerPrice: 12,
-        atrologerSkills: astrologer.skills,
-        astrologerExperience: astrologer.experience,
-        chat: true,
-        time: FireStore.FieldValue.serverTimestamp(),
-        // astrologerPrice: astrologer.,
-      });
+        if (doc.exists) {
+          return;
+        }
+        FireStore().collection('chats').doc(combinedUserId).set({
+          messages: [],
+          userId: user?.uid,
+          astrologerId: astrologer.id,
+          astologerImage: astrologer.image,
+          astrologerName: astrologer.name,
+          astrologerRating: astrologer.rating,
+          astrologerPrice: 12,
+          atrologerSkills: astrologer.skills,
+          astrologerExperience: astrologer.experience,
+          chat: true,
+          time: FireStore.FieldValue.serverTimestamp(),
+          // astrologerPrice: astrologer.,
+        });
+      }
     }
 
-    // create call between user and astrologer
-    if (route.params?.communicationType === 'call' && astrologer) {
-      const user = Auth().currentUser;
-      console.log(
-        '🚀 ~ file: AstrologerWaitModal.tsx:45 ~ useEffect ~ user:',
-        user.uid,
-      );
+    createChat();
+  }, [astrologer, communicationType, visible]);
 
+  // use effect for call
+  useEffect(() => {
+    // create call between user and astrologer
+    console.log('use Effect 2 running');
+    if (communicationType === 'call' && astrologer && visible) {
+      console.log('call use effect running');
+      const user = Auth().currentUser;
       const combinedUserId =
         Number(user?.uid) > Number(astrologer.id)
           ? //@ts-ignore
@@ -120,7 +128,6 @@ const AstrologerWaitModal = ({
         '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
         combinedUserId,
       );
-
       FireStore().collection('calls').doc().set({
         userId: user?.uid,
         astrologerId: astrologer.id,
@@ -131,9 +138,10 @@ const AstrologerWaitModal = ({
         atrologerSkills: astrologer.skills,
         astrologerExperience: astrologer.experience,
         time: FireStore.FieldValue.serverTimestamp(),
+        combinedUserId,
       });
     }
-  }, [astrologer, route.params?.communicationType]);
+  }, [astrologer, visible, communicationType]);
 
   useEffect(() => {
     if (astrologer) {
@@ -150,9 +158,12 @@ const AstrologerWaitModal = ({
   //   // return () => clearTimeout(timer);
   // }, [setVisible]);
 
-  if (isLoading || !astrologer) {
+  if (error) {
+    setVisible(false);
+    Alert.alert('Error', 'Something went wrong, please try again later');
     return null;
   }
+
   return (
     <Modal
       style={styles.modal}
@@ -163,53 +174,64 @@ const AstrologerWaitModal = ({
       swipeDirection="down"
       backdropOpacity={0.5}>
       <View style={styles.root}>
-        <Text style={styles.title}>Your assigned Astrologer</Text>
-        <View style={styles.profileContainer}>
-          <Image
-            style={styles.profileBg}
-            source={require('../../../../assets/images/profile-bg.png')}
-          />
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={require('../../../../assets/images/profile-pic.png')}
-            />
-          </View>
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.title}>{astrologer.name}</Text>
-          <View style={styles.starContainer}>
-            {stars.map((__, index) => (
-              <Star key={index} />
-            ))}
-          </View>
-          <Text style={styles.infoText}>Clients: {astrologer.clients}</Text>
-          <Text style={styles.infoText}>
-            Experience: {astrologer.experience}Yrs
-          </Text>
-          <Text style={styles.infoText}>Language: {astrologer?.language}</Text>
-          <Text style={styles.infoText}>Skills: {astrologer.skills}</Text>
-        </View>
-        <View style={styles.subTitleContainer}>
-          <Text
-            onPress={() => {
-              if (
-                route.params?.communicationType === 'chat' ||
-                communicationType === 'chat'
-              ) {
-                navigation.navigate(ChatScreen.name, {chatId: combinedUserId});
-              }
-              if (
-                route.params?.communicationType === 'call' ||
-                communicationType === 'call'
-              ) {
-                navigation.navigate(CallScreen.name, {combinedUserId});
-              }
-            }}
-            style={styles.subTitle}>
-            Astrologer Call connecting {'\n'} Go To {communicationType}
-          </Text>
-        </View>
+        {isLoading || !astrologer ? (
+          <ActivityIndicator size="large" color={colors.palette.primary500} />
+        ) : (
+          <>
+            <Text style={styles.title}>Your assigned Astrologer</Text>
+            <View style={styles.profileContainer}>
+              <Image
+                style={styles.profileBg}
+                source={require('../../../../assets/images/profile-bg.png')}
+              />
+              <View style={styles.imageContainer}>
+                <Image
+                  style={styles.image}
+                  source={require('../../../../assets/images/profile-pic.png')}
+                />
+              </View>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.title}>{astrologer.name}</Text>
+              <View style={styles.starContainer}>
+                {stars.map((__, index) => (
+                  <Star key={index} />
+                ))}
+              </View>
+              <Text style={styles.infoText}>Clients: {astrologer.clients}</Text>
+              <Text style={styles.infoText}>
+                Experience: {astrologer.experience}Yrs
+              </Text>
+              <Text style={styles.infoText}>
+                Language: {astrologer?.language}
+              </Text>
+              <Text style={styles.infoText}>Skills: {astrologer.skills}</Text>
+            </View>
+            <View style={styles.subTitleContainer}>
+              <Text
+                onPress={() => {
+                  if (
+                    route.params?.communicationType === 'chat' ||
+                    communicationType === 'chat'
+                  ) {
+                    setVisible(false);
+                    navigation.navigate(ChatScreen.name, {
+                      chatId: combinedUserId,
+                    });
+                  }
+                  if (
+                    route.params?.communicationType === 'call' ||
+                    communicationType === 'call'
+                  ) {
+                    navigation.navigate(CallScreen.name, {combinedUserId});
+                  }
+                }}
+                style={styles.subTitle}>
+                Astrologer Call connecting {'\n'} Go To {communicationType}
+              </Text>
+            </View>
+          </>
+        )}
       </View>
     </Modal>
   );

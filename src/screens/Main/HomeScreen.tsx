@@ -42,6 +42,7 @@ const HomeScreen = () => {
   React.useEffect(() => {
     const astrologer = route.params?.astrologer;
     if (astrologer) {
+      setShowModal(false);
       setShowModal(true);
     }
   }, [route.params?.astrologer]);
@@ -101,11 +102,7 @@ const HomeScreen = () => {
         visible={astrologerOptionsVisible}
         setVisible={setAstrologerOptionsVisible}
       />
-      <AstrologerWaitModal
-        astroId={route.params?.astrologer ?? ''}
-        visible={showModal}
-        setVisible={setShowModal}
-      />
+      <AstrologerWaitModal visible={showModal} setVisible={setShowModal} />
     </View>
   );
 };
