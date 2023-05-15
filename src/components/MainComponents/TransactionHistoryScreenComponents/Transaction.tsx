@@ -9,13 +9,21 @@ const Transaction = ({transaction}: {transaction: TransactionHistoryType}) => {
   return (
     <View style={styles.root}>
       <View style={styles.leftContainer}>
-        <Text style={styles.recharge}>Recharge</Text>
+        <Text style={styles.recharge}>{transaction.title}</Text>
         <Text style={styles.date}>{transaction.date}</Text>
       </View>
       <View style={styles.rightContainer}>
         <View style={styles.space} />
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>+ ₹ {transaction.amount}</Text>
+          <Text
+            style={[
+              styles.amount,
+              transaction.type === 'debit'
+                ? {color: colors.palette.error100}
+                : null,
+            ]}>
+            {transaction.type === 'credit' ? '+' : '-'} ₹ {transaction.amount}
+          </Text>
         </View>
         <View style={styles.bonusContainer}>
           <Text style={styles.bonus}>

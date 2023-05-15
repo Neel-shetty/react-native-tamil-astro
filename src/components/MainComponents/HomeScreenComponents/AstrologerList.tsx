@@ -45,24 +45,28 @@ const AstrologerList = ({
     FetchAstrologerCategories,
   );
 
-  // console.log(
-  //   '🚀 ~ file: AstrologerList.tsx:42 ~ AstrologerApiData:',
-  //   AstrologerApiData,
-  // );
+  console.log(
+    '🚀 ~ file: AstrologerList.tsx:42 ~ AstrologerApiData:',
+    AstrologerApiData,
+  );
+
+  // if (isLoading || !AstrologerApiData) {
+  //   return <View />;
+  // }
 
   return (
     <View style={styles.root}>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
+        data={AstrologerApiData}
         renderItem={({item}) => (
           <AstrologerCard
             clients={item.clients}
-            cost={item.cost}
+            cost={item.rate}
             experience={item.experience}
             firstTime={item.firstTime}
             stars={item.stars}
-            title={item.title}
+            title={item.name}
             onPress={onPress}
             showGenderOptions={showGenderOptions}
             loading={isLoading}

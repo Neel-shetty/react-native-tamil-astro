@@ -33,8 +33,9 @@ const Recharge = () => {
     data: balanceData,
     error: balanceError,
     isLoading: balanceLoading,
+    refetch,
   } = useQuery(['userBalance'], async () => {
-    const id: string = await AsyncStorage.getItem('id');
+    const id: string = (await AsyncStorage.getItem('id')) as string;
     return FetchBalance(id);
   });
 
@@ -58,7 +59,7 @@ const Recharge = () => {
       RazorpayCheckout.open(options)
         .then(data => {
           // handle success
-          Alert.alert(`Success: ${data.razorpay_payment_id}`);
+          // Alert.alert(`Success: ${data.razorpay_payment_id}`);
           api
             .post('/payment/details', {
               razorpay_payment_id: data.razorpay_payment_id,
@@ -69,6 +70,8 @@ const Recharge = () => {
               RechargeBalance({
                 amount,
                 transaction_id: data.razorpay_payment_id,
+              }).then(() => {
+                refetch();
               });
             })
             .catch(error => {
@@ -83,7 +86,12 @@ const Recharge = () => {
   }
 
   if (rechargeError || isLoading || !rechargeData || balanceLoading) {
-    return <ActivityIndicator color={colors.palette.primary500} />;
+    return (
+      <ActivityIndicator
+        style={styles.flex1}
+        color={colors.palette.primary500}
+      />
+    );
   }
 
   return (
@@ -149,6 +157,9 @@ const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+  },
+  flex1: {
     flex: 1,
   },
   balanceContainer: {

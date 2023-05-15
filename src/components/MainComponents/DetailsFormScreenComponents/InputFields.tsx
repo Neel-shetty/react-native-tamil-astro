@@ -1,5 +1,5 @@
 import {StyleSheet, View, Text} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
 import {Formik} from 'formik';
@@ -17,6 +17,7 @@ import {RootState} from '../../../store';
 import {useQuery} from '@tanstack/react-query';
 import {FetchBalance} from '../../../api/FetchBalance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RechargeScreen from '../../../screens/Main/RechargeScreen';
 
 const InputFields = () => {
   const [gender, setGender] = useState<'male' | 'female' | 'other'>();
@@ -48,9 +49,13 @@ const InputFields = () => {
     const id: string = (await AsyncStorage.getItem('id')) as string;
     return FetchBalance(id);
   });
-  if (balanceData?.balance && balanceData?.balance < 50) {
-    setLowBalance(true);
-  }
+
+  useEffect(() => {
+    if (balanceData?.balance && Number(balanceData?.balance) < 50) {
+      setLowBalance(true);
+    }
+  }, [balanceData]);
+
   const validationSchema = yup.object({
     name: yup
       .string()
@@ -161,12 +166,18 @@ const InputFields = () => {
               <View style={styles.buttonContainer}>
                 <PrimaryButton
                   title={lowBalance ? 'Recharge and Chat' : 'Start Chat'}
-                  onPress={handleSubmit}
+                  onPress={
+                    lowBalance
+                      ? () => navigation.navigate(RechargeScreen.name)
+                      : handleSubmit
+                  }
                 />
               </View>
               <Text style={styles.subtitle}>
                 {lowBalance ? 'Current Balance:' : ''}
-                <Text style={styles.red}>{lowBalance ? '29rs' : ''}</Text>
+                <Text style={styles.red}>
+                  {lowBalance ? `${balanceData?.balance}rs` : ''}
+                </Text>
               </Text>
             </View>
           </View>

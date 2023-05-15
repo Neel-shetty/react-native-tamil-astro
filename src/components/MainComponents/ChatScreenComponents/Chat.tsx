@@ -16,6 +16,7 @@ import {useRoute} from '@react-navigation/native';
 import {ChatScreenNavigationProp} from '../../../router/types';
 import {SendMessage} from '../../../api/SendMessage';
 import {DeductBalance} from '../../../api/DeductBalance';
+import {ExpireTrial} from '../../../api/ExpireTrial';
 
 export type messagesType = {
   uid: string;
@@ -28,6 +29,7 @@ const Chat = () => {
   const [showBalance0Modal, setShowBalance0Modal] = React.useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
   const [randomId, setRandomId] = React.useState<number>(0);
+  const [time, setTime] = React.useState<number>(0);
 
   const route = useRoute<ChatScreenNavigationProp['route']>();
   console.log('🚀 ~ file: Chat.tsx:31 ~ Chat ~ route:', route.params.history);
@@ -66,6 +68,7 @@ const Chat = () => {
       .doc(route.params?.chatId)
       .get()
       .then(doc => {
+        console.log('🚀 ~ file: Chat.tsx:91 ~ React.useEffect ~ doc:', doc);
         chatDetails = doc;
       });
     console.log(
@@ -86,7 +89,7 @@ const Chat = () => {
       run();
     }, 60000);
     return () => clearInterval(interval);
-  }, [uniqueId, route.params?.chatId]);
+  }, [uniqueId, route.params?.chatId, route.params?.history]);
 
   async function sendMessageToMyServer(message: string) {
     const ids = route.params?.chatId?.split('-');
@@ -124,6 +127,7 @@ const Chat = () => {
   }
 
   React.useEffect(() => {
+    ExpireTrial();
     getMessages();
   }, []);
 

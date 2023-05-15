@@ -236,6 +236,7 @@ const AstrologerWaitModal = ({
                     route.params?.communicationType === 'call' ||
                     communicationType === 'call'
                   ) {
+                    setVisible(false);
                     navigation.navigate(CallScreen.name, {combinedUserId});
                   }
                 }}

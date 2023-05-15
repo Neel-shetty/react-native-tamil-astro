@@ -7,6 +7,8 @@ import {colors} from '../../../themes/colors';
 import {useQuery} from '@tanstack/react-query';
 import {FetchBalance} from '../../../api/FetchBalance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import RechargeScreen from '../../../screens/Main/RechargeScreen';
 
 const Balance = () => {
   const {data, error, isLoading} = useQuery(['userBalance'], async () => {
@@ -17,6 +19,7 @@ const Balance = () => {
     '🚀 ~ file: Balance.tsx:16 ~ const{data,error,isLoading}=useQuery ~ data:',
     data,
   );
+  const navigation = useNavigation();
 
   return (
     <View style={styles.root}>
@@ -28,7 +31,12 @@ const Balance = () => {
           <Text style={styles.size20}>₹</Text>
           {data?.balance ?? 'loading...'}
         </Text>
-        <PrimaryButton onPress={() => {}} title="Recharge" />
+        <PrimaryButton
+          onPress={() => {
+            navigation.navigate(RechargeScreen.name);
+          }}
+          title="Recharge"
+        />
       </View>
     </View>
   );
