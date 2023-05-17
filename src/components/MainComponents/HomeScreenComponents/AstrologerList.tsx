@@ -14,32 +14,32 @@ const AstrologerList = ({
   showGenderOptions?: boolean;
   onPressCall: () => void;
 }) => {
-  const data = [
-    {
-      title: 'Junior Astrologer',
-      stars: 4.2,
-      cost: '8',
-      firstTime: false,
-      clients: '1000',
-      experience: '1 to 3 Years',
-    },
-    {
-      title: 'Senior Astrologer',
-      stars: 4.8,
-      cost: '12',
-      firstTime: true,
-      clients: '4000',
-      experience: '3 to 8 Years',
-    },
-    {
-      title: 'Expert Astrologer',
-      stars: 5,
-      cost: '20',
-      firstTime: true,
-      clients: '10,000',
-      experience: '8+ Years',
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: 'Junior Astrologer',
+  //     stars: 4.2,
+  //     cost: '8',
+  //     firstTime: false,
+  //     clients: '1000',
+  //     experience: '1 to 3 Years',
+  //   },
+  //   {
+  //     title: 'Senior Astrologer',
+  //     stars: 4.8,
+  //     cost: '12',
+  //     firstTime: true,
+  //     clients: '4000',
+  //     experience: '3 to 8 Years',
+  //   },
+  //   {
+  //     title: 'Expert Astrologer',
+  //     stars: 5,
+  //     cost: '20',
+  //     firstTime: true,
+  //     clients: '10,000',
+  //     experience: '8+ Years',
+  //   },
+  // ];
 
   const {data: AstrologerApiData, isLoading} = useQuery(
     ['astrologers'],
