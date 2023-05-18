@@ -68,7 +68,11 @@ const Call = () => {
       .where('userId', '==', user?.uid)
       .get();
 
-    const combinedUserId = callDetails.docs[0].combinedUserId;
+    const combinedUserId = callDetails.docs[0].data().combinedUserId;
+    console.log(
+      '🚀 ~ file: Call.tsx:72 ~ create ~ combinedUserId:',
+      combinedUserId,
+    );
 
     // document for the call
     const cRef = firestore().collection('meet').doc(combinedUserId);
@@ -174,7 +178,7 @@ const Call = () => {
       .where('userId', '==', user?.uid)
       .get();
 
-    const combinedUserId = callDetails.docs[0].combinedUserId;
+    const combinedUserId = callDetails.docs[0].data().combinedUserId;
     const cRef = firestore().collection('meet').doc(combinedUserId);
 
     if (cRef) {
@@ -189,6 +193,10 @@ const Call = () => {
 
       cRef.delete();
     }
+    // delete the calldetails document from firestore
+    callDetails.forEach(async call => {
+      await call.ref.delete();
+    });
   }
 
   const collectIceCandidates = async (
@@ -277,7 +285,7 @@ const Call = () => {
         subscribeDelete();
       };
     }
-    getCall();
+    // getCall();
   }, [hangupCallback]);
 
   // displays the incoming call screen
