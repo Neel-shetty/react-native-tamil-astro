@@ -51,9 +51,6 @@ const AstrologerList = ({
     AstrologerApiData,
   );
 
-  // if (isLoading || !AstrologerApiData) {
-  //   return <View />;
-  // }
   if (isLoading) {
     return (
       <ActivityIndicator
