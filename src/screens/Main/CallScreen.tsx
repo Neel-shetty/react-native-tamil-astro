@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes/colors';
 import Call from '../../components/CallComponents/Call';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CallScreen = ({navigation}) => {
   return (
@@ -10,7 +11,8 @@ const CallScreen = ({navigation}) => {
         onPress={() => {
           navigation.navigate('HomeScreen');
         }}>
-        <Text style={{color: 'black', fontSize: 16}}>Go back</Text>
+        <Ionicons name="chevron-back" size={30} color="black" />
+        {/* <Text style={{color: 'black', fontSize: 16}}>Go back</Text> */}
       </TouchableOpacity>
       <View style={{height: 20}} />
       <Call />

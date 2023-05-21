@@ -1,8 +1,9 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import AstrologerCard from './AstrologerCard';
 import {useQuery} from '@tanstack/react-query';
 import {FetchAstrologerCategories} from '../../../api/FetchAstrologerCategories';
+import {colors} from '../../../themes/colors';
 
 const AstrologerList = ({
   onPress,
@@ -53,6 +54,15 @@ const AstrologerList = ({
   // if (isLoading || !AstrologerApiData) {
   //   return <View />;
   // }
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        style={{flex: 1}}
+        size="large"
+        color={colors.palette.primary500}
+      />
+    );
+  }
 
   return (
     <View style={styles.root}>
