@@ -78,6 +78,7 @@ const AstrologerList = ({
             showGenderOptions={showGenderOptions}
             loading={isLoading}
             onPressCall={onPressCall}
+            id={item.id}
           />
         )}
       />

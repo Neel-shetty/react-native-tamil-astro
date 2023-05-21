@@ -41,6 +41,12 @@ const AstrologerWaitModal = ({
     '🚀 ~ file: AstrologerWaitModal.tsx:39 ~ communicationType:',
     communicationType,
   );
+  const astrologerGender = useSelector(
+    (state: RootState) => state.ui.astrologerGender,
+  );
+  const astrologerCategoryId = useSelector(
+    (state: RootState) => state.ui.astrologerCategoryId,
+  );
 
   const {
     data: astrologer,
@@ -48,7 +54,11 @@ const AstrologerWaitModal = ({
     isLoading,
   } = useQuery(
     ['assign-astrologer', visible],
-    visible ? AssignAstrologer : () => null,
+    visible
+      ? () => {
+          return AssignAstrologer({astrologerCategoryId, astrologerGender});
+        }
+      : () => null,
   );
   console.log('🚀 ~ file: AstrologerWaitModal.tsx:49 ~ error:', error);
 

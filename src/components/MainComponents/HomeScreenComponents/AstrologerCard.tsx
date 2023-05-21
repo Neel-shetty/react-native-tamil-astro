@@ -8,7 +8,10 @@ import Call from '../../../../assets/icons/HomeScreen/call.svg';
 import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
 import SmallButton from '../../UI/SmallButton';
 import {useDispatch} from 'react-redux';
-import {setShowGenderOptions} from '../../../store/UiSlice';
+import {
+  setAstrologerCategoryId,
+  setShowGenderOptions,
+} from '../../../store/UiSlice';
 
 interface AstrologerCardProps {
   firstTime?: boolean;
@@ -22,6 +25,7 @@ interface AstrologerCardProps {
   showGenderOptions?: boolean;
   loading?: boolean;
   onPressCall: () => void;
+  id: number;
 }
 
 const AstrologerCard = ({
@@ -35,6 +39,7 @@ const AstrologerCard = ({
   showGenderOptions,
   loading,
   onPressCall,
+  id,
 }: AstrologerCardProps) => {
   const rating = Array(5).fill(1);
   const dispatch = useDispatch();
@@ -99,6 +104,7 @@ const AstrologerCard = ({
                     if (onPress) {
                       onPressCall();
                     }
+                    dispatch(setAstrologerCategoryId(id));
                   }}
                   icon={<Call />}
                   title="Call"
@@ -113,6 +119,7 @@ const AstrologerCard = ({
                     if (onPress) {
                       onPress();
                     }
+                    dispatch(setAstrologerCategoryId(id));
                   }}
                   icon={<Chat />}
                 />

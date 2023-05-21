@@ -1,4 +1,6 @@
+import {useSelector} from 'react-redux';
 import {api} from '.';
+import {RootState} from '../store';
 
 export interface AssignedAstrologerType {
   id: number;
@@ -33,9 +35,18 @@ export interface AssignedAstrologerType {
   updated_at: string;
 }
 
-export async function AssignAstrologer() {
+export async function AssignAstrologer({
+  astrologerGender,
+  astrologerCategoryId,
+}: {
+  astrologerGender: 'Male' | 'Female' | 'Other';
+  astrologerCategoryId: number;
+}) {
   return api
-    .post('find-astro', {gender: 'male', category_id: 1})
+    .post('find-astro', {
+      gender: astrologerGender,
+      category_id: astrologerCategoryId,
+    })
     .then(res => {
       // console.log(res.data);
       return res.data?.data as AssignedAstrologerType;

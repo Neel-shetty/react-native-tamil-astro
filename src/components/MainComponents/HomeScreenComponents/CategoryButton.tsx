@@ -2,6 +2,8 @@ import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import React from 'react';
 import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
+import {useDispatch} from 'react-redux';
+import {setProblemCategory} from '../../../store/UiSlice';
 
 interface CategoryButtonProps {
   title: string;
@@ -10,10 +12,16 @@ interface CategoryButtonProps {
 }
 
 const CategoryButton = ({title, logo, onPress}: CategoryButtonProps) => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={[styles.root, styles.bg]}>
-        <TouchableOpacity onPress={onPress} style={styles.root}>
+        <TouchableOpacity
+          onPress={() => {
+            onPress();
+            dispatch(setProblemCategory(title));
+          }}
+          style={styles.root}>
           {/* <View style={styles.logoContainer}> */}
           {logo}
           {/* </View> */}

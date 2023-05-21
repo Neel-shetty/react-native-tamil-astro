@@ -10,7 +10,10 @@ import {useNavigation} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../../router/types';
 import DetailsFormScreen from '../../../screens/Main/DetailsFormScreen';
 import {useDispatch} from 'react-redux';
-import {setShowGenderOptions} from '../../../store/UiSlice';
+import {
+  setAstrologerGender,
+  setShowGenderOptions,
+} from '../../../store/UiSlice';
 
 interface GenderOptionsPropsType {
   visible: boolean;
@@ -77,11 +80,46 @@ const GenderOptions = ({
                 dispatch(setShowGenderOptions(false));
                 showAstrologerOptions(true);
               }
+              dispatch(setAstrologerGender('Male'));
             }}
             title="Male"
           />
-          <SquareButton onPress={() => {}} title="female" />
-          <SquareButton onPress={() => {}} title="No Preference" />
+          <SquareButton
+            onPress={() => {
+              if (flow === 'astrologer') {
+                navigation.navigate(DetailsFormScreen.name);
+                bottomSheetRef.current?.close();
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
+              }
+              if (flow === 'category') {
+                bottomSheetRef.current?.close();
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
+                showAstrologerOptions(true);
+              }
+              dispatch(setAstrologerGender('Female'));
+            }}
+            title="female"
+          />
+          <SquareButton
+            onPress={() => {
+              if (flow === 'astrologer') {
+                navigation.navigate(DetailsFormScreen.name);
+                bottomSheetRef.current?.close();
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
+              }
+              if (flow === 'category') {
+                bottomSheetRef.current?.close();
+                // setVisible(false);
+                dispatch(setShowGenderOptions(false));
+                showAstrologerOptions(true);
+              }
+              dispatch(setAstrologerGender('Other'));
+            }}
+            title="No Preference"
+          />
         </View>
       </View>
     </BottomSheet>
