@@ -62,7 +62,7 @@ const InputFields = () => {
       setLowBalance(true);
     }
   }
-  
+
   useEffect(() => {
     refetch();
     // checkLowBalance();
