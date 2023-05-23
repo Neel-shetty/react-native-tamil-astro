@@ -27,7 +27,7 @@ type CustomInputPropsType = {
 const CustomDropdown = ({
   placeholder,
   error,
-  // value,
+  value,
   setValue,
   data = [],
 }: // data,
@@ -57,6 +57,7 @@ CustomInputPropsType) => {
             setValue(item.value);
           }}
           renderRightIcon={true ? undefined : () => null}
+          value={value}
         />
       </View>
       <View style={styles.errorContainer}>

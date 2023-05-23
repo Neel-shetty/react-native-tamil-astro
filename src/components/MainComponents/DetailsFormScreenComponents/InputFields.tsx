@@ -45,6 +45,7 @@ const InputFields = () => {
     data: balanceData,
     error: balanceError,
     isLoading: balanceLoading,
+    refetch,
   } = useQuery(['userBalance'], async () => {
     const id: string = (await AsyncStorage.getItem('id')) as string;
     return FetchBalance(id);
@@ -54,7 +55,18 @@ const InputFields = () => {
     if (balanceData?.balance && Number(balanceData?.balance) < 50) {
       setLowBalance(true);
     }
-  }, [balanceData]);
+  }, [balanceData, refetch]);
+
+  function checkLowBalance() {
+    if (balanceData?.balance && Number(balanceData?.balance) < 50) {
+      setLowBalance(true);
+    }
+  }
+
+  useEffect(() => {
+    refetch();
+    // checkLowBalance();
+  }, [refetch]);
 
   const validationSchema = yup.object({
     name: yup
@@ -157,7 +169,28 @@ const InputFields = () => {
               value={problem}
               setValue={setProblem}
               error={''}
-              data={[{label: 'money', value: 'money'}]}
+              data={[
+                {
+                  label: 'money',
+                  value: 'money',
+                },
+                {
+                  label: 'health',
+                  value: 'health',
+                },
+                {
+                  label: 'love',
+                  value: 'love',
+                },
+                {
+                  label: 'career',
+                  value: 'career',
+                },
+                {
+                  label: 'family',
+                  value: 'family',
+                },
+              ]}
             />
             <View style={styles.bottomContainer}>
               <Text style={styles.subtitle}>
@@ -168,7 +201,10 @@ const InputFields = () => {
                   title={lowBalance ? 'Recharge and Chat' : 'Start Chat'}
                   onPress={
                     lowBalance
-                      ? () => navigation.navigate(RechargeScreen.name)
+                      ? () => {
+                          navigation.pop();
+                          navigation.navigate(RechargeScreen.name);
+                        }
                       : handleSubmit
                   }
                 />

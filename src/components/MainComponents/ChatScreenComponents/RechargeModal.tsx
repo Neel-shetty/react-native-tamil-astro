@@ -4,6 +4,8 @@ import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
 import Modal from 'react-native-modal';
+import {useNavigation} from '@react-navigation/native';
+import RechargeScreen from '../../../screens/Main/RechargeScreen';
 
 const RechargeModal = ({
   visible,
@@ -12,6 +14,7 @@ const RechargeModal = ({
   visible: boolean;
   setVisible: (x: boolean) => void;
 }) => {
+  const navigation = useNavigation();
   return (
     <Modal
       onSwipeComplete={() => {
@@ -22,8 +25,12 @@ const RechargeModal = ({
       backdropOpacity={0}
       isVisible={visible}>
       <View style={styles.root}>
-        <Text style={styles.text}>{'Balance left for < 1 min'}</Text>
-        <TouchableOpacity style={styles.button}>
+        <Text style={styles.text}>{'Balance left for < 2 min'}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(RechargeScreen.name);
+          }}
+          style={styles.button}>
           <Text style={styles.text2}>{'Recharge Now'}</Text>
         </TouchableOpacity>
       </View>

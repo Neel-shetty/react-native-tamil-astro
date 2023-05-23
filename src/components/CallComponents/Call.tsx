@@ -301,8 +301,8 @@ const Call = () => {
     return (
       <View style={root}>
         <Text>Incoming Call!</Text>
-        <Button onPress={join} title="Receive" />
-        <Button onPress={hangupCallback} title="Reject" />
+        <PrimaryButton onPress={join} title="Receive" />
+        <PrimaryButton onPress={hangupCallback} title="Reject" />
       </View>
     );
   }
@@ -323,7 +323,7 @@ const Call = () => {
 
   //display call button
   return (
-    <View>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {/* <Button title="Call" onPress={create} /> */}
       <PrimaryButton title="Call" onPress={create} />
     </View>

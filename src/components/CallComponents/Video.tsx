@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View, Button} from 'react-native';
 import React from 'react';
 import {MediaStream, RTCView} from 'react-native-webrtc';
+import PrimaryButton from '../UI/PrimaryButton';
 
 interface Props {
   hangup: () => void;
@@ -17,7 +18,7 @@ const Video = (props: Props) => {
           streamURL={props.localStream.toURL()}
           objectFit="cover"
         />
-        <Button title="Hang up" onPress={props.hangup} />
+        <PrimaryButton title="Hang up" onPress={props.hangup} />
       </View>
     );
   }
@@ -35,7 +36,7 @@ const Video = (props: Props) => {
           streamURL={props.localStream.toURL()}
           objectFit="cover"
         />
-        <Button title="Hang up" onPress={props.hangup} />
+        <PrimaryButton title="Hang up" onPress={props.hangup} />
       </View>
     );
   }
@@ -43,7 +44,7 @@ const Video = (props: Props) => {
   return (
     <View>
       <Text>Video</Text>
-      <Button title="Hang up" onPress={props.hangup} />
+      <PrimaryButton title="Hang up" onPress={props.hangup} />
     </View>
   );
 };

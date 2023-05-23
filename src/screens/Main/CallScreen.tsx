@@ -7,13 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const CallScreen = ({navigation}: any) => {
   return (
     <View style={styles.root}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           navigation.navigate('HomeScreen');
         }}>
         <Ionicons name="chevron-back" size={30} color="black" />
-        {/* <Text style={{color: 'black', fontSize: 16}}>Go back</Text> */}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={{height: 20}} />
       <Call />
     </View>

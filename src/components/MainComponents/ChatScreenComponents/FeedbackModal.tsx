@@ -14,15 +14,21 @@ import StarGold from '../../../../assets/icons/ChatScreen/starGold.svg';
 import {fonts} from '../../../themes/fonts';
 import Close from '../../../../assets/icons/ChatScreen/close.svg';
 import {Formik} from 'formik';
+import {AstrologerFeedback} from '../../../api/AstrologerFeedback';
+import Auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 const FeedbackModal = ({
   visible,
   setVisible,
+  astroId,
 }: {
   visible: boolean;
   setVisible: (value: boolean) => void;
+  astroId: number;
 }) => {
   const [rating, setRating] = React.useState(Array(5).fill({selected: false}));
+  const navigation = useNavigation();
 
   const numberofStars = rating.filter(item => item.selected).length;
 
@@ -82,8 +88,17 @@ const FeedbackModal = ({
               return;
             }
             console.log(values);
+            AstrologerFeedback({
+              astroId: 1,
+              userId: Number(Auth().currentUser?.uid) as number,
+              rating: numberofStars,
+              review: values.message,
+              type: 'chat',
+            });
             resetForm();
+
             setVisible(false);
+            navigation.navigate('HomeScreen');
           }}>
           {({handleChange, handleBlur, handleSubmit, values}) => (
             <>

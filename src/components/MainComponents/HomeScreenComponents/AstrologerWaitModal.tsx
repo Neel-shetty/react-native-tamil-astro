@@ -5,6 +5,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  ImageSourcePropType,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import Modal from 'react-native-modal';
@@ -30,7 +31,7 @@ const AstrologerWaitModal = ({
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }) => {
-  const [stars, setStars] = React.useState<string[]>(['1']);
+  const [stars, setStars] = React.useState<string[]>(['1', '1', '1', '1']);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const route = useRoute<HomeScreenNavigationProp['route']>();
@@ -61,6 +62,14 @@ const AstrologerWaitModal = ({
       : () => null,
   );
   console.log('🚀 ~ file: AstrologerWaitModal.tsx:49 ~ error:', error);
+
+  // React.useEffect(() => {
+  //   if (!astrologer) {
+  //     return;
+  //   }
+  //   //
+  //   setStars();
+  // }, [astrologer]);
 
   const combinedUserId = React.useMemo(() => {
     const user = Auth().currentUser;
@@ -225,10 +234,7 @@ const AstrologerWaitModal = ({
                 source={require('../../../../assets/images/profile-bg.png')}
               />
               <View style={styles.imageContainer}>
-                <Image
-                  style={styles.image}
-                  source={require('../../../../assets/images/profile-pic.png')}
-                />
+                <Image style={styles.image} source={{uri: astrologer.image}} />
               </View>
             </View>
             <View style={styles.infoContainer}>
@@ -268,9 +274,13 @@ const AstrologerWaitModal = ({
                     setVisible(false);
                     navigation.navigate(CallScreen.name, {combinedUserId});
                   }
+                  setVisible(false);
                 }}
-                style={styles.subTitle}>
-                Astrologer Call connecting {'\n'} Go To {communicationType}
+                style={[styles.subTitle]}>
+                Astrologer {communicationType} connecting {'\n'}
+                <Text style={{color: colors.palette.primary500}}>
+                  Go To {communicationType}
+                </Text>
               </Text>
             </View>
           </>
@@ -321,6 +331,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 100,
+    height: 53,
+    width: 54,
     // marginRight: 10,
   },
   infoContainer: {

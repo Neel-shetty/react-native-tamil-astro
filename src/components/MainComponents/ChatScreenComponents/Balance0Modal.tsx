@@ -5,6 +5,8 @@ import {colors} from '../../../themes/colors';
 import PrimaryButton from '../../UI/PrimaryButton';
 import {fonts} from '../../../themes/fonts';
 import Close from '../../../../assets/icons/ChatScreen/close.svg';
+import {useNavigation} from '@react-navigation/native';
+import RechargeScreen from '../../../screens/Main/RechargeScreen';
 
 const Balance0Modal = ({
   visible,
@@ -13,6 +15,7 @@ const Balance0Modal = ({
   visible: boolean;
   setVisible: (value: boolean) => void;
 }) => {
+  const navigation = useNavigation();
   return (
     <Modal
       backdropOpacity={0.7}
@@ -32,7 +35,12 @@ const Balance0Modal = ({
           <Close />
         </TouchableOpacity>
         <Text style={styles.text}>Have more questions?</Text>
-        <PrimaryButton onPress={() => {}} title="Recharge and Chat" />
+        <PrimaryButton
+          onPress={() => {
+            navigation.navigate(RechargeScreen.name);
+          }}
+          title="Recharge and Chat"
+        />
       </View>
     </Modal>
   );

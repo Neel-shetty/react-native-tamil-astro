@@ -12,6 +12,7 @@ interface ChatInputProps {
   handleBlur: (e: any) => void;
   handleChange: (text: string) => void;
   value: string;
+  disable: boolean;
 }
 
 const ChatInput = ({
@@ -19,6 +20,7 @@ const ChatInput = ({
   handleBlur,
   handleChange,
   value,
+  disable,
 }: ChatInputProps) => {
   async function pickFile() {
     try {
@@ -49,11 +51,12 @@ const ChatInput = ({
           onChangeText={handleChange}
           onBlur={handleBlur}
           value={value}
+          editable={!disable}
         />
         <View style={styles.clipContainer}>
-          <TouchableOpacity onPress={pickFile}>
+          {/* <TouchableOpacity onPress={pickFile}>
             <Clip />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       <View style={styles.sendContainer}>

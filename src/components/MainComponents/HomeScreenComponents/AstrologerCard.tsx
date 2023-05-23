@@ -79,7 +79,7 @@ const AstrologerCard = ({
             </View>
             <View style={styles.rightContainer}>
               <View style={styles.rightTopContainer}>
-                <Text style={styles.cost}>Clients: {clients}+</Text>
+                <Text style={styles.cost}>Clients: {clients}</Text>
                 <Text style={styles.cost}>Exp: {experience}</Text>
               </View>
               <View style={styles.rightBottomContainer}>

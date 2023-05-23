@@ -43,8 +43,8 @@ const DatePicker = ({
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date ? date : new Date()}
-          mode={'date'}
+          value={date ?? new Date()}
+          mode={'time'}
           is24Hour={false}
           display="default"
           onChange={onChange}
