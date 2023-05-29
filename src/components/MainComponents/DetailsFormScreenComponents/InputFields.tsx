@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomInput from '../../UI/CustomInput';
 import CustomDropdown from '../../UI/CustomDropdown';
@@ -18,6 +18,8 @@ import {useQuery} from '@tanstack/react-query';
 import {FetchBalance} from '../../../api/FetchBalance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RechargeScreen from '../../../screens/Main/RechargeScreen';
+import {FetchUserDetails} from '../../../api/FetchUserDetails';
+import {set} from 'date-fns';
 
 const InputFields = () => {
   const [gender, setGender] = useState<'male' | 'female' | 'other'>();
@@ -53,6 +55,12 @@ const InputFields = () => {
     return FetchBalance(id);
   });
 
+  const {
+    data: userDetails,
+    error: userDetailsError,
+    isLoading: userDetailsLoading,
+  } = useQuery(['userDetails'], FetchUserDetails);
+
   useEffect(() => {
     if (balanceData?.balance && Number(balanceData?.balance) < 50) {
       setLowBalance(true);
@@ -82,10 +90,35 @@ const InputFields = () => {
   const navigation =
     useNavigation<DetailsFormScreenNavigationProp['navigation']>();
 
+  const setInitialValues = React.useCallback(() => {
+    if (!userDetails) {
+      return;
+    }
+    setTime(new Date(userDetails?.time_of_birth));
+    setDate(new Date(userDetails?.date_of_birth));
+    setGender(userDetails?.gender as 'male' | 'female' | 'other');
+    setMaritalStatus(userDetails?.marital_status);
+    setProblem(userDetails?.type_of_problem);
+  }, [userDetails]);
+
+  if (userDetailsLoading) {
+    const style = {flex: 1};
+    return (
+      <ActivityIndicator
+        style={style}
+        size={'large'}
+        color={colors.palette.accent500}
+      />
+    );
+  }
+
   return (
     <View style={styles.root}>
       <Formik
-        initialValues={{name: '', placeOfBirth: ''}}
+        initialValues={{
+          name: userDetails?.name ?? '',
+          placeOfBirth: userDetails?.place_of_birth ?? '',
+        }}
         onSubmit={async values => {
           setDropdownErrors({...dropdownErrors, gender: false});
           if (!gender) {

@@ -12,15 +12,19 @@ interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
   loading?: boolean;
+  width?: number;
 }
 
 const PrimaryButton = ({
   title,
   onPress,
   loading = false,
+  width,
 }: PrimaryButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, width ? {width} : null]}>
       {loading ? (
         <ActivityIndicator />
       ) : (

@@ -58,9 +58,9 @@ const HomeScreen = () => {
       {/* <View style={styles.padding1} /> */}
       <View style={styles.headingContainer}>
         <Text
-          onPress={() => {
-            navigation.navigate(ChatScreen.name, {chatId: '16-17'});
-          }}
+          // onPress={() => {
+          //   navigation.navigate(ChatScreen.name, {chatId: '16-17'});
+          // }}
           style={styles.heading}>
           In which area of life do you want guidance?
         </Text>
@@ -76,7 +76,8 @@ const HomeScreen = () => {
       <View style={styles.headingContainer}>
         <Text
           style={styles.heading}
-          onPress={() => navigation.navigate(CallScreen.name)}>
+          // onPress={() => navigation.navigate(CallScreen.name)}
+        >
           Choose Astrologer Category
         </Text>
       </View>

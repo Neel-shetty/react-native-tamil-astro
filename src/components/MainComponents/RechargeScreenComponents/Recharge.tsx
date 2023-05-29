@@ -120,7 +120,11 @@ const Recharge = () => {
                   value={values.amount}
                   keyboardType="numeric"
                 />
-                <PrimaryButton onPress={handleSubmit} title="Add Money" />
+                <PrimaryButton
+                  width={layout.width * 0.3}
+                  onPress={handleSubmit}
+                  title="Add Money"
+                />
               </>
             )}
           </Formik>
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
     width: layout.widthp,
   },
   input: {
-    width: layout.width * 0.5,
+    width: layout.width * 0.55,
     fontFamily: fonts.interRegular,
     fontSize: 14,
     color: colors.text,
