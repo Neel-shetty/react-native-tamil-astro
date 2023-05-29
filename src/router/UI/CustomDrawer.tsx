@@ -10,7 +10,7 @@ import RechargeScreen from '../../screens/Main/RechargeScreen';
 import {fonts} from '../../themes/fonts';
 import {colors} from '../../themes/colors';
 import {useDispatch} from 'react-redux';
-import {setShowGenderOptions} from '../../store/UiSlice';
+import {setShowGenderOptions, setShowSupportModal} from '../../store/UiSlice';
 import HistoryScreen from '../../screens/Main/HistoryScreen';
 import TransactionHistoryScreen from '../../screens/Main/TransactionHistoryScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -96,6 +96,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       label: 'Support',
       onPress: () => {
         props.navigation.navigate(TabStackNavigator.name);
+        dispatch(setShowSupportModal(true));
       },
       icon: (
         <Image source={require('../../../assets/images/drawer/service.png')} />

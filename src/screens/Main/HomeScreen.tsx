@@ -19,9 +19,11 @@ import {
   setShowGenderOptions,
 } from '../../store/UiSlice';
 import CallScreen from './CallScreen';
+import SupportModal from '../../components/MainComponents/HomeScreenComponents/SupportModal';
 
 const HomeScreen = () => {
   const [showModal, setShowModal] = React.useState(false);
+  // const [showSupportModal, setShowSupportModal] = React.useState(true);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
   // const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
@@ -104,6 +106,10 @@ const HomeScreen = () => {
         setVisible={setAstrologerOptionsVisible}
       />
       <AstrologerWaitModal visible={showModal} setVisible={setShowModal} />
+      <SupportModal
+        // visible={showSupportModal}
+        // setVisible={setShowSupportModal}
+      />
     </View>
   );
 };

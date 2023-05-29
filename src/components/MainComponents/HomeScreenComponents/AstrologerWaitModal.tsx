@@ -235,9 +235,9 @@ const AstrologerWaitModal = ({
       style={styles.modal}
       isVisible={visible}
       backdropColor={'#FEF0F0'}
-      onBackdropPress={() => setVisible(false)}
-      onSwipeComplete={() => setVisible(false)}
-      swipeDirection="down"
+      // onBackdropPress={() => setVisible(false)}
+      // onSwipeComplete={() => setVisible(false)}
+      // swipeDirection="down"
       backdropOpacity={0.5}>
       <View style={styles.root}>
         {isLoading || !astrologer ? (

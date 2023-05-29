@@ -17,6 +17,7 @@ export interface UserState {
     | string;
   astrologerCategoryId: number;
   astrologerGender: gender;
+  showSupportModal: boolean;
 }
 
 const initialState: UserState = {
@@ -26,6 +27,7 @@ const initialState: UserState = {
   problemCategory: 'Other',
   astrologerCategoryId: 1,
   astrologerGender: 'Male',
+  showSupportModal: false,
 };
 
 export const userSlice = createSlice({
@@ -55,6 +57,9 @@ export const userSlice = createSlice({
     setAstrologerGender: (state, action: PayloadAction<gender>) => {
       state.astrologerGender = action.payload;
     },
+    setShowSupportModal: (state, action: PayloadAction<boolean>) => {
+      state.showSupportModal = action.payload;
+    },
   },
 });
 
@@ -65,7 +70,8 @@ export const {
   setCommunicationType,
   setAstrologerCategoryId,
   setProblemCategory,
-  setAstrologerGender
+  setAstrologerGender,
+  setShowSupportModal,
 } = userSlice.actions;
 
 export default userSlice.reducer;
