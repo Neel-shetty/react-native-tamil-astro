@@ -32,6 +32,7 @@ const AstrologerWaitModal = ({
   setVisible: (visible: boolean) => void;
 }) => {
   const [stars, setStars] = React.useState<string[]>(['1', '1', '1', '1']);
+  // const [timeInSeconds, setTimeInSeconds] = React.useState(0);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const route = useRoute<HomeScreenNavigationProp['route']>();
@@ -188,13 +189,29 @@ const AstrologerWaitModal = ({
     }
   }, [astrologer]);
 
-  // useEffect(() => {
-  //   // create a 10 seconds countdown
-  //   // const timer = setTimeout(() => {
-  //   //   // setVisible(false);
-  //   // }, 10000);
-  //   // return () => clearTimeout(timer);
-  // }, [setVisible]);
+  useEffect(() => {
+    // create a 10 seconds countdown
+    if (!visible) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      navigateToNextScreen(
+        route,
+        communicationType,
+        setVisible,
+        navigation,
+        combinedUserId,
+      );
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [
+    setVisible,
+    combinedUserId,
+    communicationType,
+    navigation,
+    route,
+    visible,
+  ]);
 
   if (error) {
     setVisible(false);
@@ -258,28 +275,18 @@ const AstrologerWaitModal = ({
             <View style={styles.subTitleContainer}>
               <Text
                 onPress={() => {
-                  if (
-                    route.params?.communicationType === 'chat' ||
-                    communicationType === 'chat'
-                  ) {
-                    setVisible(false);
-                    navigation.navigate(ChatScreen.name, {
-                      chatId: combinedUserId as string,
-                    });
-                  }
-                  if (
-                    route.params?.communicationType === 'call' ||
-                    communicationType === 'call'
-                  ) {
-                    setVisible(false);
-                    navigation.navigate(CallScreen.name, {combinedUserId});
-                  }
-                  setVisible(false);
+                  navigateToNextScreen(
+                    route,
+                    communicationType,
+                    setVisible,
+                    navigation,
+                    combinedUserId,
+                  );
                 }}
                 style={[styles.subTitle]}>
                 Astrologer {communicationType} connecting {'\n'}
                 <Text style={{color: colors.palette.primary500}}>
-                  Go To {communicationType}
+                  Entering {communicationType} in 5 seconds
                 </Text>
               </Text>
             </View>
@@ -362,3 +369,29 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
+
+function navigateToNextScreen(
+  route,
+  communicationType: string,
+  setVisible: (visible: boolean) => void,
+  navigation,
+  combinedUserId: string | null,
+) {
+  if (
+    route.params?.communicationType === 'chat' ||
+    communicationType === 'chat'
+  ) {
+    setVisible(false);
+    navigation.navigate(ChatScreen.name, {
+      chatId: combinedUserId as string,
+    });
+  }
+  if (
+    route.params?.communicationType === 'call' ||
+    communicationType === 'call'
+  ) {
+    setVisible(false);
+    navigation.navigate(CallScreen.name, {combinedUserId});
+  }
+  setVisible(false);
+}
