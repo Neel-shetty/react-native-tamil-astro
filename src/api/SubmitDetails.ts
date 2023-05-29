@@ -9,6 +9,7 @@ interface SubmitDetailsProps {
   maritialStatus?: string;
   typeOfProblem?: string;
   date: Date | undefined;
+  time: Date | undefined;
 }
 
 export async function SubmitDetails({
@@ -18,6 +19,7 @@ export async function SubmitDetails({
   maritialStatus,
   typeOfProblem,
   date,
+  time,
 }: SubmitDetailsProps) {
   const user_id = auth().currentUser?.uid;
   const formdata = new FormData();
@@ -25,6 +27,11 @@ export async function SubmitDetails({
   formdata.append('name', name);
   formdata.append('gender', gender);
   formdata.append('place_of_birth', placeOfBirth);
+
+  if (time) {
+    formdata.append('time_of_birth', time.toISOString());
+  }
+
   if (date) {
     formdata.append('time_of_birth', date.toISOString());
   }

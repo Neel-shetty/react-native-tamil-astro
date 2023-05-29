@@ -6,7 +6,7 @@ import {Formik} from 'formik';
 import PrimaryButton from '../../UI/PrimaryButton';
 import * as yup from 'yup';
 import {SubmitDetails} from '../../../api/SubmitDetails';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {DetailsFormScreenNavigationProp} from '../../../router/types';
 // import HomeScreen from '../../../screens/Main/HomeScreen';
 import DatePicker from './DatePicker';
@@ -28,9 +28,11 @@ const InputFields = () => {
     maritalStatus: false,
     problem: false,
     time: false,
+    date: false,
   });
   const [lowBalance, setLowBalance] = useState(false);
   const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState<Date>();
   console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
 
   const communicationType = useSelector(
@@ -85,13 +87,21 @@ const InputFields = () => {
       <Formik
         initialValues={{name: '', placeOfBirth: ''}}
         onSubmit={async values => {
+          setDropdownErrors({...dropdownErrors, gender: false});
           if (!gender) {
             // dropdownErrors.gender = true;
             setDropdownErrors({...dropdownErrors, gender: true});
             return; // NOTE: uncommnet this later
           }
-          if (!date) {
+          setDropdownErrors({...dropdownErrors, gender: false});
+          if (!time) {
             setDropdownErrors({...dropdownErrors, time: true});
+            return;
+          }
+          setDropdownErrors({...dropdownErrors, gender: false});
+          if (!date) {
+            setDropdownErrors({...dropdownErrors, date: true});
+            return;
           }
           setDropdownErrors({...dropdownErrors, gender: false});
           await SubmitDetails({
@@ -101,6 +111,7 @@ const InputFields = () => {
             maritialStatus: maritalStatus,
             typeOfProblem: problem,
             date: date,
+            time: time,
           });
           console.log(values);
           // NOTE: Workaround for require cycle, screen name is not dynamic
@@ -139,29 +150,50 @@ const InputFields = () => {
                   : ''
               }
             />
+            {/* 
+            <DatePicker
+              mode="time"
+              setParentDate={setDate}
+              placeholder="Time of Birth*"
+            /> */}
 
-            <DatePicker setParentDate={setDate} placeholder="Time of Birth*" />
+            <DatePicker
+              mode="date"
+              setParentDate={setDate}
+              placeholder="Date of Birth*"
+              error={dropdownErrors.date ? 'This is a required field' : null}
+            />
+            <DatePicker
+              mode="time"
+              setParentDate={setTime}
+              placeholder="Time of Birth*"
+              error={dropdownErrors.time ? 'This is a required field' : null}
+            />
             <CustomDropdown
               placeholder="Gender*"
               value={gender}
               setValue={setGender}
               data={[
-                {label: 'male', value: 'male'},
-                {label: 'female', value: 'female'},
-                {label: 'other', value: 'other'},
+                {label: 'Male', value: 'male'},
+                {label: 'Female', value: 'female'},
+                {label: 'Other', value: 'other'},
               ]}
               error={
-                dropdownErrors.gender ? 'This is a required field  ' : null
+                dropdownErrors.gender ? 'This is a required field test ' : null
               }
             />
             <CustomDropdown
               placeholder="Marital Status"
               value={maritalStatus}
               setValue={setMaritalStatus}
-              error={''}
+              error={
+                dropdownErrors.maritalStatus
+                  ? 'This is a required field test'
+                  : null
+              }
               data={[
-                {label: 'single', value: 'single'},
-                {label: 'married', value: 'married'},
+                {label: 'Single', value: 'single'},
+                {label: 'Married', value: 'married'},
               ]}
             />
             <CustomDropdown
@@ -171,23 +203,23 @@ const InputFields = () => {
               error={''}
               data={[
                 {
-                  label: 'money',
+                  label: 'Money',
                   value: 'money',
                 },
                 {
-                  label: 'health',
+                  label: 'Health',
                   value: 'health',
                 },
                 {
-                  label: 'love',
+                  label: 'Love',
                   value: 'love',
                 },
                 {
-                  label: 'career',
+                  label: 'Career',
                   value: 'career',
                 },
                 {
-                  label: 'family',
+                  label: 'Family',
                   value: 'family',
                 },
               ]}

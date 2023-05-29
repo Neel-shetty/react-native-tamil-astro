@@ -9,9 +9,13 @@ import {fonts} from '../../../themes/fonts';
 const DatePicker = ({
   placeholder,
   setParentDate,
+  mode,
+  error,
 }: {
   placeholder: string;
   setParentDate: (date: Date) => void;
+  mode: 'date' | 'time' | 'datetime';
+  error: string | null;
 }) => {
   const [date, setDate] = useState<Date>();
   const [show, setShow] = useState(false);
@@ -32,11 +36,14 @@ const DatePicker = ({
         <View style={styles.padding}>
           <View style={styles.root}>
             <Text style={[styles.input, date ? styles.selected : null]}>
-              {date?.toLocaleTimeString('en-US') ?? placeholder}
+              {(mode === 'time' && date?.toLocaleTimeString('en-US')) ??
+                placeholder}
+              {(mode === 'date' && date?.toLocaleDateString('en-US')) ??
+                placeholder}
             </Text>
           </View>
           <View style={styles.errorContainer}>
-            <Text style={styles.error}>{''}</Text>
+            <Text style={styles.error}>{error}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -44,8 +51,8 @@ const DatePicker = ({
         <DateTimePicker
           testID="dateTimePicker"
           value={date ?? new Date()}
-          mode={'time'}
-          is24Hour={false}
+          mode={mode}
+          // is24Hour={false}
           display="default"
           onChange={onChange}
         />
