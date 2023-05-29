@@ -16,6 +16,7 @@ const DetailsFormScreen = () => {
       </Text>
       <View style={styles.padding} />
       <InputFields />
+      <View style={styles.padding} />
     </ScrollView>
   );
 };

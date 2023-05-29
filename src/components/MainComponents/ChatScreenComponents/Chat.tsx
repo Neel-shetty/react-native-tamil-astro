@@ -25,6 +25,7 @@ import {FetchBalance} from '../../../api/FetchBalance';
 export type messagesType = {
   uid: string;
   message: string;
+  createdAt: any;
 }[];
 
 const Chat = () => {

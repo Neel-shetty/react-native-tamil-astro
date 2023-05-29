@@ -142,6 +142,7 @@ const AstrologerWaitModal = ({
           chat: true,
           time: FireStore.FieldValue.serverTimestamp(),
           languages,
+          combinedUid,
           // astrologerPrice: astrologer.,
         });
       }

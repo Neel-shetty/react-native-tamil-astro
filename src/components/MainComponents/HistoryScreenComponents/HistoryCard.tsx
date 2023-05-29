@@ -1,5 +1,12 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect} from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect, useMemo} from 'react';
 import {colors} from '../../../themes/colors';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
@@ -16,6 +23,8 @@ import {
   HistoryTabDrawerNavigatorNavigationProp,
 } from '../../../router/types';
 import ChatScreen from '../../../screens/Main/ChatScreen';
+import firestore from '@react-native-firebase/firestore';
+import {messagesType} from '../ChatScreenComponents/Chat';
 
 interface HistoryCardPropTypes {
   astrologer: {
@@ -46,9 +55,10 @@ interface HistoryCardPropTypes {
 const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
   console.log(
     '🚀 ~ file: HistoryCard.tsx:40 ~ HistoryCard ~ astrologer:',
-    astrologer.astrologerRating,
+    astrologer.messages,
   );
   const [rating, setRating] = React.useState<string[]>(['1']);
+  const [messages, setMessages] = React.useState<messagesType>([]);
   console.log('🚀 ~ file: HistoryCard.tsx:46 ~ HistoryCard ~ rating:', rating);
   const navigation = useNavigation<ChatScreenNavigationProp['navigation']>();
 
@@ -58,6 +68,21 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
     );
     setRating(rate);
   }, [astrologer.astrologerRating]);
+
+  useEffect(() => {
+    async function getMessages() {
+      const doc = astrologer?.combinedUid;
+      // console.log('🚀 ~ file: HistoryList.tsx:54 ~ messages ~ doc:', doc);
+      const fetchedMessages = await firestore()
+        .collection('chats')
+        .doc(doc)
+        .collection('messages')
+        .get();
+      const idk = fetchedMessages?.docs?.map(doc => doc?.data());
+      setMessages(idk as messagesType);
+    }
+    getMessages();
+  }, [astrologer]);
 
   return (
     <View style={styles.background}>
@@ -81,10 +106,10 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
             <Text style={styles.title} numberOfLines={1}>
               {astrologer.astrologerName}
               <Text style={styles.text}>
-                {'  '}[{astrologer?.astrologerLanguage}]
+                {'  '}[{astrologer?.languages}]
               </Text>
             </Text>
-            <Text style={styles.text}>{astrologer.astrologerSkills}</Text>
+            <Text style={styles.text}>{astrologer.atrologerSkills}</Text>
             <Text style={styles.text}>
               Exp: {astrologer.astrologerExperience}Yrs{' '}
             </Text>
@@ -114,20 +139,37 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate(ChatScreen.name, {
-                      history: astrologer.messages,
+                      history: messages,
                     });
                   }}
                   style={styles.button}>
-                  {astrologer.chat ? <File /> : <Play />}
-                  <Text style={styles.buttonText}>
-                    {astrologer.chat ? 'Read Past Chat' : 'Play Past Call'}
-                  </Text>
+                  {messages.length > 0 &&
+                    (astrologer.chat ? <File /> : <Play />)}
+                  {messages.length > 0 && (
+                    <Text style={styles.buttonText}>
+                      {astrologer.chat ? 'Read Past Chat' : 'Play Past Call'}
+                    </Text>
+                  )}
+                  {messages.length === 0 ? (
+                    <ActivityIndicator
+                      color={colors.palette.accent200}
+                      size={'small'}
+                    />
+                  ) : null}
                 </TouchableOpacity>
               </View>
               <View style={styles.bottomButton}>
                 <SmallButton title="Call" icon={<Call />} onPress={() => {}} />
                 <View style={styles.space} />
-                <SmallButton title="Chat" icon={<Chat />} onPress={() => {}} />
+                <SmallButton
+                  title="Chat"
+                  icon={<Chat />}
+                  onPress={() => {
+                    navigation.navigate(ChatScreen.name, {
+                      chatId: astrologer.combinedUid,
+                    });
+                  }}
+                />
               </View>
             </View>
           </View>
