@@ -17,6 +17,7 @@ import {Formik} from 'formik';
 import {AstrologerFeedback} from '../../../api/AstrologerFeedback';
 import Auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const FeedbackModal = ({
   visible,
@@ -29,6 +30,7 @@ const FeedbackModal = ({
 }) => {
   const [rating, setRating] = React.useState(Array(5).fill({selected: false}));
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const numberofStars = rating.filter(item => item.selected).length;
 
@@ -66,7 +68,7 @@ const FeedbackModal = ({
           <Close />
         </TouchableOpacity>
         <Text style={styles.title}>
-          Rate your conversation with the astrologer
+          {t('Rate your conversation with the astrologer')}
         </Text>
         <View style={styles.starContainer}>
           {rating.map((item, index) => {
@@ -118,7 +120,7 @@ const FeedbackModal = ({
                   styles.buttonContainer,
                   numberofStars < 1 ? styles.buttonGray : null,
                 ]}>
-                <Text style={styles.buttonText}>Submit</Text>
+                <Text style={styles.buttonText}>{t('Submit')}</Text>
               </TouchableOpacity>
             </>
           )}

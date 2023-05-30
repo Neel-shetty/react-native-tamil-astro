@@ -3,6 +3,7 @@ import React from 'react';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const Timer = ({
   onPress,
@@ -11,6 +12,7 @@ const Timer = ({
   onPress: () => void;
   timeLeft: number | null;
 }) => {
+  const {t} = useTranslation();
   // const navigation = useNavigation();
   // const [timer, setTimer] = React.useState(0);
 
@@ -44,14 +46,16 @@ const Timer = ({
     <View style={styles.root}>
       <TouchableOpacity
         onPress={() => {
-          console.log('onpress touchableopacity end chat timer')
+          console.log('onpress touchableopacity end chat timer');
           onPress();
           // navigation.navigate('HomeScreen');
         }}>
-        <Text style={styles.text}>End Chat</Text>
+        <Text style={styles.text}>{t('End Chat')}</Text>
       </TouchableOpacity>
       <View style={styles.timeContainer}>
-        <Text style={styles.time}>{timeLeft} mins remaining</Text>
+        <Text style={styles.time}>
+          {timeLeft} {t('mins remaining')}
+        </Text>
       </View>
     </View>
   );

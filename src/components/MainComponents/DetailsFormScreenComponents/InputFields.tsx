@@ -265,11 +265,11 @@ const InputFields = () => {
             />
             <View style={styles.bottomContainer}>
               <Text style={styles.subtitle}>
-                {lowBalance ? 'You need atleast 50rs to consult' : ''}
+                {lowBalance ? t('You need atleast 50rs to consult') : ''}
               </Text>
               <View style={styles.buttonContainer}>
                 <PrimaryButton
-                  title={lowBalance ? 'Recharge and Chat' : 'Start Chat'}
+                  title={lowBalance ? t('Recharge and Chat') : t('Start Chat')}
                   onPress={
                     lowBalance
                       ? () => {
@@ -281,7 +281,7 @@ const InputFields = () => {
                 />
               </View>
               <Text style={styles.subtitle}>
-                {lowBalance ? 'Current Balance:' : ''}
+                {lowBalance ? t('Current Balance:') : ''}
                 <Text style={styles.red}>
                   {lowBalance ? `${balanceData?.balance}rs` : ''}
                 </Text>

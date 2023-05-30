@@ -7,6 +7,7 @@ import {fonts} from '../../../themes/fonts';
 import Close from '../../../../assets/icons/ChatScreen/close.svg';
 import {useNavigation} from '@react-navigation/native';
 import RechargeScreen from '../../../screens/Main/RechargeScreen';
+import {useTranslation} from 'react-i18next';
 
 const Balance0Modal = ({
   visible,
@@ -16,6 +17,7 @@ const Balance0Modal = ({
   setVisible: (value: boolean) => void;
 }) => {
   const navigation = useNavigation();
+  const {t} = useTranslation();
   return (
     <Modal
       backdropOpacity={0.7}
@@ -34,12 +36,12 @@ const Balance0Modal = ({
           style={styles.closeContainer}>
           <Close />
         </TouchableOpacity>
-        <Text style={styles.text}>Have more questions?</Text>
+        <Text style={styles.text}>{t('Have more questions?')}</Text>
         <PrimaryButton
           onPress={() => {
             navigation.navigate(RechargeScreen.name);
           }}
-          title="Recharge and Chat"
+          title={t('Recharge and Chat')}
         />
       </View>
     </Modal>
