@@ -14,18 +14,13 @@ import {fonts} from '../../../themes/fonts';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../store';
 import {setShowSupportModal} from '../../../store/UiSlice';
+import {useTranslation} from 'react-i18next';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const SupportModal = ({
-  // visible,
-  setVisible,
-}: {
-  // visible: boolean;
-  setVisible: (visible: boolean) => void;
-}) => {
-  // const [visible, setVisible] = React.useState(false);
+const SupportModal = () => {
   const visible = useSelector((state: RootState) => state.ui.showSupportModal);
   const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   return (
     <Modal
@@ -38,7 +33,7 @@ const SupportModal = ({
       backdropOpacity={0.5}>
       <View style={styles.root}>
         <Text style={styles.title}>
-          We are always here to resolve your queries
+          {t('We are always here to resolve your queries')}
         </Text>
         <TouchableOpacity
           style={styles.button}
@@ -49,7 +44,7 @@ const SupportModal = ({
           <Image
             source={require('../../../../assets/images/whatsappLogo.png')}
           />
-          <Text style={styles.buttonText}>Whatsapp Us</Text>
+          <Text style={styles.buttonText}>{t('Whatsapp Us')}</Text>
         </TouchableOpacity>
       </View>
     </Modal>

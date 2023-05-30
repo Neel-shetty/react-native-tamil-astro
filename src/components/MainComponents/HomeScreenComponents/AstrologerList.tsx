@@ -46,11 +46,6 @@ const AstrologerList = ({
     FetchAstrologerCategories,
   );
 
-  console.log(
-    '🚀 ~ file: AstrologerList.tsx:42 ~ AstrologerApiData:',
-    AstrologerApiData,
-  );
-
   if (isLoading) {
     return (
       <ActivityIndicator

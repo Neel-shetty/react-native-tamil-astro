@@ -9,10 +9,12 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {setLoggedIn} from '../../store/UserSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 const LanguageScreen = () => {
   const {i18n} = useTranslation();
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const changeLanguage = async (language: string) => {
     i18n.changeLanguage(language).catch(err => console.log(err));
@@ -36,6 +38,7 @@ const LanguageScreen = () => {
           title="தமிழ்"
           onPress={() => {
             changeLanguage('ta');
+            navigation.navigate('HomeScreen');
           }}
         />
         <View style={styles.paddingH} />
@@ -43,6 +46,7 @@ const LanguageScreen = () => {
           title="English"
           onPress={() => {
             changeLanguage('en');
+            navigation.navigate('HomeScreen');
           }}
         />
       </View>

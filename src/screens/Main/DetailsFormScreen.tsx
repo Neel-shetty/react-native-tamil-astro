@@ -4,15 +4,17 @@ import {layout} from '../../constants/layout';
 import {colors} from '../../themes/colors';
 import InputFields from '../../components/MainComponents/DetailsFormScreenComponents/InputFields';
 import {fonts} from '../../themes/fonts';
+import {useTranslation} from 'react-i18next';
 
 const DetailsFormScreen = () => {
+  const {t} = useTranslation();
   return (
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.root}>
       <View style={styles.paddingTop} />
       <Text style={styles.title}>
-        Please fill your details for the astrologer
+        {t('Please fill your details for the astrologer')}
       </Text>
       <View style={styles.padding} />
       <InputFields />

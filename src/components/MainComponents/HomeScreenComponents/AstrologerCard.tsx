@@ -41,7 +41,7 @@ const AstrologerCard = ({
   onPressCall,
   id,
 }: AstrologerCardProps) => {
-  const rating = Array(5).fill(1);
+  const rating = Array(stars).fill(1);
   const dispatch = useDispatch();
 
   return (

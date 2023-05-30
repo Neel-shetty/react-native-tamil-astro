@@ -2,6 +2,24 @@
   "translation": {
     "hello": "வணக்கம்",
     "this line is translated": "இந்த வரி மொழிபெயர்க்கப்பட்டுள்ளது",
-    "title": "தமிழருக்கான சிறந்த ஜோதிட ஆப்"
+    "title": "தமிழருக்கான சிறந்த ஜோதிட ஆப்",
+    "In which area of life do you want guidance?": "வாழ்க்கையின் எந்தப் பகுதியில் உங்களுக்கு வழிகாட்டுதல் தேவை?",
+    "Choose Astrologer Category": "ஜோதிடர் வகையைத் தேர்ந்தெடுக்கவும்",
+    "Whatsapp Us": "எங்களை வாட்ஸ்அப் செய்யுங்கள்",
+    "We are always here to resolve your queries": "உங்கள் கேள்விகளைத் தீர்க்க நாங்கள் எப்போதும் இங்கு இருக்கிறோம்",
+    "Love": "அன்பு",
+    "Career": "தொழில்",
+    "Money": "பணம்",
+    "Health": "ஆரோக்கியம்",
+    "Family": "குடும்பம்",
+    "Other": "மற்றவை",
+    "Please fill your details for the astrologer": "ஜோதிடரிடம் உங்கள் விவரங்களை நிரப்பவும்",
+    "Name*": "மற்றவை*",
+    "Place of Birth*": "மற்றவை*",
+    "Date of Birth*": "மற்றவை*",
+    "Time of Birth*": "மற்றவை*",
+    "Gender*": "மற்றவை*",
+    "Maritial Status": "மற்றவை",
+    "Type of Problem": "மற்றவை"
   }
 }

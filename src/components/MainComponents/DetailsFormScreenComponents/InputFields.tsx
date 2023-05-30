@@ -19,7 +19,7 @@ import {FetchBalance} from '../../../api/FetchBalance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RechargeScreen from '../../../screens/Main/RechargeScreen';
 import {FetchUserDetails} from '../../../api/FetchUserDetails';
-import {set} from 'date-fns';
+import {useTranslation} from 'react-i18next';
 
 const InputFields = () => {
   const [gender, setGender] = useState<'male' | 'female' | 'other'>();
@@ -44,6 +44,8 @@ const InputFields = () => {
     '🚀 ~ file: InputFields.tsx:40 ~ InputFields ~ communicationType:',
     communicationType,
   );
+
+  const {t} = useTranslation();
 
   const {
     data: balanceData,
@@ -164,7 +166,7 @@ const InputFields = () => {
         }) => (
           <View>
             <CustomInput
-              placeholder="Name*"
+              placeholder={t('Name*')}
               handleChange={handleChange('name')}
               handleBlur={handleBlur('name')}
               value={values.name}
@@ -173,17 +175,17 @@ const InputFields = () => {
               }
             />
             <CustomInput
-              placeholder="Place of Birth*"
+              placeholder={t('Place of Birth*')}
               handleChange={handleChange('placeOfBirth')}
               handleBlur={handleBlur('placeOfBirth')}
               value={values.placeOfBirth}
               error={
                 errors.placeOfBirth && touched.placeOfBirth
-                  ? 'Place of Birth field is required'
+                  ? t('Place of Birth field is required')
                   : ''
               }
             />
-            {/* 
+            {/*
             <DatePicker
               mode="time"
               setParentDate={setDate}
@@ -193,66 +195,70 @@ const InputFields = () => {
             <DatePicker
               mode="date"
               setParentDate={setDate}
-              placeholder="Date of Birth*"
-              error={dropdownErrors.date ? 'This is a required field' : null}
+              placeholder={t('Date of Birth*')}
+              error={dropdownErrors.date ? t('This is a required field') : null}
             />
             <DatePicker
               mode="time"
               setParentDate={setTime}
-              placeholder="Time of Birth*"
+              placeholder={t('Time of Birth*')}
               error={dropdownErrors.time ? 'This is a required field' : null}
+              initialValue={userDetails?.time_of_birth}
             />
             <CustomDropdown
-              placeholder="Gender*"
+              placeholder={t('Gender*')}
               value={gender}
               setValue={setGender}
+              initialValue={userDetails?.date_of_birth}
               data={[
-                {label: 'Male', value: 'male'},
-                {label: 'Female', value: 'female'},
-                {label: 'Other', value: 'other'},
+                {label: t('Male'), value: 'male'},
+                {label: t('Female'), value: 'female'},
+                {label: t('Other'), value: 'other'},
               ]}
               error={
                 dropdownErrors.gender ? 'This is a required field test ' : null
               }
             />
             <CustomDropdown
-              placeholder="Marital Status"
+              placeholder={t('Marital Status')}
               value={maritalStatus}
               setValue={setMaritalStatus}
+              initialValue={userDetails?.marital_status}
               error={
                 dropdownErrors.maritalStatus
                   ? 'This is a required field test'
                   : null
               }
               data={[
-                {label: 'Single', value: 'single'},
-                {label: 'Married', value: 'married'},
+                {label: t('Single'), value: 'single'},
+                {label: t('Married'), value: 'married'},
               ]}
             />
             <CustomDropdown
-              placeholder="Type of Problem"
+              placeholder={t('Type of Problem')}
               value={problem}
               setValue={setProblem}
+              initialValue={userDetails?.type_of_problem}
               error={''}
               data={[
                 {
-                  label: 'Money',
+                  label: t('Money'),
                   value: 'money',
                 },
                 {
-                  label: 'Health',
+                  label: t('Health'),
                   value: 'health',
                 },
                 {
-                  label: 'Love',
+                  label: t('Love'),
                   value: 'love',
                 },
                 {
-                  label: 'Career',
+                  label: t('Career'),
                   value: 'career',
                 },
                 {
-                  label: 'Family',
+                  label: t('Family'),
                   value: 'family',
                 },
               ]}

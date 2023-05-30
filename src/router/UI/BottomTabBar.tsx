@@ -37,6 +37,7 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({name: route.name, merge: true, params: {}});
           }
+          navigation.navigate('HomeScreen');
         };
 
         const onLongPress = () => {

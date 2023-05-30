@@ -8,31 +8,33 @@ import Health from '../../../../assets/icons/HomeScreen/health.svg';
 import Other from '../../../../assets/icons/HomeScreen/other.svg';
 import {layout} from '../../../constants/layout';
 import CategoryButton from './CategoryButton';
+import {useTranslation} from 'react-i18next';
 
 const CategoryList = ({onPress}: {onPress: () => void}) => {
+  const {t} = useTranslation();
   const categories = [
     {
-      title: 'Love',
+      title: t('Love'),
       logo: <Love />,
     },
     {
-      title: 'Career',
+      title: t('Career'),
       logo: <Career />,
     },
     {
-      title: 'Money',
+      title: t('Money'),
       logo: <Money />,
     },
     {
-      title: 'Family',
+      title: t('Family'),
       logo: <Family />,
     },
     {
-      title: 'Health',
+      title: t('Health'),
       logo: <Health />,
     },
     {
-      title: 'Other',
+      title: t('Other'),
       logo: <Other />,
     },
   ];

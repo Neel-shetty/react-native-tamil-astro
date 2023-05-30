@@ -7,10 +7,9 @@ import CategoryList from '../../components/MainComponents/HomeScreenComponents/C
 import AstrologerList from '../../components/MainComponents/HomeScreenComponents/AstrologerList';
 import GenderOptions from '../../components/MainComponents/HomeScreenComponents/GenderOptions';
 import AstrologerWaitModal from '../../components/MainComponents/HomeScreenComponents/AstrologerWaitModal';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '../../router/types';
 import AstrologerOptions from '../../components/MainComponents/HomeScreenComponents/AtrologerOptions';
-import ChatScreen from './ChatScreen';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
 import {
@@ -18,28 +17,24 @@ import {
   setFlow,
   setShowGenderOptions,
 } from '../../store/UiSlice';
-import CallScreen from './CallScreen';
 import SupportModal from '../../components/MainComponents/HomeScreenComponents/SupportModal';
+import {useTranslation} from 'react-i18next';
 
 const HomeScreen = () => {
   const [showModal, setShowModal] = React.useState(false);
-  // const [showSupportModal, setShowSupportModal] = React.useState(true);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
-  // const [flow, setFlow] = React.useState<'astrologer' | 'category'>('category');
-  const flow = useSelector((state: RootState) => state.ui.flow);
-  console.log('🚀 ~ file: HomeScreen.tsx:20 ~ HomeScreen ~ flow:', flow);
 
-  const route = useRoute<HomeScreenNavigationProp['route']>();
-  const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
-  const dispatch = useDispatch();
+  // global state
+  const flow = useSelector((state: RootState) => state.ui.flow);
   const showGenderOptions = useSelector(
     (state: RootState) => state.ui.showGenderOptions,
   );
-  console.log(
-    '🚀 ~ file: HomeScreen.tsx:31 ~ HomeScreen ~ showGenderOptions:',
-    showGenderOptions,
-  );
+
+  const route = useRoute<HomeScreenNavigationProp['route']>();
+  const dispatch = useDispatch();
+
+  const {t} = useTranslation();
 
   React.useEffect(() => {
     const astrologer = route.params?.astrologer;
@@ -64,7 +59,7 @@ const HomeScreen = () => {
           //   navigation.navigate(ChatScreen.name, {chatId: '16-17'});
           // }}
           style={styles.heading}>
-          In which area of life do you want guidance?
+          {t('In which area of life do you want guidance?')}
         </Text>
       </View>
       <CategoryList
@@ -80,7 +75,7 @@ const HomeScreen = () => {
           style={styles.heading}
           // onPress={() => navigation.navigate(CallScreen.name)}
         >
-          Choose Astrologer Category
+          {t('Choose Astrologer Category')}
         </Text>
       </View>
       <AstrologerList
@@ -107,8 +102,8 @@ const HomeScreen = () => {
       />
       <AstrologerWaitModal visible={showModal} setVisible={setShowModal} />
       <SupportModal
-        // visible={showSupportModal}
-        // setVisible={setShowSupportModal}
+      // visible={showSupportModal}
+      // setVisible={setShowSupportModal}
       />
     </View>
   );

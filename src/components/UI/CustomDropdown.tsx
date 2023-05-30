@@ -11,6 +11,7 @@ type CustomInputPropsType = {
   value?: string;
   setValue: (value: string) => void;
   data: {label: string; value: string}[];
+  initialValue?: string;
 };
 
 // const data = [
@@ -30,10 +31,17 @@ const CustomDropdown = ({
   value,
   setValue,
   data = [],
+  initialValue,
 }: // data,
 CustomInputPropsType) => {
   // const [value, setValue] = useState<string>('');
   const [_, setIsFocus] = useState(false);
+
+  React.useEffect(() => {
+    if (initialValue) {
+      setValue(initialValue);
+    }
+  }, [initialValue, setValue]);
 
   return (
     <View style={styles.padding}>

@@ -2,6 +2,26 @@
   "translation": {
     "hello": "Hello",
     "this line is translated": "This line is translated",
-    "authScaffold.titleText": "Best Astrology App for Tamil Community"
+    "authScaffold.titleText": "Best Astrology App for Tamil Community",
+    "In which area of life do you want guidance?": "In which area of life do you want guidance?",
+    "Choose Astrologer Category": "Choose Astrologer Category",
+    "Whatsapp Us": "Whatsapp Us",
+    "We are always here to resolve your queries": "We are always here to resolve your queries",
+    "Love": "Love",
+    "Career": "Career",
+    "Money": "Money",
+    "Health": "Health",
+    "Family": "Family",
+    "Other": "Other",
+    "Please fill your details for the astrologer": "Please fill your details for the astrologer",
+    "Name*": "Name*",
+    "Place of Birth*": "Place of Birth*",
+    "Date of Birth*": "Date of Birth*",
+    "Time of Birth*": "Time of Birth*",
+    "Gender*": "Gender*",
+    "Maritial Status": "Maritial Status",
+    "Type of Problem": "Type of Problem",
+    "Place of Birth field is required": "Place of Birth field is required",
+    "This is a required field": "This is a required field",
   }
 }
