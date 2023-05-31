@@ -39,6 +39,7 @@ const Balance0Modal = ({
         <Text style={styles.text}>{t('Have more questions?')}</Text>
         <PrimaryButton
           onPress={() => {
+            //@ts-ignore
             navigation.navigate(RechargeScreen.name);
           }}
           title={t('Recharge and Chat')}
