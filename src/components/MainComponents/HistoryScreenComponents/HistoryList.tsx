@@ -1,9 +1,8 @@
 import {FlatList, StyleSheet, View} from 'react-native';
-import React, {useMemo} from 'react';
+import React from 'react';
 import HistoryCard from './HistoryCard';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {messagesType} from '../ChatScreenComponents/Chat';
 
 type HistoryList = {
   astrologerId: number;
@@ -21,12 +20,6 @@ type HistoryList = {
 
 const HistoryList = () => {
   const [history, setHistory] = React.useState<HistoryList>([]);
-  const [docId, setDocId] = React.useState<string>('');
-  // const [messages, setMessages] = React.useState<messagesType>([]);
-  console.log(
-    '🚀 ~ file: HistoryList.tsx:23 ~ HistoryList ~ history:',
-    history,
-  );
   // const astrologer = {
   //   name: 'Kethan Swami',
   //   stars: 5,
@@ -45,6 +38,7 @@ const HistoryList = () => {
       .onSnapshot(snapshot => {
         const data = snapshot?.docs?.map(doc => doc?.data());
         console.log('🚀 ~ file: HistoryList.tsx:26 ~ React.useEffect ~ data:');
+        //@ts-ignore
         setHistory(data);
       });
   }, []);

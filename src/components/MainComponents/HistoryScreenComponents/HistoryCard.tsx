@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import {colors} from '../../../themes/colors';
 import {layout} from '../../../constants/layout';
 import {fonts} from '../../../themes/fonts';
@@ -16,12 +16,8 @@ import Call from '../../../../assets/icons/HomeScreen/call.svg';
 import Chat from '../../../../assets/icons/HomeScreen/chat.svg';
 import File from '../../../../assets/icons/HistoryScreen/file.svg';
 import Play from '../../../../assets/icons/HistoryScreen/play.svg';
-import {use} from 'i18next';
 import {useNavigation} from '@react-navigation/native';
-import {
-  ChatScreenNavigationProp,
-  HistoryTabDrawerNavigatorNavigationProp,
-} from '../../../router/types';
+import {ChatScreenNavigationProp} from '../../../router/types';
 import ChatScreen from '../../../screens/Main/ChatScreen';
 import firestore from '@react-native-firebase/firestore';
 import {messagesType} from '../ChatScreenComponents/Chat';
