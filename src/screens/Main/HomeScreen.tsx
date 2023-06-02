@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.contageRegular,
     color: colors.text,
     paddingVertical: 5,
+    textAlign: 'center',
   },
   padding1: {
     height: layout.height * 0.02,

@@ -22,11 +22,11 @@ import {useTranslation} from 'react-i18next';
 const FeedbackModal = ({
   visible,
   setVisible,
-  astroId,
-}: {
+}: // astroId,
+{
   visible: boolean;
   setVisible: (value: boolean) => void;
-  astroId: number;
+  // astroId: number;
 }) => {
   const [rating, setRating] = React.useState(Array(5).fill({selected: false}));
   const navigation = useNavigation();
@@ -94,12 +94,13 @@ const FeedbackModal = ({
               astroId: 1,
               userId: Number(Auth().currentUser?.uid) as number,
               rating: numberofStars,
-              review: values.message,
+              review: values.message ?? '',
               type: 'chat',
             });
             resetForm();
 
             setVisible(false);
+            //@ts-ignore
             navigation.navigate('HomeScreen');
           }}>
           {({handleChange, handleBlur, handleSubmit, values}) => (

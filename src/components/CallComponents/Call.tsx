@@ -6,7 +6,7 @@ import {
   RTCPeerConnection,
   RTCSessionDescription,
 } from 'react-native-webrtc';
-import {Button} from 'react-native';
+// import {Button} from 'react-native';
 import {StyleProp} from 'react-native';
 import {ViewStyle} from 'react-native';
 import Video from './Video';

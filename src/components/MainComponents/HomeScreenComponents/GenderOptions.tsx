@@ -14,6 +14,7 @@ import {
   setAstrologerGender,
   setShowGenderOptions,
 } from '../../../store/UiSlice';
+import {useTranslation} from 'react-i18next';
 
 interface GenderOptionsPropsType {
   visible: boolean;
@@ -29,6 +30,7 @@ const GenderOptions = ({
   const bottomSheetRef = useRef<BottomSheet>(null);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   const snapPoints = useMemo(() => ['50%'], []);
 
@@ -63,7 +65,9 @@ const GenderOptions = ({
       ref={bottomSheetRef}>
       <View style={styles.root}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Preferred gender of the Astrologer?</Text>
+          <Text style={styles.title}>
+            {t('Preferred gender of the Astrologer?')}
+          </Text>
         </View>
         <View style={styles.buttonContainer}>
           <SquareButton
@@ -82,7 +86,7 @@ const GenderOptions = ({
               }
               dispatch(setAstrologerGender('Male'));
             }}
-            title="Male"
+            title={t('Male')}
           />
           <SquareButton
             onPress={() => {
@@ -100,7 +104,7 @@ const GenderOptions = ({
               }
               dispatch(setAstrologerGender('Female'));
             }}
-            title="female"
+            title={t('Female')}
           />
           <SquareButton
             onPress={() => {
@@ -118,7 +122,7 @@ const GenderOptions = ({
               }
               dispatch(setAstrologerGender('Other'));
             }}
-            title="No Preference"
+            title={t('No Preference')}
           />
         </View>
       </View>

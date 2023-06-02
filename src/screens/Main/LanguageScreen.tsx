@@ -16,10 +16,11 @@ const LanguageScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const changeLanguage = async (language: string) => {
+  const changeLanguage = async (language: 'ta' | 'en') => {
     i18n.changeLanguage(language).catch(err => console.log(err));
     //handle navigation, set loggedIn as true
     await AsyncStorage.setItem('loggedIn', 'true');
+    await AsyncStorage.setItem('language', language);
     dispatch(setLoggedIn(true));
   };
 

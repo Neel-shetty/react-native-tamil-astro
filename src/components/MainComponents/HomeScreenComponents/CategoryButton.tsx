@@ -4,6 +4,7 @@ import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
 import {useDispatch} from 'react-redux';
 import {setProblemCategory} from '../../../store/UiSlice';
+import TextTicker from 'react-native-text-ticker';
 
 interface CategoryButtonProps {
   title: string;
@@ -25,7 +26,7 @@ const CategoryButton = ({title, logo, onPress}: CategoryButtonProps) => {
           {/* <View style={styles.logoContainer}> */}
           {logo}
           {/* </View> */}
-          <Text style={styles.title}>{title}</Text>
+          <TextTicker style={styles.title}>{title}</TextTicker>
           <Image
             style={styles.image}
             source={require('../../../../assets/images/logoOpacity10.png')}

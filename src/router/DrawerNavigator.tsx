@@ -14,6 +14,7 @@ import {colors} from '../themes/colors';
 import CustomDrawer from './UI/CustomDrawer';
 import HistoryScreen from '../screens/Main/HistoryScreen';
 import {fonts} from '../themes/fonts';
+import {useTranslation} from 'react-i18next';
 
 const Drawer = createDrawerNavigator();
 
@@ -52,14 +53,18 @@ const headerTitleStyle2: StyleProp<TextStyle> = {
 };
 
 const HeaderTitle = () => {
+  const {t} = useTranslation();
   return (
     <View
     // style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}
     >
       <Text numberOfLines={1} style={headerTitleStyle2}>
-        Tamil Astro
+        {t('Tamil Astro')}
       </Text>
-      <Text style={headerTitleStyle1}>Tamil Astro</Text>
+      <Text style={headerTitleStyle1}>
+        {t('Tamil Astro')}
+        {/* Tamil Astro */}
+      </Text>
     </View>
   );
 };

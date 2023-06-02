@@ -25,6 +25,8 @@ import {
 import ChatScreen from '../../../screens/Main/ChatScreen';
 import firestore from '@react-native-firebase/firestore';
 import {messagesType} from '../ChatScreenComponents/Chat';
+import {useTranslation} from 'react-i18next';
+import TextTicker from 'react-native-text-ticker';
 
 interface HistoryCardPropTypes {
   astrologer: {
@@ -53,6 +55,11 @@ interface HistoryCardPropTypes {
 }
 
 const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
+  console.log(
+    '🚀 ~ file: HistoryCard.tsx:57 ~ HistoryCard ~ astrologer:',
+    astrologer,
+  );
+  const {t} = useTranslation();
   console.log(
     '🚀 ~ file: HistoryCard.tsx:40 ~ HistoryCard ~ astrologer:',
     astrologer.messages,
@@ -109,9 +116,11 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 {'  '}[{astrologer?.languages}]
               </Text>
             </Text>
-            <Text style={styles.text}>{astrologer.atrologerSkills}</Text>
             <Text style={styles.text}>
-              Exp: {astrologer.astrologerExperience}Yrs{' '}
+              {t('Skills')}:{astrologer.atrologerSkills}
+            </Text>
+            <Text style={styles.text}>
+              {t('Exp')}: {astrologer.astrologerExperience}Yrs{' '}
             </Text>
           </View>
         </View>
@@ -123,7 +132,9 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 <Star key={index} />
               ))}
             </View>
-            <Text style={styles.text}>Clients: {astrologer.clients}</Text>
+            <Text style={styles.text}>
+              {t('Clients')}: {astrologer.astrologerClients}
+            </Text>
           </View>
           <View style={styles.bottomRight}>
             <View style={styles.costContainer}>
@@ -146,9 +157,9 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                   {messages.length > 0 &&
                     (astrologer.chat ? <File /> : <Play />)}
                   {messages.length > 0 && (
-                    <Text style={styles.buttonText}>
-                      {astrologer.chat ? 'Read Past Chat' : 'Play Past Call'}
-                    </Text>
+                    <TextTicker duration={8000} style={styles.buttonText}>
+                      {astrologer.chat ? t('Read Past Chat') : 'Play Past Call'}
+                    </TextTicker>
                   )}
                   {messages.length === 0 ? (
                     <ActivityIndicator
@@ -159,10 +170,14 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.bottomButton}>
-                <SmallButton title="Call" icon={<Call />} onPress={() => {}} />
+                <SmallButton
+                  title={t('Call')}
+                  icon={<Call />}
+                  onPress={() => {}}
+                />
                 <View style={styles.space} />
                 <SmallButton
-                  title="Chat"
+                  title={t('Chat')}
                   icon={<Chat />}
                   onPress={() => {
                     navigation.navigate(ChatScreen.name, {

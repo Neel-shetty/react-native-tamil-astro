@@ -21,8 +21,10 @@ import {FetchRecharge} from '../../../api/FetchRecharge';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FetchBalance} from '../../../api/FetchBalance';
 import {RechargeBalance} from '../../../api/RechargeBalance';
+import {useTranslation} from 'react-i18next';
 
 const Recharge = () => {
+  const {t} = useTranslation();
   const {
     data: rechargeData,
     error: rechargeError,
@@ -47,14 +49,15 @@ const Recharge = () => {
         currency: 'INR',
         key: 'rzp_test_sx9x0KmOhUZ0Lb',
         amount: amount,
-        name: 'Acme Corp',
+        name: 'Tamil Astro',
         order_id: res.data.data, //Replace this with an order_id created using Orders API.
         prefill: {
+          // TODO: delete this
           email: 'gaurav.kumar@example.com',
           contact: '9191919191',
           name: 'Gaurav Kumar',
         },
-        theme: {color: colors.palette.primary500},
+        theme: {color: colors.palette.primary300},
       };
       RazorpayCheckout.open(options)
         .then(data => {
@@ -97,7 +100,7 @@ const Recharge = () => {
   return (
     <View style={styles.root}>
       <View style={styles.balanceContainer}>
-        <Text style={styles.title}>Available Balance</Text>
+        <Text style={styles.title}>{t('Available Balance')}</Text>
         <Text style={styles.amount}>
           <Text style={styles.size20}>₹</Text>
           {balanceData?.balance}
@@ -123,7 +126,7 @@ const Recharge = () => {
                 <PrimaryButton
                   width={layout.width * 0.3}
                   onPress={handleSubmit}
-                  title="Add Money"
+                  title={t('Add Money')}
                 />
               </>
             )}
@@ -133,7 +136,7 @@ const Recharge = () => {
       {/* recharge options */}
       <View style={styles.rechargeOptionsContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.optionTitle}>Quick Balance Options</Text>
+          <Text style={styles.optionTitle}>{t('Quick Balance Options')}</Text>
         </View>
         {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
         <FlatList

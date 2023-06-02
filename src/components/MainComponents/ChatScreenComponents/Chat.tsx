@@ -114,11 +114,16 @@ const Chat = () => {
         return;
       }
       console.log('reducing rimer');
-      setTimeLeft(timer => timer - 1);
+      setTimeLeft(timer => {
+        if (timer) {
+          return timer - 1;
+        }
+        return null;
+      });
     }, 60000);
     console.log('timer reduced by 1 min');
     return () => clearInterval(interval);
-  }, [setTimeLeft]);
+  }, [setTimeLeft, chatState]);
 
   React.useEffect(() => {
     if (timeLeft === 0) {

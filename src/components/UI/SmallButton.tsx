@@ -15,7 +15,9 @@ const SmallButton = ({
   return (
     <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
       {icon}
-      <Text style={styles.cost}>{title}</Text>
+      <Text numberOfLines={1} style={styles.cost}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -36,5 +38,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.interRegular,
     fontSize: 14,
     color: colors.palette.gray300,
+    maxWidth: 55,
   },
 });

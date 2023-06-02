@@ -32,6 +32,7 @@ export interface Data {
   is_active: any;
   place_of_birth: string;
   time_of_birth: string;
+  date_of_birth: string;
   marital_status: string;
   type_of_problem: string;
   wallet: string;
@@ -89,6 +90,7 @@ export async function FetchUserDetails() {
         email_verified_at: null,
         created_at: '2023-05-16T13:59:08.000000Z',
         updated_at: '2023-05-29T13:43:08.000000Z',
+        date_of_birth: '2023-05-29T13:42:41.088Z',
       };
       return tempData;
     });

@@ -5,7 +5,6 @@ import {
   Image,
   Alert,
   ActivityIndicator,
-  ImageSourcePropType,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import Modal from 'react-native-modal';
@@ -23,6 +22,7 @@ import FireStore from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store';
+import {useTranslation} from 'react-i18next';
 
 const AstrologerWaitModal = ({
   visible,
@@ -36,6 +36,7 @@ const AstrologerWaitModal = ({
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const route = useRoute<HomeScreenNavigationProp['route']>();
+  const {t} = useTranslation();
   const communicationType = useSelector(
     (state: RootState) => state.ui.communicationType,
   );
@@ -203,6 +204,7 @@ const AstrologerWaitModal = ({
         navigation,
         combinedUserId,
       );
+      // TODO : remove this
     }, 5000);
     return () => clearTimeout(timer);
   }, [
@@ -222,13 +224,13 @@ const AstrologerWaitModal = ({
 
   let languages = '';
   if (astrologer?.speak_hindi === '1') {
-    languages += ' Hindi ';
+    languages += t(' Hindi ');
   }
   if (astrologer?.speak_english === '1') {
-    languages += ' English ';
+    languages += t(' English ');
   }
   if (astrologer?.speak_tamil === '1') {
-    languages += ' Tamil ';
+    languages += t(' Tamil ');
   }
 
   return (
@@ -245,7 +247,7 @@ const AstrologerWaitModal = ({
           <ActivityIndicator size="large" color={colors.palette.primary500} />
         ) : (
           <>
-            <Text style={styles.title}>Your assigned Astrologer</Text>
+            <Text style={styles.title}>{t('Your assigned Astrologer')}</Text>
             <View style={styles.profileContainer}>
               <Image
                 style={styles.profileBg}
@@ -262,15 +264,17 @@ const AstrologerWaitModal = ({
                   <Star key={index} />
                 ))}
               </View>
-              <Text style={styles.infoText}>Clients: {astrologer.clients}</Text>
               <Text style={styles.infoText}>
-                Experience: {astrologer.experience}Yrs
+                {t('Clients')}: {astrologer.clients}
+              </Text>
+              <Text style={styles.infoText}>
+                {t('Experience')}: {astrologer.experience}Yrs
               </Text>
               <Text numberOfLines={1} style={styles.infoText}>
-                Language: {languages}
+                {t('Language')}: {languages}
               </Text>
               <Text numberOfLines={1} style={styles.infoText}>
-                Skills: {astrologer.skills}
+                {t('Skills')}: {astrologer.skills}
               </Text>
             </View>
             <View style={styles.subTitleContainer}>
@@ -285,9 +289,14 @@ const AstrologerWaitModal = ({
                   );
                 }}
                 style={[styles.subTitle]}>
-                Astrologer {communicationType} connecting {'\n'}
+                {t('Astrologer')}{' '}
+                {communicationType === 'chat' ? t('Chat') : t('Call')}{' '}
+                {/* {t(communicationType)}  */}
+                {t('connecting')} {'\n'}
                 <Text style={{color: colors.palette.primary500}}>
-                  Entering {communicationType} in 5 seconds
+                  {t('Entering')}{' '}
+                  {communicationType === 'chat' ? t('Chat') : t('Call')}{' '}
+                  {t('in 5 seconds')}
                 </Text>
               </Text>
             </View>
@@ -372,10 +381,10 @@ const styles = StyleSheet.create({
 });
 
 function navigateToNextScreen(
-  route,
+  route: any,
   communicationType: string,
   setVisible: (visible: boolean) => void,
-  navigation,
+  navigation: any,
   combinedUserId: string | null,
 ) {
   if (

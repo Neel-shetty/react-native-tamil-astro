@@ -4,6 +4,7 @@ import {colors} from '../../../themes/colors';
 import {fonts} from '../../../themes/fonts';
 import Star from '../../../../assets/icons/RechargeScreen/popularStar.svg';
 import {layout} from '../../../constants/layout';
+import {useTranslation} from 'react-i18next';
 
 const BalanceOptions = ({
   popular,
@@ -16,12 +17,13 @@ const BalanceOptions = ({
   bonus?: string;
   onPress: () => void;
 }) => {
+  const {t} = useTranslation();
   return (
     <View style={styles.realRoot}>
       {popular ? (
         <View style={styles.popularContainer}>
           <Star />
-          <Text style={styles.popular}>Popular</Text>
+          <Text style={styles.popular}>{t('Popular')}</Text>
         </View>
       ) : (
         <View style={styles.spacer} />
@@ -36,7 +38,9 @@ const BalanceOptions = ({
       </View>
       {bonus ? (
         <View style={styles.bonusContainer}>
-          <Text style={styles.popular}>Bonus ₹{bonus}</Text>
+          <Text style={styles.popular}>
+            {t('Bonus')} ₹{bonus}
+          </Text>
         </View>
       ) : (
         <View style={styles.spacer} />

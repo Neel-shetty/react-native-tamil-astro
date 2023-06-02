@@ -12,6 +12,8 @@ import {
   setAstrologerCategoryId,
   setShowGenderOptions,
 } from '../../../store/UiSlice';
+import {useTranslation} from 'react-i18next';
+import TextTicker from 'react-native-text-ticker';
 
 interface AstrologerCardProps {
   firstTime?: boolean;
@@ -43,6 +45,7 @@ const AstrologerCard = ({
 }: AstrologerCardProps) => {
   const rating = Array(stars).fill(1);
   const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   return (
     <View style={styles.background}>
@@ -68,10 +71,10 @@ const AstrologerCard = ({
               <View style={styles.leftBottomContainer}>
                 <Text
                   style={[styles.cost, firstTime ? styles.firstTime : null]}>
-                  Rate: ₹{cost}/min
+                  Rate: ₹{cost}/{t('min')}
                 </Text>
                 {firstTime ? (
-                  <Text style={styles.free}>First Free!</Text>
+                  <Text style={styles.free}>{t('First Free!')}</Text>
                 ) : (
                   <Text>{''}</Text>
                 )}
@@ -79,8 +82,24 @@ const AstrologerCard = ({
             </View>
             <View style={styles.rightContainer}>
               <View style={styles.rightTopContainer}>
-                <Text style={styles.cost}>Clients: {clients}</Text>
-                <Text style={styles.cost}>Exp: {experience}</Text>
+                <TextTicker
+                  duration={10000}
+                  loop
+                  bounce
+                  repeatSpacer={50}
+                  marqueeDelay={1000}
+                  style={[styles.cost, {width: layout.widthp * 0.4}]}>
+                  {t('Clients')}: {clients}
+                </TextTicker>
+                <TextTicker
+                  duration={10000}
+                  loop
+                  bounce
+                  repeatSpacer={50}
+                  marqueeDelay={1000}
+                  style={styles.cost}>
+                  {t('Exp')}: {experience}
+                </TextTicker>
               </View>
               <View style={styles.rightBottomContainer}>
                 {/* <TouchableOpacity
@@ -107,11 +126,11 @@ const AstrologerCard = ({
                     dispatch(setAstrologerCategoryId(id));
                   }}
                   icon={<Call />}
-                  title="Call"
+                  title={t('Call')}
                 />
                 <View style={styles.spacer} />
                 <SmallButton
-                  title="Chat"
+                  title={t('Chat')}
                   onPress={() => {
                     if (showGenderOptions) {
                       dispatch(setShowGenderOptions(true));

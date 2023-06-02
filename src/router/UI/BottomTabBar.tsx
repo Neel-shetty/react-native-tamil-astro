@@ -10,9 +10,11 @@ import TabStackNavigator from '../TabStackNavigator';
 import HomeScreen from '../../screens/Main/HomeScreen';
 import {useDispatch} from 'react-redux';
 import {setFlow, setShowGenderOptions} from '../../store/UiSlice';
+import {useTranslation} from 'react-i18next';
 
 const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
   const dispatch = useDispatch();
+  const {t} = useTranslation();
   return (
     <View style={styles.root}>
       {state.routes.map((route, index) => {
@@ -37,7 +39,6 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({name: route.name, merge: true, params: {}});
           }
-          navigation.navigate('HomeScreen');
         };
 
         const onLongPress = () => {
@@ -61,11 +62,14 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
                   accessibilityLabel={options.tabBarAccessibilityLabel}
                   testID={options.tabBarTestID}
                   onLongPress={onLongPress}
-                  onPress={onPress}>
+                  onPress={() => {
+                    onPress();
+                    navigation.navigate('HomeScreen');
+                  }}>
                   <Home />
                 </TouchableOpacity>
                 <View>
-                  <Text style={styles.title}>Home</Text>
+                  <Text style={styles.title}>{t('Home')}</Text>
                 </View>
               </View>
             )}
@@ -93,7 +97,7 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
                   </TouchableOpacity>
                 </View>
                 <View style={{}}>
-                  <Text style={styles.title}>Consult Astrologer</Text>
+                  <Text style={styles.title}>{t('Consult Astrologer')}</Text>
                 </View>
               </View>
             )}
@@ -109,7 +113,7 @@ const BottomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
                   <History />
                 </TouchableOpacity>
                 <View>
-                  <Text style={styles.title}>History</Text>
+                  <Text style={styles.title}>{t('History')}</Text>
                 </View>
               </View>
             )}

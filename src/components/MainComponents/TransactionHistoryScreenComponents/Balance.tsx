@@ -9,8 +9,10 @@ import {FetchBalance} from '../../../api/FetchBalance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import RechargeScreen from '../../../screens/Main/RechargeScreen';
+import {useTranslation} from 'react-i18next';
 
 const Balance = () => {
+  const {t} = useTranslation();
   const {data, error, isLoading} = useQuery(['userBalance'], async () => {
     const id: string = await AsyncStorage.getItem('id');
     return FetchBalance(id);
@@ -24,7 +26,7 @@ const Balance = () => {
   return (
     <View style={styles.root}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Available Balance</Text>
+        <Text style={styles.title}>{t('Available Balance')}</Text>
       </View>
       <View style={styles.balanceContainer}>
         <Text style={styles.amount}>
@@ -35,7 +37,7 @@ const Balance = () => {
           onPress={() => {
             navigation.navigate(RechargeScreen.name);
           }}
-          title="Recharge"
+          title={t('Recharge')}
         />
       </View>
     </View>

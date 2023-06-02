@@ -202,7 +202,7 @@ const InputFields = () => {
               mode="time"
               setParentDate={setTime}
               placeholder={t('Time of Birth*')}
-              error={dropdownErrors.time ? 'This is a required field' : null}
+              error={dropdownErrors.time ? t('This is a required field') : null}
               initialValue={userDetails?.time_of_birth}
             />
             <CustomDropdown
@@ -216,7 +216,9 @@ const InputFields = () => {
                 {label: t('Other'), value: 'other'},
               ]}
               error={
-                dropdownErrors.gender ? 'This is a required field test ' : null
+                dropdownErrors.gender
+                  ? t('This is a required field test')
+                  : null
               }
             />
             <CustomDropdown
@@ -226,7 +228,7 @@ const InputFields = () => {
               initialValue={userDetails?.marital_status}
               error={
                 dropdownErrors.maritalStatus
-                  ? 'This is a required field test'
+                  ? t('This is a required field')
                   : null
               }
               data={[

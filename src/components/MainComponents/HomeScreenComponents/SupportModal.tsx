@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../store';
 import {setShowSupportModal} from '../../../store/UiSlice';
 import {useTranslation} from 'react-i18next';
+import TextTicker from 'react-native-text-ticker';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const SupportModal = () => {
@@ -41,10 +42,20 @@ const SupportModal = () => {
             console.log('pressed');
             Linking.openURL('https://wa.me/919174704175');
           }}>
-          <Image
-            source={require('../../../../assets/images/whatsappLogo.png')}
-          />
-          <Text style={styles.buttonText}>{t('Whatsapp Us')}</Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              overflow: 'hidden',
+              padding: 10,
+            }}>
+            <Image
+              source={require('../../../../assets/images/whatsappLogo.png')}
+            />
+            <TextTicker duration={10000} style={styles.buttonText}>
+              {t('Whatsapp Us')}
+            </TextTicker>
+          </View>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -91,5 +102,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: fonts.DiwanKufi,
+    flex: 1,
+    marginLeft: 5,
   },
 });

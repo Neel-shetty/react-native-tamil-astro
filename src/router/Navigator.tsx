@@ -10,6 +10,7 @@ import {RootStackParamList} from './types';
 import OtpScreen from '../screens/Auth/OtpScreen';
 import LanguageScreen from '../screens/Main/LanguageScreen';
 import BottomTabNavigator from './BottomTabNavigator';
+import {useTranslation} from 'react-i18next';
 // import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -18,6 +19,7 @@ const Navigator = () => {
   const [showSpashScreen, setShowSplashScreen] = useState(false);
 
   const dispatch = useDispatch();
+  const {i18n} = useTranslation();
   const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
 
   useEffect(() => {
@@ -28,6 +30,12 @@ const Navigator = () => {
         '🚀 ~ file: Navigator.tsx:22 ~ checkLoggedIn ~ result:',
         result,
       );
+      const language = await AsyncStorage.getItem('language');
+      if (language) {
+        if (language !== i18n.language) {
+          i18n.changeLanguage(language).catch(err => console.log(err));
+        }
+      }
       if (result === 'true') {
         dispatch(setLoggedIn(true));
       }

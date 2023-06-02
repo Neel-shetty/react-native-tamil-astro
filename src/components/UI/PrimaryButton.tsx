@@ -7,6 +7,7 @@ import {
 import React from 'react';
 import {colors} from '../../themes/colors';
 import {fonts} from '../../themes/fonts';
+import TextTicker from 'react-native-text-ticker';
 
 interface PrimaryButtonProps {
   title: string;
@@ -28,7 +29,9 @@ const PrimaryButton = ({
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <Text style={styles.text}>{title}</Text>
+        <TextTicker duration={title.length * 750} style={styles.text}>
+          {title}
+        </TextTicker>
       )}
     </TouchableOpacity>
   );

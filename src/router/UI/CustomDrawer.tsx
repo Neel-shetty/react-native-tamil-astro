@@ -15,6 +15,7 @@ import HistoryScreen from '../../screens/Main/HistoryScreen';
 import TransactionHistoryScreen from '../../screens/Main/TransactionHistoryScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoggedIn} from '../../store/UserSlice';
+import { useTranslation } from 'react-i18next';
 
 const Item = ({
   label,
@@ -35,9 +36,10 @@ const Item = ({
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch();
+  const {t} = useTranslation();
   const screens = [
     {
-      label: 'Home',
+      label: t('Home'),
       onPress: () => {
         props.navigation.navigate(TabStackNavigator.name);
       },
@@ -46,7 +48,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Chat with Astrologer',
+      label: t('Chat with Astrologer'),
       onPress: () => {
         props.navigation.navigate(TabStackNavigator.name);
         dispatch(setShowGenderOptions(true));
@@ -56,7 +58,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Call with Astrologer',
+      label: t('Call with Astrologer'),
       onPress: () => {
         props.navigation.navigate(TabStackNavigator.name);
         dispatch(setShowGenderOptions(true));
@@ -66,7 +68,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Balance Recharge',
+      label: t('Balance Recharge'),
       onPress: () => {
         props.navigation.navigate(RechargeScreen.name);
       },
@@ -75,7 +77,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Transaction History',
+      label: t('Transaction History'),
       onPress: () => {
         props.navigation.navigate(TransactionHistoryScreen.name);
       },
@@ -84,7 +86,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Past Astrologer Talks',
+      label: t('Past Astrologer Talks'),
       onPress: () => {
         props.navigation.navigate(HistoryScreen.name);
       },
@@ -93,7 +95,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Support',
+      label: t('Support'),
       onPress: () => {
         props.navigation.navigate(TabStackNavigator.name);
         dispatch(setShowSupportModal(true));
@@ -103,7 +105,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       ),
     },
     {
-      label: 'Log Out',
+      label: t('Log Out'),
       onPress: async () => {
         await AsyncStorage.removeItem('loggedIn');
         dispatch(setLoggedIn(false));
