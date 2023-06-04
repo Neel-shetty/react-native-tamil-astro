@@ -11,7 +11,7 @@ export async function RequestOtp({phone}: {phone: string}) {
     .catch(error => {
       console.log(error);
       if (error) {
-        Alert.alert('Error', error.response.data.message);
+        Alert.alert('Error');
       }
       return false;
     });

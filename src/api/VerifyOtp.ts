@@ -10,6 +10,9 @@ export async function VerifyOtp({otp, phone}: {otp: string; phone: string}) {
       console.log(res.data);
       if (res.data?.data) {
         AsyncStorage.setItem('id', JSON.stringify(res.data.data.id));
+        if (res.data.data.name) {
+          AsyncStorage.setItem('name', res.data.data.name);
+        }
         const result = await Auth().signInWithCustomToken(res.data.token);
         console.log('🚀 ~ file: VerifyOtp.ts:14 ~ VerifyOtp ~ result:', result);
       }
@@ -18,7 +21,7 @@ export async function VerifyOtp({otp, phone}: {otp: string; phone: string}) {
     .catch(error => {
       console.log(error);
       if (error) {
-        Alert.alert('Error', error.response.data.message);
+        Alert.alert('Error');
       }
       return false;
     });

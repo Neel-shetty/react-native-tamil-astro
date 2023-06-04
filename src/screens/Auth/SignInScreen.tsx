@@ -35,8 +35,7 @@ const SignInScreen = () => {
             });
           }
         }}
-        // validationSchema={scheme}
-      >
+        validationSchema={scheme}>
         {({
           handleChange,
           handleBlur,

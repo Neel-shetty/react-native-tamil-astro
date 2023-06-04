@@ -40,7 +40,7 @@ const SupportModal = () => {
           style={styles.button}
           onPress={() => {
             console.log('pressed');
-            Linking.openURL('https://wa.me/919174704175');
+            Linking.openURL('https://wa.me/919559816644');
           }}>
           <View
             style={{

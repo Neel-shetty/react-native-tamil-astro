@@ -2,6 +2,9 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -96,64 +99,73 @@ const Recharge = () => {
       />
     );
   }
+  const behavior = Platform.OS === 'ios' ? 'padding' : undefined;
 
   return (
     <View style={styles.root}>
-      <View style={styles.balanceContainer}>
-        <Text style={styles.title}>{t('Available Balance')}</Text>
-        <Text style={styles.amount}>
-          <Text style={styles.size20}>₹</Text>
-          {balanceData?.balance}
-        </Text>
-        <View style={styles.addMoneyContainer}>
-          <Formik
-            initialValues={{amount: ''}}
-            onSubmit={async values => {
-              console.log(values);
-              await pay(parseInt(values.amount, 10));
-            }}>
-            {({handleChange, handleBlur, handleSubmit, values}) => (
-              <>
-                <TextInput
-                  placeholder="Enter Amount"
-                  placeholderTextColor={'#DCD4D4'}
-                  style={styles.input}
-                  onChangeText={handleChange('amount')}
-                  onBlur={handleBlur('amount')}
-                  value={values.amount}
-                  keyboardType="numeric"
-                />
-                <PrimaryButton
-                  width={layout.width * 0.3}
-                  onPress={handleSubmit}
-                  title={t('Add Money')}
-                />
-              </>
-            )}
-          </Formik>
+      <ScrollView>
+        {/* <KeyboardAvoidingView behavior={behavior}> */}
+        <View style={styles.balanceContainer}>
+          <Text style={styles.title}>{t('Available Balance')}</Text>
+          <Text style={styles.amount}>
+            <Text style={styles.size20}>₹</Text>
+            {balanceData?.balance}
+          </Text>
+          <View style={styles.addMoneyContainer}>
+            <Formik
+              initialValues={{amount: ''}}
+              onSubmit={async values => {
+                console.log(values);
+                await pay(parseInt(values.amount, 10));
+              }}>
+              {({handleChange, handleBlur, handleSubmit, values}) => (
+                <>
+                  <TextInput
+                    placeholder="Enter Amount"
+                    placeholderTextColor={'#DCD4D4'}
+                    style={styles.input}
+                    onChangeText={handleChange('amount')}
+                    onBlur={handleBlur('amount')}
+                    value={values.amount}
+                    keyboardType="numeric"
+                  />
+                  <PrimaryButton
+                    width={layout.width * 0.3}
+                    onPress={handleSubmit}
+                    title={t('Add Money')}
+                  />
+                </>
+              )}
+            </Formik>
+          </View>
         </View>
-      </View>
-      {/* recharge options */}
-      <View style={styles.rechargeOptionsContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.optionTitle}>{t('Quick Balance Options')}</Text>
-        </View>
-        {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
-        <FlatList
-          data={rechargeData}
-          numColumns={3}
-          renderItem={({item}) => (
-            <BalanceOptions
-              popular={item.tag === 'Popular' ? true : false}
-              amount={item.amount}
-              bonus={item.bonus}
-              onPress={() => {
-                pay(Number(item.amount));
-              }}
+        {/* recharge options */}
+        <View style={styles.rechargeOptionsContainer}>
+          <KeyboardAvoidingView behavior={behavior}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.optionTitle}>
+                {t('Quick Balance Options')}
+              </Text>
+            </View>
+            {/* <BalanceOptions popular={false} amount={150} bonus={23} /> */}
+            <FlatList
+              data={rechargeData}
+              numColumns={3}
+              nestedScrollEnabled={false}
+              renderItem={({item}) => (
+                <BalanceOptions
+                  popular={item.tag === 'Popular' ? true : false}
+                  amount={item.amount}
+                  bonus={item.bonus}
+                  onPress={() => {
+                    pay(Number(item.amount));
+                  }}
+                />
+              )}
             />
-          )}
-        />
-      </View>
+          </KeyboardAvoidingView>
+        </View>
+      </ScrollView>
     </View>
   );
 };

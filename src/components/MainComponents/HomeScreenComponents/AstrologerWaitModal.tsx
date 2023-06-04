@@ -144,6 +144,7 @@ const AstrologerWaitModal = ({
           time: FireStore.FieldValue.serverTimestamp(),
           languages,
           combinedUid,
+          userName: route.params?.name,
           // astrologerPrice: astrologer.,
         });
       }

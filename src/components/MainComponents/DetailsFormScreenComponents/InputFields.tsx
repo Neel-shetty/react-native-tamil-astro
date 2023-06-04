@@ -139,6 +139,7 @@ const InputFields = () => {
             return;
           }
           setDropdownErrors({...dropdownErrors, gender: false});
+          await AsyncStorage.setItem('name', values.name);
           await SubmitDetails({
             gender: gender,
             name: values.name,
@@ -153,6 +154,7 @@ const InputFields = () => {
           navigation.navigate('HomeScreen', {
             astrologer: '1',
             communicationType: communicationType,
+            name: values.name,
           });
         }}
         validationSchema={validationSchema}>
