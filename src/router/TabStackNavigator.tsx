@@ -4,6 +4,7 @@ import DetailsFormScreen from '../screens/Main/DetailsFormScreen';
 import HomeScreen from '../screens/Main/HomeScreen';
 import ChatScreen from '../screens/Main/ChatScreen';
 import CallScreen from '../screens/Main/CallScreen';
+import NewCall from '../components/CallComponents/NewCall';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const TabStackNavigator = () => {
         component={DetailsFormScreen.component}
       />
       <Stack.Screen name={ChatScreen.name} component={ChatScreen.component} />
+      <Stack.Screen name={NewCall.name} component={NewCall.component} />
       <Stack.Screen name={CallScreen.name} component={CallScreen.component} />
     </Stack.Navigator>
   );

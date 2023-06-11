@@ -19,8 +19,9 @@ import {
 } from '../../store/UiSlice';
 import SupportModal from '../../components/MainComponents/HomeScreenComponents/SupportModal';
 import {useTranslation} from 'react-i18next';
+import NewCall from '../../components/CallComponents/NewCall';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [showModal, setShowModal] = React.useState(false);
   const [astrologerOptionsVisible, setAstrologerOptionsVisible] =
     React.useState(false);
@@ -73,8 +74,7 @@ const HomeScreen = () => {
       <View style={styles.headingContainer}>
         <Text
           style={styles.heading}
-          // onPress={() => navigation.navigate(CallScreen.name)}
-        >
+          onPress={() => navigation.navigate(NewCall.name)}>
           {t('Choose Astrologer Category')}
         </Text>
       </View>
