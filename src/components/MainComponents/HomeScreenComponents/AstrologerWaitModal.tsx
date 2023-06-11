@@ -151,7 +151,7 @@ const AstrologerWaitModal = ({
     }
 
     createChat();
-  }, [astrologer, communicationType, visible]);
+  }, [astrologer, communicationType, visible, route.params?.name]);
 
   // use effect for call
   useEffect(() => {
