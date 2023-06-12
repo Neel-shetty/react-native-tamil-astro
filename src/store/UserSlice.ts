@@ -7,7 +7,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  loggedIn: false,
+  loggedIn: false, // TODO: Change to false
   language: 'en',
 };
 

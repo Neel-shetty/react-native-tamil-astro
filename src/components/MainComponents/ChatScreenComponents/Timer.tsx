@@ -11,6 +11,7 @@ const Timer = ({
   onPress: () => void;
   timeLeft: number | null;
 }) => {
+  console.log('🚀 ~ file: Timer.tsx:14 ~ timeLeft:', timeLeft);
   const {t} = useTranslation();
   // const navigation = useNavigation();
   // const [timer, setTimer] = React.useState(0);

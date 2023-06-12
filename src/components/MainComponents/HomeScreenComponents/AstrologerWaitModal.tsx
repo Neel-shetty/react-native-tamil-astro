@@ -16,7 +16,10 @@ import {HomeScreenNavigationProp} from '../../../router/types';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import ChatScreen from '../../../screens/Main/ChatScreen';
 import {useQuery} from '@tanstack/react-query';
-import {AssignAstrologer} from '../../../api/AssignAstrologer';
+import {
+  AssignAstrologer,
+  AssignedAstrologerType,
+} from '../../../api/AssignAstrologer';
 import Auth from '@react-native-firebase/auth';
 import FireStore from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
@@ -170,20 +173,11 @@ const AstrologerWaitModal = ({
         '🚀 ~ file: AstrologerWaitModal.tsx:51 ~ useEffect ~ combinedUserId:',
         combinedUid,
       );
-      FireStore().collection('calls').doc().set({
-        userId: user?.uid,
-        astrologerId: astrologer.id,
-        astologerImage: astrologer.image,
-        astrologerName: astrologer.name,
-        astrologerRating: astrologer.rating,
-        astrologerPrice: 12,
-        atrologerSkills: astrologer.skills,
-        astrologerExperience: astrologer.experience,
-        time: FireStore.FieldValue.serverTimestamp(),
-        combinedUserId: combinedUid,
-      });
+      // navigation.navigate(CallScreen.name, {
+      //   combinedUserId: combinedUid,
+      // });
     }
-  }, [astrologer, visible, communicationType]);
+  }, [astrologer, visible, communicationType, navigation]);
 
   useEffect(() => {
     if (astrologer) {
@@ -204,6 +198,7 @@ const AstrologerWaitModal = ({
         setVisible,
         navigation,
         combinedUserId,
+        astrologer,
       );
       // TODO : remove this
     }, 5000);
@@ -215,6 +210,7 @@ const AstrologerWaitModal = ({
     navigation,
     route,
     visible,
+    astrologer,
   ]);
 
   if (error) {
@@ -387,6 +383,7 @@ function navigateToNextScreen(
   setVisible: (visible: boolean) => void,
   navigation: any,
   combinedUserId: string | null,
+  astrologer?: AssignedAstrologerType | null,
 ) {
   if (
     route.params?.communicationType === 'chat' ||
@@ -402,7 +399,11 @@ function navigateToNextScreen(
     communicationType === 'call'
   ) {
     setVisible(false);
-    navigation.navigate(CallScreen.name, {combinedUserId});
+    navigation.navigate(CallScreen.name, {
+      combinedUserId,
+      astrologerPrice: astrologer?.price,
+      astrologerName: astrologer?.name,
+    });
   }
   setVisible(false);
 }

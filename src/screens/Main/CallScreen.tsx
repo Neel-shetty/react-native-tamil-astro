@@ -3,6 +3,7 @@ import React from 'react';
 import {colors} from '../../themes/colors';
 import Call from '../../components/CallComponents/Call';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import NewCall from '../../components/CallComponents/NewCall';
 
 const CallScreen = ({navigation}: any) => {
   return (
@@ -13,8 +14,9 @@ const CallScreen = ({navigation}: any) => {
         }}>
         <Ionicons name="chevron-back" size={30} color="black" />
       </TouchableOpacity> */}
-      <View style={{height: 20}} />
-      <Call />
+      {/* <View style={{height: 20}} /> */}
+      {/* <Call /> */}
+      <NewCall.component />
     </View>
   );
 };

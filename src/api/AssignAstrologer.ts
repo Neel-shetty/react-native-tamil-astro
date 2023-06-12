@@ -3,6 +3,7 @@ import {api} from '.';
 import {RootState} from '../store';
 
 export interface AssignedAstrologerType {
+  price: number;
   id: number;
   assign_backup: any;
   name: string;
