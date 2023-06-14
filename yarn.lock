@@ -6614,10 +6614,10 @@ react-native-animatable@1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-callkeep@^4.3.8:
-  version "4.3.8"
-  resolved "https://registry.yarnpkg.com/react-native-callkeep/-/react-native-callkeep-4.3.8.tgz#8f164fa2c1998b228a0676102bb848192821779e"
-  integrity sha512-xGw5SDZfOIwB5XfUwd5wBycyHrfnN5cp0F/iEjYvsupAzrSqQ14ljzNy3MNZr1nVqv7r/MdthIGh8uu7RsxOBA==
+react-native-callkeep@^4.3.9:
+  version "4.3.9"
+  resolved "https://registry.yarnpkg.com/react-native-callkeep/-/react-native-callkeep-4.3.9.tgz#f0250846b55b00c6d2be07525fc61f8fa28c540d"
+  integrity sha512-yTYrf8yifvozSrCNDfTBf3cAm2SIRiRoIsVh6HzAN0vrhXvG8EsaGmkCw867zZwCxUAQPFjM26sy+tkpNA4gUA==
 
 react-native-codegen@^0.71.5:
   version "0.71.5"
@@ -6685,10 +6685,10 @@ react-native-reanimated@^3.0.2:
     setimmediate "^1.0.5"
     string-hash-64 "^1.0.3"
 
-react-native-safe-area-context@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.5.0.tgz#9208313236e8f49e1920ac1e2a2c975f03aed284"
-  integrity sha512-0WORnk9SkREGUg2V7jHZbuN5x4vcxj/1B0QOcXJjdYWrzZHgLcUzYWWIUecUPJh747Mwjt/42RZDOaFn3L8kPQ==
+react-native-safe-area-context@^4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.5.3.tgz#e98eb1a73a6b3846d296545fe74760754dbaaa69"
+  integrity sha512-ihYeGDEBSkYH+1aWnadNhVtclhppVgd/c0tm4mj0+HV11FoiWJ8N6ocnnZnRLvM5Fxc+hUqxR9bm5AXU3rXiyA==
 
 react-native-screens@^3.20.0:
   version "3.20.0"
@@ -8233,3 +8233,13 @@ zego-express-engine-reactnative@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/zego-express-engine-reactnative/-/zego-express-engine-reactnative-3.2.0.tgz#e4098a7ff0434110e9363e231d896f4bb0eec900"
   integrity sha512-UkAw+PdFesNg2NiXZxifhG2KP67RGPE1QYj5jo8wXp3gswM5axeyIqKuqJeBxhkKdPPGei8jQ5MFmTXrVaRm5Q==
+
+zego-zim-react-native@2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/zego-zim-react-native/-/zego-zim-react-native-2.7.1.tgz#0abc906cb25a92902745ba37e30ae14efe446109"
+  integrity sha512-9NyOZR1yBwwcOjmao21Uow83+Cq5fnTrAtPFH4n2IU5wumA5prdvtBXz6u4WkPB8aGtTXEmDNfPwm3xk/3WAdA==
+
+zego-zpns-react-native@2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/zego-zpns-react-native/-/zego-zpns-react-native-2.3.6.tgz#cab015c3e4e587782dab1af276cc0d7f4aad2c15"
+  integrity sha512-WLT8fG9Oysn4nItNCGcnhQjnUGID+JJa7rCGIQlnEvlvu6VbXd5u5Q9oD8F5Bc+TigPbiTRBDhL9VSackRqXYA==

@@ -12,6 +12,14 @@ import LanguageScreen from '../screens/Main/LanguageScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import {useTranslation} from 'react-i18next';
 // import BottomTabNavigator from './BottomTabNavigator';
+import * as ZIM from 'zego-zim-react-native';
+import * as ZPNs from 'zego-zpns-react-native';
+import Auth from '@react-native-firebase/auth';
+import ZegoUIKitPrebuiltCallService, {
+  ZegoCallInvitationDialog,
+  ZegoUIKitPrebuiltCallWaitingScreen,
+  ZegoUIKitPrebuiltCallInCallScreen,
+} from '@zegocloud/zego-uikit-prebuilt-call-rn';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -42,7 +50,29 @@ const Navigator = () => {
       setShowSplashScreen(false);
     }
     checkLoggedIn();
-  }, [dispatch]);
+  }, [dispatch, i18n]);
+
+  useEffect(() => {
+    async function initZegoCloudService() {
+      const name = await AsyncStorage.getItem('name');
+      ZegoUIKitPrebuiltCallService.init(
+        572938071, // You can get it from ZEGOCLOUD's console
+        'f6baf179282f742eeed83d3b8cc25e42be61696205162015126658a89d29c309', // You can get it from ZEGOCLOUD's console
+        Auth().currentUser?.uid, // It can be any valid characters, but we recommend using a phone number.
+        name ?? 'User_17',
+        [ZIM, ZPNs],
+        {
+          notifyWhenAppRunningInBackgroundOrQuit: true,
+          isIOSSandboxEnvironment: true,
+          androidNotificationConfig: {
+            channelID: 'ZegoUIKit',
+            channelName: 'ZegoUIKit',
+          },
+        },
+      );
+    }
+    initZegoCloudService();
+  }, [loggedIn]);
 
   if (showSpashScreen) {
     return null;
@@ -50,6 +80,7 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
+      <ZegoCallInvitationDialog />
       <Stack.Navigator
         screenOptions={{
           gestureEnabled: true,
@@ -61,6 +92,18 @@ const Navigator = () => {
             <Stack.Screen
               component={BottomTabNavigator.component}
               name={BottomTabNavigator.name}
+            />
+            <Stack.Screen
+              options={{headerShown: false}}
+              // DO NOT change the name
+              name="ZegoUIKitPrebuiltCallWaitingScreen"
+              component={ZegoUIKitPrebuiltCallWaitingScreen}
+            />
+            <Stack.Screen
+              options={{headerShown: false}}
+              // DO NOT change the name
+              name="ZegoUIKitPrebuiltCallInCallScreen"
+              component={ZegoUIKitPrebuiltCallInCallScreen}
             />
           </>
         ) : (

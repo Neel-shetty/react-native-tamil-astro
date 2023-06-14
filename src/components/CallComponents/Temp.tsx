@@ -6,6 +6,7 @@ import {
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Auth from '@react-native-firebase/auth';
+import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
 
 const Temp = () => {
   const navigation = useNavigation();
@@ -14,7 +15,7 @@ const Temp = () => {
 
   return (
     <View style={{flex: 1}}>
-      <ZegoUIKitPrebuiltCall
+      {/* <ZegoUIKitPrebuiltCall
         appID={572938071}
         appSign={
           'f6baf179282f742eeed83d3b8cc25e42be61696205162015126658a89d29c309'
@@ -34,6 +35,17 @@ const Temp = () => {
             navigation.navigate('HomeScreen');
           },
         }}
+      /> */}
+      <ZegoSendCallInvitationButton
+        invitees={[
+          {
+            userID: '17',
+            userName: 'User_17',
+          },
+        ]}
+        isVideoCall={false}
+        resourceID={'zegouikit_call'} // Please fill in the resource ID name that has been configured in the ZEGOCLOUD's console here.
+
       />
     </View>
   );
