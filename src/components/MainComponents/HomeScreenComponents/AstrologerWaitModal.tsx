@@ -403,6 +403,7 @@ function navigateToNextScreen(
       combinedUserId,
       astrologerPrice: astrologer?.price,
       astrologerName: astrologer?.name,
+      astrologerId: astrologer?.id,
     });
   }
   setVisible(false);

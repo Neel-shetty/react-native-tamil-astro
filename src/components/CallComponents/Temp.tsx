@@ -1,9 +1,5 @@
 import {View} from 'react-native';
 import React from 'react';
-import {
-  ZegoUIKitPrebuiltCall,
-  ONE_ON_ONE_VIDEO_CALL_CONFIG,
-} from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Auth from '@react-native-firebase/auth';
 import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
@@ -11,7 +7,7 @@ import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-
 const Temp = () => {
   const navigation = useNavigation();
   const id = Auth().currentUser?.uid;
-  const route: any = useRoute();
+  const route = useRoute();
 
   return (
     <View style={{flex: 1}}>
@@ -39,13 +35,12 @@ const Temp = () => {
       <ZegoSendCallInvitationButton
         invitees={[
           {
-            userID: '17',
-            userName: 'User_17',
+            userID: route.params?.astrologerId,
+            userName: 'User_' + route.params?.astrologerId,
           },
         ]}
         isVideoCall={false}
         resourceID={'zegouikit_call'} // Please fill in the resource ID name that has been configured in the ZEGOCLOUD's console here.
-
       />
     </View>
   );
