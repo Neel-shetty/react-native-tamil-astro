@@ -35,7 +35,7 @@ const Temp = () => {
       <ZegoSendCallInvitationButton
         invitees={[
           {
-            userID: route.params?.astrologerId,
+            userID: JSON.stringify(route.params?.astrologerId),
             userName: 'User_' + route.params?.astrologerId,
           },
         ]}
