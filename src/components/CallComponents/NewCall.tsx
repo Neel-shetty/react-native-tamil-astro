@@ -10,6 +10,7 @@ import {DeductBalance} from '../../api/DeductBalance';
 import {useQuery} from '@tanstack/react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FetchBalance} from '../../api/FetchBalance';
+import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 
 const NewCall = () => {
   const [timeLeft, setTimeLeft] = React.useState<number | null>(null);
@@ -108,6 +109,17 @@ const NewCall = () => {
   ]);
 
   React.useEffect(() => {
+    if (timeLeft === 0) {
+      console.log('timeleft is 0');
+      setCallState('end');
+      ZegoUIKitPrebuiltCallService.hangUp();
+    }
+    if (timeLeft === 2) {
+      console.log('timeleft is 2');
+    }
+  }, [setCallState, timeLeft]);
+
+  React.useEffect(() => {
     ExpireTrial();
   }, []);
 
@@ -117,7 +129,7 @@ const NewCall = () => {
         timeLeft={timeLeft}
         onPress={() => {
           //@ts-ignore
-          navigation.navigate('HomeScreen');
+          navigation.goBack();
         }}
       />
       <Temp />
@@ -131,5 +143,6 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     width: layout.width,
+    backgroundColor: 'white',
   },
 });

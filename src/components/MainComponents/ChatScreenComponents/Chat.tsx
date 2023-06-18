@@ -218,13 +218,13 @@ const Chat = () => {
       uniqueId,
     );
     if (astroId) {
-      const res = SendMessage({
+      const res = await SendMessage({
         to: astroId[0],
         message,
         from: userID,
         uniqueId,
       });
-      // console.log('send message result- ---- ', res);
+      console.log('send message result- ---- ', res);
     }
   }
 

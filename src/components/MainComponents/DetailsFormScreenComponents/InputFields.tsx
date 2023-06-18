@@ -199,6 +199,7 @@ const InputFields = () => {
               setParentDate={setDate}
               placeholder={t('Date of Birth*')}
               error={dropdownErrors.date ? t('This is a required field') : null}
+              initialValue={userDetails?.date_of_birth}
             />
             <DatePicker
               mode="time"
@@ -211,7 +212,7 @@ const InputFields = () => {
               placeholder={t('Gender*')}
               value={gender}
               setValue={setGender}
-              initialValue={userDetails?.date_of_birth}
+              initialValue={userDetails?.gender}
               data={[
                 {label: t('Male'), value: 'male'},
                 {label: t('Female'), value: 'female'},

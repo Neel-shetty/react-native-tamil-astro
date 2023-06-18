@@ -1,37 +1,31 @@
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Auth from '@react-native-firebase/auth';
 import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
-
+import {fonts} from '../../themes/fonts';
+import {colors} from '../../themes/colors';
 const Temp = () => {
   const navigation = useNavigation();
   const id = Auth().currentUser?.uid;
   const route = useRoute();
 
   return (
-    <View style={{flex: 1}}>
-      {/* <ZegoUIKitPrebuiltCall
-        appID={572938071}
-        appSign={
-          'f6baf179282f742eeed83d3b8cc25e42be61696205162015126658a89d29c309'
-        }
-        userID={id} // userID can be something like a phone number or the user id on your own user system.
-        userName={'test 2'}
-        callID={route.params?.combinedUserId} // callID can be any unique string.
-        config={{
-          // You can also use ONE_ON_ONE_VOICE_CALL_CONFIG/GROUP_VIDEO_CALL_CONFIG/GROUP_VOICE_CALL_CONFIG to make more types of calls.
-          ...ONE_ON_ONE_VIDEO_CALL_CONFIG,
-          onOnlySelfInRoom: () => {
-            //@ts-ignore
-            navigation.navigate('HomeScreen');
-          },
-          onHangUp: () => {
-            //@ts-ignore
-            navigation.navigate('HomeScreen');
-          },
-        }}
-      /> */}
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <Text
+        style={{
+          fontFamily: fonts.interMedium,
+          color: colors.text,
+          fontSize: 18,
+          marginBottom: 20,
+        }}>
+        Start Call With Astrologer
+      </Text>
       <ZegoSendCallInvitationButton
         invitees={[
           {

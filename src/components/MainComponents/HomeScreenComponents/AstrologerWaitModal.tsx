@@ -35,6 +35,7 @@ const AstrologerWaitModal = ({
   setVisible: (visible: boolean) => void;
 }) => {
   const [stars, setStars] = React.useState<string[]>(['1', '1', '1', '1']);
+  const [countdown, setCountdown] = React.useState(5);
   // const [timeInSeconds, setTimeInSeconds] = React.useState(0);
   // console.log('🚀 ~ file: AstrologerWaitModal.tsx:33 ~ stars:', stars);
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
@@ -213,6 +214,17 @@ const AstrologerWaitModal = ({
     astrologer,
   ]);
 
+  //effect to create a 5 seconds countdown
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setCountdown(cntdn => cntdn - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [countdown, visible]);
+
   if (error) {
     setVisible(false);
     Alert.alert('Error', 'Something went wrong, please try again later');
@@ -293,7 +305,10 @@ const AstrologerWaitModal = ({
                 <Text style={{color: colors.palette.primary500}}>
                   {t('Entering')}{' '}
                   {communicationType === 'chat' ? t('Chat') : t('Call')}{' '}
-                  {t('in 5 seconds')}
+                  {/* {t('in 5 seconds')} */}
+                  {t('in ')}
+                  {countdown}
+                  {t(' seconds')}
                 </Text>
               </Text>
             </View>

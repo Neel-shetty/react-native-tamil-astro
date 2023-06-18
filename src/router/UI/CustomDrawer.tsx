@@ -15,7 +15,8 @@ import HistoryScreen from '../../screens/Main/HistoryScreen';
 import TransactionHistoryScreen from '../../screens/Main/TransactionHistoryScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setLoggedIn} from '../../store/UserSlice';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+import Auth from '@react-native-firebase/auth';
 
 const Item = ({
   label,
@@ -109,6 +110,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       onPress: async () => {
         await AsyncStorage.removeItem('loggedIn');
         dispatch(setLoggedIn(false));
+        Auth().signOut();
       },
       icon: (
         <Image source={require('../../../assets/images/drawer/logout.png')} />

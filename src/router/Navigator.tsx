@@ -62,6 +62,10 @@ const Navigator = () => {
         'User_' + Auth().currentUser?.uid,
         [ZIM, ZPNs],
         {
+          ringtoneConfig: {
+            incomingCallFileName: 'zego_incoming.mp3',
+            outgoingCallFileName: 'zego_outgoing.mp3',
+          },
           notifyWhenAppRunningInBackgroundOrQuit: true,
           isIOSSandboxEnvironment: true,
           androidNotificationConfig: {

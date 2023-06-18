@@ -11,12 +11,15 @@ const DatePicker = ({
   setParentDate,
   mode,
   error,
+  initialValue,
 }: {
   placeholder: string;
   setParentDate: (date: Date) => void;
   mode: 'date' | 'time' | 'datetime';
   error: string | null;
+  initialValue?: Date;
 }) => {
+  const dt = new Date(initialValue as unknown as string);
   const [date, setDate] = useState<Date>();
   const [show, setShow] = useState(false);
 
@@ -26,6 +29,19 @@ const DatePicker = ({
     setDate(currentDate);
     setParentDate(currentDate);
   };
+
+  // React.useEffect(() => {
+  //   if (initialValue) {
+  //     const onChange2 = (event: any, selectedDate: any) => {
+  //       const currentDate = selectedDate;
+  //       setShow(Platform.OS === 'ios');
+  //       setDate(currentDate);
+  //       setParentDate(currentDate);
+  //     };
+
+  //     onChange2(null, initialValue);
+  //   }
+  // }, [initialValue, setDate, setShow, setParentDate]);
 
   return (
     <View>
