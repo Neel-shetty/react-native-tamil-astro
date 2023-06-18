@@ -19,6 +19,11 @@ import ZegoUIKitPrebuiltCallService, {
   ZegoCallInvitationDialog,
   ZegoUIKitPrebuiltCallWaitingScreen,
   ZegoUIKitPrebuiltCallInCallScreen,
+  GROUP_VIDEO_CALL_CONFIG,
+  ONE_ON_ONE_VIDEO_CALL_CONFIG,
+  GROUP_VOICE_CALL_CONFIG,
+  ONE_ON_ONE_VOICE_CALL_CONFIG,
+  ZegoInvitationType,
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,6 +70,24 @@ const Navigator = () => {
           ringtoneConfig: {
             incomingCallFileName: 'zego_incoming.mp3',
             outgoingCallFileName: 'zego_outgoing.mp3',
+          },
+          requireConfig: data => {
+            const callConfig =
+              data.invitees.length > 1
+                ? ZegoInvitationType.videoCall === data.type
+                  ? GROUP_VIDEO_CALL_CONFIG
+                  : GROUP_VOICE_CALL_CONFIG
+                : ZegoInvitationType.videoCall === data.type
+                ? ONE_ON_ONE_VIDEO_CALL_CONFIG
+                : ONE_ON_ONE_VOICE_CALL_CONFIG;
+            return {
+              ...callConfig,
+              //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+              turnOnCameraWhenJoining: false,
+              turnOnMicrophoneWhenJoining: false,
+              useSpeakerWhenJoining: true,
+              ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+            };
           },
           notifyWhenAppRunningInBackgroundOrQuit: true,
           isIOSSandboxEnvironment: true,
