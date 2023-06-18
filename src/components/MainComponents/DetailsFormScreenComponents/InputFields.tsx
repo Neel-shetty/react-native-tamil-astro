@@ -12,7 +12,7 @@ import {DetailsFormScreenNavigationProp} from '../../../router/types';
 import DatePicker from './DatePicker';
 import {fonts} from '../../../themes/fonts';
 import {colors} from '../../../themes/colors';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../store';
 import {useQuery} from '@tanstack/react-query';
 import {FetchBalance} from '../../../api/FetchBalance';
@@ -20,6 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RechargeScreen from '../../../screens/Main/RechargeScreen';
 import {FetchUserDetails} from '../../../api/FetchUserDetails';
 import {useTranslation} from 'react-i18next';
+import {setShowAstrologerWaitModal} from '../../../store/UiSlice';
+import DefaultDate from './DefaultDate';
 
 const InputFields = () => {
   const [gender, setGender] = useState<'male' | 'female' | 'other'>();
@@ -35,6 +37,8 @@ const InputFields = () => {
   const [lowBalance, setLowBalance] = useState(false);
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<Date>();
+  const [prefilledDate, setPrefilledDate] = useState<boolean>(true);
+  const [prefilledTime, setPrefilledTime] = useState<boolean>(true);
   console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
 
   const communicationType = useSelector(
@@ -61,6 +65,7 @@ const InputFields = () => {
     data: userDetails,
     error: userDetailsError,
     isLoading: userDetailsLoading,
+    refetch: refetchUserDetails,
   } = useQuery(['userDetails'], FetchUserDetails);
 
   useEffect(() => {
@@ -77,8 +82,9 @@ const InputFields = () => {
 
   useEffect(() => {
     refetch();
+    refetchUserDetails();
     // checkLowBalance();
-  }, [refetch]);
+  }, [refetch, refetchUserDetails]);
 
   const validationSchema = yup.object({
     name: yup
@@ -91,6 +97,7 @@ const InputFields = () => {
 
   const navigation =
     useNavigation<DetailsFormScreenNavigationProp['navigation']>();
+  const dispatch = useDispatch();
 
   const setInitialValues = React.useCallback(() => {
     if (!userDetails) {
@@ -156,6 +163,7 @@ const InputFields = () => {
             communicationType: communicationType,
             name: values.name,
           });
+          dispatch(setShowAstrologerWaitModal(true));
         }}
         validationSchema={validationSchema}>
         {({
@@ -194,20 +202,66 @@ const InputFields = () => {
               placeholder="Time of Birth*"
             /> */}
 
-            <DatePicker
-              mode="date"
-              setParentDate={setDate}
-              placeholder={t('Date of Birth*')}
-              error={dropdownErrors.date ? t('This is a required field') : null}
-              initialValue={userDetails?.date_of_birth}
-            />
-            <DatePicker
-              mode="time"
-              setParentDate={setTime}
-              placeholder={t('Time of Birth*')}
-              error={dropdownErrors.time ? t('This is a required field') : null}
-              initialValue={userDetails?.time_of_birth}
-            />
+            {userDetails?.date_of_birth ? (
+              prefilledDate === true ? (
+                <DefaultDate
+                  mode="date"
+                  placeholder={t('Date of Birth*')}
+                  showDatePicker={setPrefilledDate}
+                  initialValue={userDetails?.date_of_birth}
+                />
+              ) : (
+                <DatePicker
+                  mode="date"
+                  setParentDate={setDate}
+                  placeholder={t('Date of Birth*')}
+                  error={
+                    dropdownErrors.date ? t('This is a required field') : null
+                  }
+                  // initialValue={userDetails?.date_of_birth}
+                />
+              )
+            ) : (
+              <DatePicker
+                mode="date"
+                setParentDate={setDate}
+                placeholder={t('Date of Birth*')}
+                error={
+                  dropdownErrors.date ? t('This is a required field') : null
+                }
+                initialValue={userDetails?.date_of_birth}
+              />
+            )}
+            {userDetails?.time_of_birth ? (
+              prefilledTime === true ? (
+                <DefaultDate
+                  mode="time"
+                  placeholder={t('Time of Birth*')}
+                  showDatePicker={setPrefilledTime}
+                  initialValue={userDetails?.time_of_birth}
+                />
+              ) : (
+                <DatePicker
+                  mode="time"
+                  setParentDate={setTime}
+                  placeholder={t('Time of Birth*')}
+                  error={
+                    dropdownErrors.time ? t('This is a required field') : null
+                  }
+                  // initialValue={userDetails?.time_of_birth}
+                />
+              )
+            ) : (
+              <DatePicker
+                mode="time"
+                setParentDate={setTime}
+                placeholder={t('Time of Birth*')}
+                error={
+                  dropdownErrors.time ? t('This is a required field') : null
+                }
+                initialValue={userDetails?.time_of_birth}
+              />
+            )}
             <CustomDropdown
               placeholder={t('Gender*')}
               value={gender}

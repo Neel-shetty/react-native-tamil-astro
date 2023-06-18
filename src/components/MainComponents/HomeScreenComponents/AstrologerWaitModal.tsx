@@ -23,9 +23,10 @@ import {
 import Auth from '@react-native-firebase/auth';
 import FireStore from '@react-native-firebase/firestore';
 import CallScreen from '../../../screens/Main/CallScreen';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../store';
 import {useTranslation} from 'react-i18next';
+import {setShowAstrologerWaitModal} from '../../../store/UiSlice';
 
 const AstrologerWaitModal = ({
   visible,
@@ -41,6 +42,7 @@ const AstrologerWaitModal = ({
   const navigation = useNavigation<HomeScreenNavigationProp['navigation']>();
   const route = useRoute<HomeScreenNavigationProp['route']>();
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   const communicationType = useSelector(
     (state: RootState) => state.ui.communicationType,
   );
@@ -200,7 +202,9 @@ const AstrologerWaitModal = ({
         navigation,
         combinedUserId,
         astrologer,
+        dispatch,
       );
+      setCountdown(5);
       // TODO : remove this
     }, 5000);
     return () => clearTimeout(timer);
@@ -212,6 +216,7 @@ const AstrologerWaitModal = ({
     route,
     visible,
     astrologer,
+    dispatch,
   ]);
 
   //effect to create a 5 seconds countdown
@@ -289,13 +294,13 @@ const AstrologerWaitModal = ({
             <View style={styles.subTitleContainer}>
               <Text
                 onPress={() => {
-                  navigateToNextScreen(
-                    route,
-                    communicationType,
-                    setVisible,
-                    navigation,
-                    combinedUserId,
-                  );
+                  // navigateToNextScreen(
+                  //   route,
+                  //   communicationType,
+                  //   setVisible,
+                  //   navigation,
+                  //   combinedUserId,
+                  // );
                 }}
                 style={[styles.subTitle]}>
                 {t('Astrologer')}{' '}
@@ -399,6 +404,7 @@ function navigateToNextScreen(
   navigation: any,
   combinedUserId: string | null,
   astrologer?: AssignedAstrologerType | null,
+  dispatch?: any,
 ) {
   if (
     route.params?.communicationType === 'chat' ||
@@ -422,4 +428,5 @@ function navigateToNextScreen(
     });
   }
   setVisible(false);
+  dispatch(setShowAstrologerWaitModal(false));
 }

@@ -36,14 +36,25 @@ const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {t} = useTranslation();
+  const showWaitModal = useSelector(
+    (state: RootState) => state.ui.showAstrologerWaitModal,
+  );
+  console.log(
+    '🚀 ~ file: HomeScreen.tsx:42 ~ HomeScreen ~ showWaitModal:',
+    showWaitModal,
+  );
 
   React.useEffect(() => {
     const astrologer = route.params?.astrologer;
-    if (astrologer) {
+    console.log(
+      '🚀 ~ file: HomeScreen.tsx:42 ~ React.useEffect ~ astrologer:',
+      astrologer,
+    );
+    if (showWaitModal) {
       setShowModal(false);
       setShowModal(true);
     }
-  }, [route.params?.astrologer]);
+  }, [route.params?.astrologer, showWaitModal]);
 
   React.useEffect(() => {
     return () => {
@@ -74,7 +85,8 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.headingContainer}>
         <Text
           style={styles.heading}
-          onPress={() => navigation.navigate(NewCall.name)}>
+          // onPress={() => navigation.navigate(NewCall.name)}
+        >
           {t('Choose Astrologer Category')}
         </Text>
       </View>

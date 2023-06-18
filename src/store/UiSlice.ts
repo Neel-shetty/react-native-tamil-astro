@@ -18,6 +18,7 @@ export interface UserState {
   astrologerCategoryId: number;
   astrologerGender: gender;
   showSupportModal: boolean;
+  showAstrologerWaitModal: boolean;
 }
 
 const initialState: UserState = {
@@ -28,6 +29,7 @@ const initialState: UserState = {
   astrologerCategoryId: 1,
   astrologerGender: 'Male',
   showSupportModal: false,
+  showAstrologerWaitModal: false,
 };
 
 export const userSlice = createSlice({
@@ -60,6 +62,9 @@ export const userSlice = createSlice({
     setShowSupportModal: (state, action: PayloadAction<boolean>) => {
       state.showSupportModal = action.payload;
     },
+    setShowAstrologerWaitModal: (state, action: PayloadAction<boolean>) => {
+      state.showAstrologerWaitModal = action.payload;
+    },
   },
 });
 
@@ -72,6 +77,7 @@ export const {
   setProblemCategory,
   setAstrologerGender,
   setShowSupportModal,
+  setShowAstrologerWaitModal,
 } = userSlice.actions;
 
 export default userSlice.reducer;
