@@ -37,6 +37,7 @@ const InputFields = () => {
   const [lowBalance, setLowBalance] = useState(false);
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<Date>();
+  console.log('🚀 ~ file: InputFields.tsx:40 ~ InputFields ~ time:', time);
   const [prefilledDate, setPrefilledDate] = useState<boolean>(true);
   const [prefilledTime, setPrefilledTime] = useState<boolean>(true);
   console.log('🚀 ~ file: InputFields.tsx:27 ~ InputFields ~ date:', date);
@@ -66,6 +67,7 @@ const InputFields = () => {
     error: userDetailsError,
     isLoading: userDetailsLoading,
     refetch: refetchUserDetails,
+    isRefetching: isRefetchingUserDetails,
   } = useQuery(['userDetails'], FetchUserDetails);
 
   useEffect(() => {
@@ -103,14 +105,20 @@ const InputFields = () => {
     if (!userDetails) {
       return;
     }
-    setTime(new Date(userDetails?.time_of_birth));
-    setDate(new Date(userDetails?.date_of_birth));
-    setGender(userDetails?.gender as 'male' | 'female' | 'other');
-    setMaritalStatus(userDetails?.marital_status);
-    setProblem(userDetails?.type_of_problem);
+    const tm = new Date(userDetails?.time_of_birth);
+    const dt = new Date(userDetails?.date_of_birth);
+    setTime(tm);
+    setDate(dt);
+    // setGender(userDetails?.gender as 'male' | 'female' | 'other');
+    // setMaritalStatus(userDetails?.marital_status);
+    // setProblem(userDetails?.type_of_problem);
   }, [userDetails]);
 
-  if (userDetailsLoading) {
+  useEffect(() => {
+    setInitialValues();
+  }, [setInitialValues]);
+
+  if (userDetailsLoading || isRefetchingUserDetails) {
     const style = {flex: 1};
     return (
       <ActivityIndicator

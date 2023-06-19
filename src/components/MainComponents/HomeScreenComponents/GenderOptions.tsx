@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useMemo, useRef, useCallback, useEffect} from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
@@ -15,6 +15,7 @@ import {
   setShowGenderOptions,
 } from '../../../store/UiSlice';
 import {useTranslation} from 'react-i18next';
+import Icon from '../../../../assets/icons/HomeScreen/close.svg';
 
 interface GenderOptionsPropsType {
   visible: boolean;
@@ -64,6 +65,11 @@ const GenderOptions = ({
       index={-1}
       ref={bottomSheetRef}>
       <View style={styles.root}>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={() => bottomSheetRef.current?.close()}>
+          <Icon color="black" />
+        </TouchableOpacity>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
             {t('Preferred gender of the Astrologer?')}
@@ -156,5 +162,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginTop: 30,
     // backgroundColor: 'yellow',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+    padding: 10,
   },
 });

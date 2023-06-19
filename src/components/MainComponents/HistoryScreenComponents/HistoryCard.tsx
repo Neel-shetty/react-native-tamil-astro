@@ -23,6 +23,7 @@ import firestore from '@react-native-firebase/firestore';
 import {messagesType} from '../ChatScreenComponents/Chat';
 import {useTranslation} from 'react-i18next';
 import TextTicker from 'react-native-text-ticker';
+import CallScreen from '../../../screens/Main/CallScreen';
 
 interface HistoryCardPropTypes {
   astrologer: {
@@ -169,7 +170,14 @@ const HistoryCard = ({astrologer}: HistoryCardPropTypes) => {
                 <SmallButton
                   title={t('Call')}
                   icon={<Call />}
-                  onPress={() => {}}
+                  onPress={() => {
+                    navigation.navigate(CallScreen.name, {
+                      combinedUserId: astrologer.combinedUid,
+                      astrologerPrice: astrologer?.astrologerPrice,
+                      astrologerName: astrologer?.astrologerName,
+                      astrologerId: astrologer?.astrologerId,
+                    });
+                  }}
                 />
                 <View style={styles.space} />
                 <SmallButton
